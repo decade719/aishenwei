@@ -5,8 +5,15 @@
   "description": "深维智能科技静态企业网站",
   "scripts": {
     "dev": "node tools/serve.mjs",
+    "build": "node tools/build-site.mjs && node tools/check-site.mjs dist",
+    "deploy": "wrangler deploy",
     "check": "node tools/check-site.mjs",
     "test": "node --test tests/*.test.cjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "wrangler": "4.151.0"
+  }
 }

@@ -3,7 +3,7 @@ import { resolve, dirname, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
-const root = fileURLToPath(new URL('../', import.meta.url));
+const root = process.argv[2] ? resolve(process.argv[2]) : fileURLToPath(new URL('../', import.meta.url));
 const files = (await readdir(root)).filter(name => /\.(html|css|js)$/.test(name));
 const failures = [];
 let references = 0, scripts = 0;

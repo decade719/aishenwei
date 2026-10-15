@@ -1,10 +1,10 @@
 # 深维智能科技企业网站
 
-以 HTML、CSS 和原生 JavaScript 构建的静态多页面网站。无运行时依赖，不需要安装 npm 包或执行构建。
+以 HTML、CSS 和原生 JavaScript 构建的静态多页面网站。无运行时依赖，本地预览无需构建；发布时将网站文件收集到独立的 `dist/` 目录。Wrangler 仅用于 Cloudflare 部署。
 
 ## 本地预览与检查
 
-安装 Node.js 20 或更高版本后，在仓库目录执行：
+安装 Node.js 22 或更高版本后，在仓库目录执行：
 
 ```sh
 npm run dev
@@ -17,7 +17,7 @@ npm run check
 npm test
 ```
 
-检查覆盖本地资源引用、JavaScript 语法、页面基础元数据、重复 ID，以及表单草稿持久化、存储损坏和空间不足。GitHub Actions 在 push / pull request 时运行同样的检查。
+检查覆盖本地资源引用、JavaScript 语法、页面基础元数据、重复 ID，以及表单草稿持久化、存储损坏和空间不足。还会测试发布文件隔离与 25 MiB 单文件大小限制。GitHub Actions 在 push / pull request 时运行检查、构建和 Wrangler 部署预检（不实际发布）。
 
 ## 页面与维护
 
@@ -54,6 +54,33 @@ python tools/optimize-images.py /path/to/original/pictures
 
 ## 静态托管
 
-可将根目录 HTML、CSS、JS、`images/` 和 `pictures/` 发布到静态服务器。使用 GitHub Pages 时，可在仓库 Settings → Pages 选择从分支发布，分支 `main`、目录 `/ (root)`。本次上传只提交仓库文件，不自动启用托管。
+### Cloudflare Workers
+
+在 Cloudflare 的 `aishenwei` Worker → Settings → Build 中使用以下配置：
+
+| 设置 | 值 |
+| --- | --- |
+| 生产分支 | `main` |
+| 根目录 | 仓库根目录（留空） |
+| 构建命令 | `npm run build` |
+| 部署命令 | `npx wrangler deploy` |
+
+保存后部署最新提交。资源目录由已提交的 `wrangler.jsonc` 指定为 `./dist`，不要改成 `.`，也不要在部署命令中添加 `--assets .`。
+
+构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则和 `images/`、`pictures/` 中的图片，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
+
+Cloudflare Workers Builds 的构建命令需在控制台显式设置；仓库中 `build.command` 为本地 Wrangler 调用提供同样的构建步骤。配置说明见 [Cloudflare Workers Builds 文档](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。
+
+本地部署预检（不会发布到 Cloudflare）：
+
+```sh
+npm ci
+npm run build
+npx wrangler deploy --dry-run
+```
+
+### 其他静态服务器
+
+运行 `npm run build` 后发布 `dist/` 的内容。使用 GitHub Pages 从分支发布时，仍可选择分支 `main`、目录 `/ (root)`；源码中的网站路径保持不变。
 
 若使用独立域名，请在确认域名后再添加 canonical、站点地图和域名配置，避免发布错误的网址。
