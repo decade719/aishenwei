@@ -1,48 +1,24 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-title-en="Partner researcher | Shenwei Intelligence">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="pageTitle">成员介绍 - USTB 具身智能实验室</title>
+  <title id="pageTitle">合作研究团队资料 | 深维智能科技</title>
   <link rel="stylesheet" href="styles.css" />
 
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="site-enhancements.css">
+  <link rel="stylesheet" href="site-enhancements.css"><link rel="stylesheet" href="company.css">
   <meta name="description" content="团队成员介绍与研究方向。">
   <meta name="theme-color" content="#09111f">
 </head>
-<body class="theme-huaqin">
+<body class="theme-huaqin partner-profile-page">
 <a class="skip-link" href="#memberProfile">跳转到主要内容</a>
-  <header class="site-header theme-huaqin">
-    <div class="container">
-      <a class="logo" href="index.html">深维智能科技-北京科技大学</a>
-      <nav class="nav" id="mainNav">
-        <button class="nav-toggle" aria-label="toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-list">
-<li><a href="index.html" data-i18n="nav_home">首页</a></li>
-<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
-<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
-<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
-<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
-<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
-<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
-<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
-</ul>
-        <div class="tools">
-          <select id="langSwitcher" aria-label="language">
-            <option value="zh-CN">简体中文</option>
-            <option value="zh-HK">繁體中文</option>
-            <option value="en">English</option>
-          </select>
-          <button id="themeToggle">深色</button>
-        </div>
-      </nav>
-    </div>
-  </header>
+  <a class="skip-link" href="#main-content"><span data-en="Skip to content">跳转到主要内容</span></a>
+<header class="company-header"><div class="wrap header-row"><a class="company-brand" href="index.html" aria-label="深维智能科技首页"><svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 7h22v6H11v6h16v6H5v-6h16v-6H5z" fill="currentColor"/></svg><span><span class="brand-name">深维智能科技</span><span class="brand-en">Shenwei Intelligence</span></span></a>
+<nav class="company-nav" aria-label="主导航" data-open="false"><button class="menu-button" type="button" aria-label="打开或关闭导航菜单" aria-expanded="false" aria-controls="companyNav"><span></span><span></span></button>
+<div class="nav-panel" id="companyNav"><ul class="company-links"><li><a href="index.html"><span data-en="Home">首页</span></a></li><li><a href="product_chair.html"><span data-en="Products">产品方案</span></a></li><li><a href="more.html"><span data-en="Technology">技术能力</span></a></li><li><a href="cases.html"><span data-en="Applications">应用案例</span></a></li><li><a href="about.html"><span data-en="About">关于深维</span></a></li><li><a href="contact.html"><span data-en="Contact">联系我们</span></a></li></ul><div class="nav-tools"><select id="companyLanguage" aria-label="Language / 语言"><option value="zh-CN">中文</option><option value="en">English</option></select><button class="theme-switch" type="button" aria-label="切换深浅主题" aria-pressed="false">☾</button></div></div></nav></div></header>
 
-  <main id="memberProfile">
+  <div id="main-content" class="wrap partner-context"><a href="partners.html">生态合作</a> / <a href="members.html">合作研究团队</a><p class="team-notice">本页为合作方研究人员资料，不是深维智能科技员工介绍。研究成果和联系方式属于相关研究人员，不代表公司资质或企业联系方式。</p></div><main id="memberProfile">
     <!-- 返回按钮 -->
     <a href="members.html" style="position: fixed; top: 80px; left: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; font-size: 24px; text-decoration: none; color: var(--primary); box-shadow: 0 4px 16px rgba(0,0,0,0.1); z-index: 100; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 24px rgba(102,126,234,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'">
       ←
@@ -620,7 +596,7 @@
       const member = membersData[memberId];
 
       // 设置页面标题
-      document.getElementById('pageTitle').textContent = `${member.name} - USTB 具身智能实验室`;
+      document.getElementById('pageTitle').textContent = `${member.name} | 合作研究团队 · 深维智能科技`;
 
       // 设置头像
       document.getElementById('avatarContainer').innerHTML = `
@@ -761,7 +737,7 @@
     }
   </script>
 
-  <script src="script.js"></script>
+  <script src="company.js"></script>
 <script src="site-enhancements.js"></script>
-</body>
+<footer class="company-footer"><div class="wrap"><div class="footer-main"><div><a class="company-brand" href="index.html" aria-label="深维智能科技首页"><svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 7h22v6H11v6h16v6H5v-6h16v-6H5z" fill="currentColor"/></svg><span><span class="brand-name">深维智能科技</span><span class="brand-en">Shenwei Intelligence</span></span></a><p data-en="Focused on intelligent mobility, robotic perception and industrial vision.">专注智能出行、机器人感知与工业视觉。</p></div><div class="footer-links"><a href="product_chair.html"><span data-en="Products">产品方案</span></a><a href="about.html"><span data-en="About">关于深维</span></a><a href="partners.html"><span data-en="Partnerships">生态合作</span></a><a href="contact.html"><span data-en="Contact">联系我们</span></a></div></div><div class="footer-bottom"><span>© 2026 深维智能科技</span><span data-en="Intelligent perception for real-world applications.">智能感知，服务真实场景。</span></div></div></footer></body>
 </html>

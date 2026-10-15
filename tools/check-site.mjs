@@ -29,6 +29,9 @@ for (const file of files) {
   }
   // All literal local HTML attributes and CSS URLs must exist; dynamic templates are skipped.
   const links = [...text.matchAll(/(?:src|href)\s*=\s*["']([^"']+)["']|url\(\s*["']?([^)'"\s]+)/g)];
+  for (const match of text.matchAll(/\bsrcset="([^"]+)"/g)) {
+    for (const candidate of match[1].split(',')) links.push([null, candidate.trim().split(/\s+/)[0]]);
+  }
   for (const match of links) {
     const value = match[1] || match[2];
     if (/^(#|\/\/|[a-z][a-z\d+.-]*:)/i.test(value) || value.includes('${')) continue;

@@ -1,183 +1,194 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="zh-CN" data-title-en="About | Shenwei Intelligence">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>关于我们 · 北京科技大学具身智能实验室</title>
-  <meta name="description" content="北京科技大学具身智能实验室简介、使命与合作" />
-  <link rel="stylesheet" href="styles.css" />
-
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="site-enhancements.css">
-  <meta name="description" content="了解深维智能科技的研究方向、技术能力与团队愿景。">
-  <meta name="theme-color" content="#09111f">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>关于深维 | 深维智能科技</title>
+<meta name="description" content="了解深维智能科技在智能出行、工业视觉与服务机器人领域的业务方向。">
+<meta name="theme-color" content="#10243c">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="company.css">
+<script src="company.js" defer>
+</script>
 </head>
-<body class="theme-huaqin">
-<a class="skip-link" href="#main-content">跳转到主要内容</a>
-  <!-- 站点头部导航（与其他页面一致） -->
-  <header class="site-header theme-huaqin" style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000;">
-    <div class="container">
-      <a class="logo" href="index.html" data-i18n="nav.brand">深维智能科技-北京科技大学</a>
-      <nav class="nav" id="mainNav">
-        <button class="nav-toggle" aria-label="toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-list">
-<li><a href="index.html" data-i18n="nav_home">首页</a></li>
-<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
-<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
-<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
-<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
-<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
-<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
-<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+<body class="company-page">
+<a class="skip-link" href="#main-content">
+<span data-en="Skip to content">跳转到主要内容</span>
+</a>
+<header class="company-header">
+<div class="wrap header-row">
+<a class="company-brand" href="index.html" aria-label="深维智能科技首页">
+<svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+<path d="M5 7h22v6H11v6h16v6H5v-6h16v-6H5z" fill="currentColor"/>
+</svg>
+<span>
+<span class="brand-name">深维智能科技</span>
+<span class="brand-en">Shenwei Intelligence</span>
+</span>
+</a>
+<nav class="company-nav" aria-label="主导航" data-open="false">
+<button class="menu-button" type="button" aria-label="打开或关闭导航菜单" aria-expanded="false" aria-controls="companyNav">
+<span>
+</span>
+<span>
+</span>
+</button>
+<div class="nav-panel" id="companyNav">
+<ul class="company-links">
+<li>
+<a href="index.html">
+<span data-en="Home">首页</span>
+</a>
+</li>
+<li>
+<a href="product_chair.html">
+<span data-en="Products">产品方案</span>
+</a>
+</li>
+<li>
+<a href="more.html">
+<span data-en="Technology">技术能力</span>
+</a>
+</li>
+<li>
+<a href="cases.html">
+<span data-en="Applications">应用案例</span>
+</a>
+</li>
+<li>
+<a href="about.html" aria-current="page">
+<span data-en="About">关于深维</span>
+</a>
+</li>
+<li>
+<a href="contact.html">
+<span data-en="Contact">联系我们</span>
+</a>
+</li>
 </ul>
-        <div class="tools">
-          <select id="langSwitcher" aria-label="language">
-            <option value="zh-CN">简体中文</option>
-            <option value="zh-HK">繁体中文</option>
-            <option value="en">English</option>
-          </select>
-          <button id="themeToggle" data-i18n="theme_toggle">🌙</button>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- 主体内容 -->
-  <main id="main-content" tabindex="-1">
-    <!-- Hero -->
-    <section class="fp-section hero-plain" style="background: var(--gradient);">
-      <div class="container" style="text-align: center; padding: 140px 20px 40px;">
-        <h1 style="color: white; font-size: 40px; margin-bottom: 12px; font-weight: 800;">关于我们</h1>
-        <p style="color: rgba(255,255,255,0.95); font-size: 16px; max-width: 760px; margin: 0 auto;">北京科技大学具身智能实验室，聚焦机器人具身智能与机器视觉等方向，推进关键技术落地与产业协同。</p>
-      </div>
-    </section>
-
-    <!-- 实验室简介 -->
-    <section class="fp-section" style="background: linear-gradient(135deg,#f8fafc 0%,#eef2ff 100%);">
-      <div class="container" style="padding: 60px 20px; max-width: 1000px;">
-        <h2 class="section-title" style="font-size: 28px; color: var(--primary); margin-bottom: 16px;">实验室简介</h2>
-        <p style="color: #334155; line-height: 1.9;">我们致力于具身智能、导航与定位、机器视觉感知、语音交互与人机协作等交叉方向研究与产品化，面向医疗康复、智慧物流、智能服务等场景提供高可靠的解决方案。</p>
-      </div>
-    </section>
-
-    <!-- 核心方向 -->
-    <section class="fp-section" style="background: white;">
-      <div class="container" style="padding: 48px 20px; max-width: 1000px;">
-        <h2 class="section-title" style="font-size: 28px; color: var(--primary); margin-bottom: 24px;">核心研究方向</h2>
-        <div class="grid" style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px;">
-          <div class="card" style="background:#f9fafb; border-radius:12px; padding:16px;">
-            <h3 style="margin:0 0 8px; font-size:18px; color:#0f172a;">具身智能与机器人</h3>
-            <p style="margin:0; color:#475569;">以任务驱动的感知-决策-控制闭环，实现复杂环境中的稳健行为。</p>
-          </div>
-          <div class="card" style="background:#f9fafb; border-radius:12px; padding:16px;">
-            <h3 style="margin:0 0 8px; font-size:18px; color:#0f172a;">机器视觉与导航</h3>
-            <p style="margin:0; color:#475569;">多模态视觉融合与地图构建，面向轮椅/餐车/物流设备的自主导航。</p>
-          </div>
-          <div class="card" style="background:#f9fafb; border-radius:12px; padding:16px;">
-            <h3 style="margin:0 0 8px; font-size:18px; color:#0f172a;">人机交互与语音</h3>
-            <p style="margin:0; color:#475569;">自然语言理解与交互式控制，提升设备易用性与安全性。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 导师团队预览 -->
-    <section class="fp-section" style="background: linear-gradient(135deg,#fff7ed 0%, #ffedd5 100%);">
-      <div class="container" style="padding: 64px 20px; max-width: 1100px;">
-        <div style="text-align:center; margin-bottom: 24px;">
-          <div style="display:inline-block; background: linear-gradient(135deg,#f59e0b,#d97706); color:white; padding:8px 20px; border-radius:20px; font-weight:700; box-shadow:0 6px 20px rgba(245,158,11,.35);">导师团队</div>
-          <h2 style="font-size: 28px; color:#7c2d12; margin:12px 0 6px; font-weight:800;">核心成员精选</h2>
-          <p style="color:#a16207; font-size:14px;">了解我们的负责人与研究骨干</p>
-        </div>
-
-        <!-- 负责人 -->
-        <div class="reveal" onclick="window.location.href='member-profile.html?id=zhangtaohong'" style="background:white; border-radius:24px; padding:32px; box-shadow:0 12px 40px rgba(0,0,0,.1); display:flex; align-items:center; gap:28px; margin-bottom:24px; cursor:pointer;">
-          <div style="width:120px; height:120px; border-radius:50%; overflow:hidden; border:4px solid #f59e0b; box-shadow:0 10px 30px rgba(245,158,11,.35);">
-            <img src="pictures/老师.webp" alt="张桃红" style="width:100%; height:100%; object-fit:cover;" />
-          </div>
-          <div style="flex:1;">
-            <div style="display:inline-block; background: linear-gradient(135deg,#dc2626,#991b1b); color:white; padding:6px 14px; border-radius:16px; font-size:12px; font-weight:700; margin-bottom:10px;">教授 · 实验室负责人</div>
-            <h3 style="margin:0 0 8px; font-size:22px; color:#1f2937; font-weight:800;">张桃红</h3>
-            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-              <span style="background:#fff7ed; color:#7c2d12; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600;">具身智能</span>
-              <span style="background:#fff7ed; color:#7c2d12; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600;">机器人导航</span>
-              <span style="background:#fff7ed; color:#7c2d12; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600;">智能感知</span>
-            </div>
-            <p style="color:#374151; font-size:14px; line-height:1.7;">实验室创始人与学术带头人，专注于具身智能、机器人导航与环境感知领域的前沿研究。</p>
-          </div>
-        </div>
-
-        <!-- 博士与硕士预览 -->
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px;">
-          <div class="reveal" onclick="window.location.href='member-profile.html?id=yuchunlin'" style="background:linear-gradient(135deg,#eff6ff,#dbeafe); border-radius:18px; padding:24px; border:2px solid #93c5fd; box-shadow:0 10px 32px rgba(59,130,246,.18); cursor:pointer;">
-            <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid #3b82f6; margin:0 auto 12px;">
-              <img src="pictures/成员1.webp" alt="俞纯林" style="width:100%; height:100%; object-fit:cover;"  width="1899" height="1899" loading="lazy" decoding="async">
-            </div>
-            <div style="text-align:center;">
-              <div style="display:inline-block; background: linear-gradient(135deg,#3b82f6,#2563eb); color:white; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700; margin-bottom:8px;">博士 · SLAM</div>
-              <h3 style="margin:0 0 6px; font-size:18px; color:#1e40af; font-weight:700;">俞纯林</h3>
-              <p style="margin:0; color:#1e3a8a; font-size:12px;">视觉导航 · 多传感器融合</p>
-            </div>
-          </div>
-
-          <div class="reveal" onclick="window.location.href='member-profile.html?id=wanghaoyu'" style="background:linear-gradient(135deg,#eff6ff,#dbeafe); border-radius:18px; padding:24px; border:2px solid #93c5fd; box-shadow:0 10px 32px rgba(59,130,246,.18); cursor:pointer;">
-            <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid #3b82f6; margin:0 auto 12px;">
-              <img src="pictures/成员2.webp" alt="王浩宇" style="width:100%; height:100%; object-fit:cover;"  width="1920" height="1808" loading="lazy" decoding="async">
-            </div>
-            <div style="text-align:center;">
-              <div style="display:inline-block; background: linear-gradient(135deg,#3b82f6,#2563eb); color:white; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700; margin-bottom:8px;">博士 · 感知</div>
-              <h3 style="margin:0 0 6px; font-size:18px; color:#1e40af; font-weight:700;">王浩宇</h3>
-              <p style="margin:0; color:#1e3a8a; font-size:12px;">深度学习 · 环境感知</p>
-            </div>
-          </div>
-
-          <div class="reveal" onclick="window.location.href='member-profile.html?id=libotao'" style="background:white; border-radius:18px; padding:24px; border:2px solid #a7f3d0; box-shadow:0 8px 28px rgba(16,185,129,.16); cursor:pointer;">
-            <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid #10b981; margin:0 auto 12px;">
-              <img src="pictures/成员3.webp" alt="李博涛" style="width:100%; height:100%; object-fit:cover;"  width="1920" height="1831" loading="lazy" decoding="async">
-            </div>
-            <div style="text-align:center;">
-              <div style="display:inline-block; background:#d1fae5; color:#065f46; padding:4px 10px; border-radius:12px; font-size:12px; font-weight:700; margin-bottom:8px;">硕士 · 机器学习</div>
-              <h3 style="margin:0 0 6px; font-size:18px; color:#065f46; font-weight:700;">李博涛</h3>
-              <p style="margin:0; color:#10b981; font-size:12px;">算法工程 · 数据分析</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align:center; margin-top:20px;">
-          <a class="btn-primary" href="members.html">查看更多成员</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 团队与合作链接 -->
-    <section class="fp-section" style="background: linear-gradient(135deg,#ecfeff 0%,#dbeafe 100%);">
-      <div class="container" style="padding: 48px 20px; max-width: 1000px; text-align:center;">
-        <h2 class="section-title" style="font-size: 28px; color: #0ea5e9; margin-bottom: 16px;">团队与合作</h2>
-        <p style="color:#334155; max-width:760px; margin: 0 auto 24px;">了解核心成员与生态伙伴，共建开放协作生态。</p>
-        <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-          <a class="btn-primary" href="members.html">查看团队成员</a>
-          <a class="btn-primary" href="partners.html" style="background: linear-gradient(135deg, var(--accent-b), var(--accent-c));">生态合作伙伴</a>
-          <a class="btn-ghost" href="contact.html">联系合作</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- 页脚（沿用首页样式按钮） -->
-  <footer class="site-footer theme-huaqin">
-    <div class="container">
-      <div class="footer-actions">
-        <a class="footer-btn" href="contact.html"><span class="icon">✉️</span><span data-i18n="footer.contact">联系我们</span></a>
-        <a class="footer-btn" href="about.html"><span class="icon">ℹ️</span><span data-i18n="footer.about">关于我们</span></a>
-        <a class="footer-btn" href="partners.html"><span class="icon">🤝</span><span data-i18n="footer.partners">合作伙伴</span></a>
-      </div>
-      <p style="margin-top:16px; color:#64748b;">© 北京科技大学具身智能实验室 · 保留所有权利</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-<script src="site-enhancements.js"></script>
+<div class="nav-tools">
+<select id="companyLanguage" aria-label="Language / 语言">
+<option value="zh-CN">中文</option>
+<option value="en">English</option>
+</select>
+<button class="theme-switch" type="button" aria-label="切换深浅主题" aria-pressed="false">☾</button>
+</div>
+</div>
+</nav>
+</div>
+</header>
+<main id="main-content" tabindex="-1">
+<section class="page-head">
+<div class="wrap">
+<div class="breadcrumb">
+<a href="index.html">
+<span data-en="Home">首页</span>
+</a>
+<span aria-hidden="true">/</span>
+<span data-en="About Shenwei">关于深维</span>
+</div>
+<h1 data-en="About Shenwei">关于深维</h1>
+<p data-en="Focused on intelligent mobility and machine vision, shaped by real-world needs.">聚焦智能出行与机器视觉，让技术围绕真实需求展开。</p>
+</div>
+</section>
+<section class="section">
+<div class="wrap split">
+<div>
+<h2 data-en="Shenwei Intelligence">深维智能科技</h2>
+<p class="intro-text" data-en="We explore how intelligent devices perceive their surroundings, understand tasks and work with people, with a focus on assisted mobility and industrial applications.">我们关注智能设备如何感知环境、理解任务并与人协作。围绕机器人视觉、自主导航和自然交互，探索面向出行辅助与工业场景的产品应用。</p>
+<p class="intro-text" data-en="We start with the user’s task, connecting the environment, interaction and functionality in a clear product solution.">从用户需要完成的任务出发，重视使用环境、操作方式与功能之间的配合，让复杂的技术表达成清晰的产品方案。</p>
+</div>
+<div>
+<figure class="media-frame">
+<img src="pictures/技术服务.webp" srcset="pictures/responsive/技术服务-480.webp 480w, pictures/responsive/技术服务-960.webp 960w, pictures/技术服务.webp 1440w" sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 960px) calc(100vw - 80px), 600px" width="1440" height="960" alt="智能设备技术应用示意" loading="eager" decoding="async" fetchpriority="high">
+</figure>
+<p class="media-caption">
+<span data-en="Technology concept illustration">技术应用场景示意</span>
+</p>
+</div>
+</div>
+</section>
+<section class="section wash">
+<div class="wrap">
+<div class="section-heading">
+<h2 data-en="Our areas of focus">我们的业务方向</h2>
+</div>
+<div class="three-grid">
+<article class="capability">
+<h3 data-en="Intelligent mobility">智能出行</h3>
+<p data-en="Explore navigation, obstacle avoidance and voice interaction for everyday mobility.">围绕智能轮椅，探索导航、避障与语音交互在日常移动中的应用。</p>
+</article>
+<article class="capability">
+<h3 data-en="Industrial vision">工业视觉</h3>
+<p data-en="Apply image analysis, defect recognition and object detection to industrial problems.">关注图像分析、缺陷识别与目标检测，为工业场景提供技术思路。</p>
+</article>
+<article class="capability">
+<h3 data-en="Service robotics">服务机器人</h3>
+<p data-en="Explore perception and movement for delivery, transport and service robots.">探索配送、运货与服务设备的感知与移动能力。</p>
+</article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="wrap split">
+<div>
+<h2 data-en="Product-focused. Open to collaboration.">专注产品，也保持开放合作。</h2>
+</div>
+<div>
+<p class="intro-text" data-en="We welcome collaboration with technology, industry and research partners around specific applications. Partner research profiles are presented separately from the company’s products.">围绕具体应用，与技术、产业和研究伙伴交流合作。企业产品介绍与合作方的研究团队资料分别呈现。</p>
+<a class="text-link" href="partners.html">
+<span data-en="Explore partnerships">查看生态合作</span>
+</a>
+</div>
+</div>
+</section>
+<section class="contact-band">
+<div class="wrap">
+<div>
+<h2 data-en="Let’s talk about your application">让我们聊聊你的应用场景</h2>
+<p data-en="Start with the environment, functionality and deployment requirements.">从使用环境、功能需求和部署条件开始，梳理适合的产品方向。</p>
+</div>
+<a class="button" href="contact.html">
+<span data-en="Plan your project">准备合作需求</span>
+</a>
+</div>
+</section>
+</main>
+<footer class="company-footer">
+<div class="wrap">
+<div class="footer-main">
+<div>
+<a class="company-brand" href="index.html" aria-label="深维智能科技首页">
+<svg class="brand-symbol" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+<path d="M5 7h22v6H11v6h16v6H5v-6h16v-6H5z" fill="currentColor"/>
+</svg>
+<span>
+<span class="brand-name">深维智能科技</span>
+<span class="brand-en">Shenwei Intelligence</span>
+</span>
+</a>
+<p data-en="Focused on intelligent mobility, robotic perception and industrial vision.">专注智能出行、机器人感知与工业视觉。</p>
+</div>
+<div class="footer-links">
+<a href="product_chair.html">
+<span data-en="Products">产品方案</span>
+</a>
+<a href="about.html">
+<span data-en="About">关于深维</span>
+</a>
+<a href="partners.html">
+<span data-en="Partnerships">生态合作</span>
+</a>
+<a href="contact.html">
+<span data-en="Contact">联系我们</span>
+</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 深维智能科技</span>
+<span data-en="Intelligent perception for real-world applications.">智能感知，服务真实场景。</span>
+</div>
+</div>
+</footer>
 </body>
 </html>

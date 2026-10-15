@@ -21,32 +21,32 @@ npm test
 
 ## 页面与维护
 
-| 文件 | 用途 |
-| --- | --- |
-| `index.html` / `home.css` | 企业首页与首页样式 |
-| `product_chair.html` | 智能轮椅产品介绍 |
-| `more.html` / `cases.html` | 具身智能介绍与成果案例 |
-| `members.html` / `member-profile.html` | 团队与成员详情 |
-| `about.html` / `partners.html` / `contact.html` | 企业介绍、合作伙伴与联系表单 |
-| `styles.css` / `script.js` | 原有共享样式与语言、主题交互 |
-| `site-enhancements.css` / `site-enhancements.js` | 响应式、自然滚动、导航与键盘可访问性 |
-| `pictures/` | 优化后的 WebP 图片 |
+公司主导航为首页、产品方案、技术能力、应用案例、关于深维、联系我们。高校和课题组只在页脚进入的生态合作、合作研究团队及研究者详情中展示，明确不代表公司员工组织。
 
-原有品牌、产品、团队、案例内容保留。首页重新整理信息层级；开发中的产品明确标注；移动导航去掉重复事件；各详情页改为自然滚动，避免长内容被裁切。语言选项覆盖现有翻译字典，部分详细正文仍沿用中文，尚未实现全文翻译。
+- `company.css` / `company.js`：公司页面共享样式、手机菜单、中英文、深浅主题和需求草稿交互。
+- `index.html` / `product_chair.html`：公司首页及智能轮椅方案，概念图均有示意标注。
+- `more.html` / `cases.html`：技术能力和应用示例；不将合作团队的学术成果直接声称为公司成果。
+- `about.html` / `contact.html`：公司介绍及需求草稿。
+- `partners.html` / `members.html` / `member-profile.html`：独立的外部合作团队入口。
+- `styles.css`、`script.js`、`site-enhancements.*`：保留给原有详情与本机演示页面。
 
-87 张图片由约 150.5 MB 优化为 11.1 MB（十进制），减少约 92.6%；最大边长 1920 px，WebP 质量 86。图片增加尺寸声明、异步解码与非首屏懒加载。原始图片保留在上传前的本地原始目录，不重复提交到仓库。
+布局覆盖手机、平板及宽屏，长页面使用自然滚动。主页面提供中英文，研究者详细学术资料仍以中文为主。设计取舍见 `DESIGN.md`。
 
-如需重新生成图片，安装 Pillow 后执行：
+87 张基础图片进一步从 11,084,176 字节压缩到 5,109,790 字节，减少约 53.9%。另提供 32 张响应式小图，浏览器按显示尺寸选择，不会全部下载；非首屏图片懒加载。普通图最大边长 1440 px、图表 1600 px、头像 480 px。原始素材保留在仓库外。
+
+安装 Pillow 后，从原始图片生成（不要将压缩后的 pictures 作为输入）：
 
 ```sh
-python tools/optimize-images.py /path/to/original/pictures
+python tools/prepare-responsive-images.py /path/to/original/pictures
 ```
+
+`_headers` 为图片与共享样式设置浏览器缓存。更换同名图片后缓存最多保留一天；需要即时更新时使用新文件名。
 
 ## 静态表单与本机演示的范围
 
 网站尚未接入服务器、数据库或邮件发送服务：
 
-- 留言、求职和订购表单只保存为当前浏览器的本机草稿，不会发送给企业，不会生成真实订单。
+- 公司联系页只保存需求草稿到当前浏览器，不会发送给企业；已从公司页面移除招聘和订购入口。旧演示数据不代表真实业务记录。
 - 简历附件仅记录文件名，不上传文件。清除浏览器站点数据会清除本机草稿。
 - `admin-login.html` 与 `admin-dashboard.html` 是本机内容管理演示，不提供身份验证，不能读取其他访客的草稿或在线发布内容。不要存放真实业务资料。
 - 正式收集咨询、订单或简历前，应接入服务端表单接口、身份验证与访问控制，并确认页面中的企业联系方式和内容。浏览器存储不能替代业务后台。
@@ -67,7 +67,7 @@ python tools/optimize-images.py /path/to/original/pictures
 
 保存后部署最新提交。资源目录由已提交的 `wrangler.jsonc` 指定为 `./dist`，不要改成 `.`，也不要在部署命令中添加 `--assets .`。
 
-构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则和 `images/`、`pictures/` 中的图片，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
+构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则、`_headers` 缓存规则和 `images/`、`pictures/` 中的图片，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
 
 Cloudflare Workers Builds 的构建命令需在控制台显式设置；仓库中 `build.command` 为本地 Wrangler 调用提供同样的构建步骤。配置说明见 [Cloudflare Workers Builds 文档](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。
 

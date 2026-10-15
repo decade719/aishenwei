@@ -32,6 +32,7 @@ class FormSubmissionManager {
       name: data.name || '',
       email: data.email || '',
       phone: data.phone || '',
+      company: data.company || '',
       message: data.message || '',
       date: new Date().toLocaleString('zh-CN'),
       timestamp: Date.now(),

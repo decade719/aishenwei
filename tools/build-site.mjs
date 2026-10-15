@@ -19,7 +19,7 @@ export async function buildSite(sourceRoot) {
       if (directory && entry.isDirectory()) await collect(relative, pattern);
     }
   }
-  await collect('', /\.(html|css|js)$|^_redirects$/i);
+  await collect('', /\.(html|css|js)$|^_(redirects|headers)$/i);
   for (const directory of ['images', 'pictures']) {
     const info = await lstat(join(root, directory));
     if (!info.isDirectory() || info.isSymbolicLink()) throw new Error(`Invalid asset directory: ${directory}`);
