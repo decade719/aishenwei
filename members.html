@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>成员介绍 - USTB 具身智能实验室</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* 全屏滚动样式 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    #fullpage-wrapper {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .fp-section {
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fp-section .container {
+      width: 100%;
+      max-width: 1400px;
+      padding: 60px 20px;
+    }
+
+    /* 导航点样式 */
+    .fp-nav {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+    }
+
+    .fp-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fp-nav li {
+      position: relative;
+    }
+
+    .fp-nav a {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      border: 2px solid rgba(102,126,234,0.8);
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .fp-nav a:hover,
+    .fp-nav a.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: scale(1.4);
+      box-shadow: 0 0 20px rgba(102,126,234,0.6);
+    }
+
+    .fp-nav .fp-tooltip {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.85);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .fp-nav li:hover .fp-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-8px);
+    }
+
+    @media (max-width: 768px) {
+      .fp-nav {
+        right: 15px;
+      }
+
+      .fp-nav a {
+        width: 10px;
+        height: 10px;
+      }
+
+      .fp-section .container {
+        padding: 40px 15px;
+      }
+    }
+
+    /* 成员页兜底：让卡片默认可见，避免滚动动画未触发造成空白 */
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .reveal-show { opacity: 1 !important; transform: none !important; }
+  </style>
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="description" content="认识深维智能科技与北京科技大学具身智能实验室的研究团队。">
+  <meta name="theme-color" content="#09111f">
+</head>
+<body class="theme-huaqin">
+<a class="skip-link" href="#fullpage-wrapper">跳转到主要内容</a>
+  <header class="site-header theme-huaqin" style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000;">
+    <div class="container">
+      <a class="logo" href="index.html" data-i18n="nav.brand">深维智能科技-北京科技大学</a>
+      <nav class="nav" id="mainNav">
+        <button class="nav-toggle" aria-label="toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list">
+<li><a href="index.html" data-i18n="nav_home">首页</a></li>
+<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
+<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
+<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
+<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
+<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
+<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
+<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+</ul>
+        <div class="tools">
+          <select id="langSwitcher" aria-label="language">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-HK">繁体中文</option>
+            <option value="en">English</option>
+          </select>
+          <button id="themeToggle" data-i18n="theme_toggle">🌙</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 全屏滚动容器 -->
+  <div id="fullpage-wrapper" role="main" tabindex="-1">
+
+    <!-- Hero区 -->
+    <section class="fp-section" data-anchor="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"></div>
+      <div class="container" style="position: relative; z-index: 1; text-align: center; padding: 140px 20px 60px;">
+        <h1 style="color: white; font-size: 48px; margin-bottom: 20px; font-weight: 800;">团队成员</h1>
+        <p style="color: rgba(255,255,255,0.9); font-size: 20px; max-width: 700px; margin: 0 auto 40px; line-height: 1.8;">汇聚视觉、导航、语音交互、云平台与硬件系统等领域的跨学科人才</p>
+        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+          <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 16px 32px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.3);">
+            <span style="color: white; font-size: 16px; font-weight: 600;">👨‍🏫 教授 × 1</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 16px 32px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.3);">
+            <span style="color: white; font-size: 16px; font-weight: 600;">🎓 博士 × 2</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 16px 32px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.3);">
+            <span style="color: white; font-size: 16px; font-weight: 600;">📚 硕士 × 7</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 实验室负责人 - 教授 -->
+    <section class="fp-section" data-anchor="professor" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+      <div class="container" style="padding: 120px 20px 60px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <div style="display: inline-block; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 8px 24px; border-radius: 24px; font-size: 14px; font-weight: 700; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(245,158,11,0.4);">
+            ⭐ 实验室负责人
+          </div>
+          <h2 style="font-size: 32px; color: #92400e; margin-bottom: 12px; font-weight: 800;">导师团队</h2>
+          <p style="color: #78350f; font-size: 15px;">Leading Our Research Vision</p>
+        </div>
+
+        <div style="max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=zhangtaohong'" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 20px; padding: 24px; box-shadow: 0 8px 28px rgba(245,158,11,0.15); border: 2px solid #f59e0b; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 36px rgba(245,158,11,0.22)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 28px rgba(245,158,11,0.15)'">
+            <div style="position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 50%; opacity: 0.15;"></div>
+            <div style="position: relative; z-index: 1;">
+              <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #f59e0b; margin: 0 auto 14px; box-shadow: 0 6px 20px rgba(245,158,11,0.3);">
+                <img src="pictures/老师.webp" alt="张桃红教授" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div style="text-align: center; margin-bottom: 12px;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 3px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">
+                  教授 · Professor
+                </div>
+                <h3 style="font-size: 18px; color: #92400e; margin-bottom: 4px; font-weight: 700;">张桃红</h3>
+                <p style="color: #f59e0b; font-size: 12px; margin-bottom: 12px;">实验室负责人</p>
+              </div>
+              <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+                <span style="background: white; color: #92400e; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">具身智能</span>
+                <span style="background: white; color: #92400e; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">机器人导航</span>
+                <span style="background: white; color: #92400e; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">智能感知</span>
+              </div>
+              <p style="color: #92400e; font-size: 12px; line-height: 1.5; text-align: center;">实验室创始人与学术带头人，专注于具身智能、机器人导航与环境感知领域的前沿研究</p>
+            </div>
+          </div>
+          <!-- 第二位导师（静态备份，避免管理员数据影响原始展示）-->
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=xingbowen'" style="--d:.05s; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 20px; padding: 24px; box-shadow: 0 8px 28px rgba(245,158,11,0.15); border: 2px solid #f59e0b; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 36px rgba(245,158,11,0.22)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 28px rgba(245,158,11,0.15)'">
+            <div style="position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 50%; opacity: 0.15;"></div>
+            <div style="position: relative; z-index: 1;">
+              <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #f59e0b; margin: 0 auto 14px; box-shadow: 0 6px 20px rgba(245,158,11,0.3);">
+                <img src="pictures/老师.webp" alt="邢博文副教授" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1809" loading="lazy" decoding="async">
+              </div>
+              <div style="text-align: center; margin-bottom: 12px;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 3px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">
+                  副教授 · Associate Professor
+                </div>
+                <h3 style="font-size: 18px; color: #92400e; margin-bottom: 4px; font-weight: 700;">邢博文</h3>
+                <p style="color: #f59e0b; font-size: 12px; margin-bottom: 12px;">学术顾问</p>
+              </div>
+              <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+                <span style="background: white; color: #92400e; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">大语言模型</span>
+                <span style="background: white; color: #92400e; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">自然语言处理</span>
+              </div>
+              <p style="color: #92400e; font-size: 12px; line-height: 1.5; text-align: center;">长期从事人工智能和自然语言处理的前沿研究，专注于基于大语言模型的异构语言信息处理及其在垂直领域的应用。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 博士团队 -->
+    <section class="fp-section" id="doctoral-team-section" data-anchor="doctoral" style="background: white;">
+      <div class="container" style="padding: 100px 20px 40px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(59,130,246,0.4);">
+            🎓 核心研究力量
+          </div>
+          <h2 style="font-size: 28px; color: #1e40af; margin-bottom: 8px; font-weight: 800;">博士研究员</h2>
+          <p style="color: #60a5fa; font-size: 14px;">Advanced Research Team</p>
+        </div>
+
+        <div id="doctoral-team-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; grid-auto-flow: row; grid-auto-rows: auto;">
+          <!-- 俞纯林 -->
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=yuchunlin'" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 20px; padding: 24px; box-shadow: 0 8px 28px rgba(59,130,246,0.15); border: 2px solid #93c5fd; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 36px rgba(59,130,246,0.22)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 28px rgba(59,130,246,0.15)'">
+            <div style="position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); border-radius: 50%; opacity: 0.15;"></div>
+            <div style="position: relative; z-index: 1;">
+              <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #3b82f6; margin: 0 auto 14px; box-shadow: 0 6px 20px rgba(59,130,246,0.3);">
+                <img src="pictures/成员1.webp" alt="俞纯林" style="width: 100%; height: 100%; object-fit: cover;" width="1899" height="1899" loading="lazy" decoding="async">
+              </div>
+              <div style="text-align: center; margin-bottom: 12px;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 3px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">
+                  博士 · Ph.D.
+                </div>
+                <h3 style="font-size: 18px; color: #1e40af; margin-bottom: 4px; font-weight: 700;">俞纯林</h3>
+                <p style="color: #60a5fa; font-size: 12px; margin-bottom: 12px;">Yu Chunlin</p>
+              </div>
+              <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+                <span style="background: white; color: #1e40af; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">SLAM算法</span>
+                <span style="background: white; color: #1e40af; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">视觉导航</span>
+              </div>
+              <p style="color: #1e3a8a; font-size: 12px; line-height: 1.5; text-align: center;">专注SLAM算法与视觉导航系统开发</p>
+            </div>
+          </div>
+
+          <!-- 王浩宇 -->
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=wanghaoyu'" style="--d:.05s; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 20px; padding: 24px; box-shadow: 0 8px 28px rgba(59,130,246,0.15); border: 2px solid #93c5fd; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 36px rgba(59,130,246,0.22)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 28px rgba(59,130,246,0.15)'">
+            <div style="position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); border-radius: 50%; opacity: 0.15;"></div>
+            <div style="position: relative; z-index: 1;">
+              <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #3b82f6; margin: 0 auto 14px; box-shadow: 0 6px 20px rgba(59,130,246,0.3);">
+                <img src="pictures/成员2.webp" alt="王浩宇" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1808" loading="lazy" decoding="async">
+              </div>
+              <div style="text-align: center; margin-bottom: 12px;">
+                <div style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 3px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">
+                  博士 · Ph.D.
+                </div>
+                <h3 style="font-size: 18px; color: #1e40af; margin-bottom: 4px; font-weight: 700;">王浩宇</h3>
+                <p style="color: #60a5fa; font-size: 12px; margin-bottom: 12px;">Wang Haoyu</p>
+              </div>
+              <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+                <span style="background: white; color: #1e40af; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">深度学习</span>
+                <span style="background: white; color: #1e40af; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">环境感知</span>
+              </div>
+              <p style="color: #1e3a8a; font-size: 12px; line-height: 1.5; text-align: center;">研究深度学习与环境感知技术</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 硕士团队 -->
+    <section class="fp-section" id="master-team-section" data-anchor="masters" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+      <div class="container" style="padding: 100px 20px 40px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(16,185,129,0.4);">
+            📚 研究生团队
+          </div>
+          <h2 style="font-size: 28px; color: #065f46; margin-bottom: 8px; font-weight: 800;">硕士研究生</h2>
+          <p style="color: #10b981; font-size: 14px;">Master's Research Team</p>
+        </div>
+
+        <div id="master-team-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1300px; margin: 0 auto;">
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=libotao'" style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 30px rgba(16,185,129,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(16,185,129,0.12)'">
+            <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 12px; box-shadow: 0 4px 15px rgba(16,185,129,0.2);">
+              <img src="pictures/成员3.webp" alt="李博涛" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1831" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 3px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">硕士</div>
+            <h3 style="font-size: 16px; color: #065f46; margin-bottom: 4px; font-weight: 700;">李博涛</h3>
+            <p style="color: #10b981; font-size: 11px; margin-bottom: 10px;">Li Botao</p>
+            <div style="display: flex; gap: 4px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 8px; font-size: 9px; font-weight: 600;">机器学习</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=xiachenglong'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员4.webp" alt="夏成龙" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1824" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">夏成龙</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Xia Chenglong</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">嵌入式</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=chenzhen'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员5.webp" alt="陈震" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1839" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">陈震</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Chen Zhen</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">控制算法</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=lin'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员6.webp" alt="临" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1832" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">临</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Lin</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">语音识别</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=xulonglong'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员7.webp" alt="许龙龙" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1840" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">许龙龙</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Xu Longlong</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">图像处理</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=zhuzhuangzhuang'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员8.webp" alt="朱状状" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1810" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">朱状状</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Zhu Zhuangzhuang</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">云平台</span>
+            </div>
+          </div>
+
+          <div class="reveal" onclick="window.location.href='member-profile.html?id=ganyutong'" style="background: white; border-radius: 18px; padding: 28px; box-shadow: 0 8px 30px rgba(16,185,129,0.12); border: 2px solid #a7f3d0; text-align: center; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-6px) scale(1.02)'; this.style.boxShadow='0 12px 40px rgba(16,185,129,0.22)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 30px rgba(16,185,129,0.12)'">
+            <div style="width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid #10b981; margin: 0 auto 16px; box-shadow: 0 6px 20px rgba(16,185,129,0.2);">
+              <img src="pictures/成员9.webp" alt="甘语桐" style="width: 100%; height: 100%; object-fit: cover;" width="1920" height="1808" loading="lazy" decoding="async">
+            </div>
+            <div style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 700; margin-bottom: 10px;">硕士</div>
+            <h3 style="font-size: 18px; color: #065f46; margin-bottom: 5px; font-weight: 700;">甘语桐</h3>
+            <p style="color: #10b981; font-size: 12px; margin-bottom: 12px;">Gan Yutong</p>
+            <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+              <span style="background: #d1fae5; color: #065f46; padding: 3px 9px; border-radius: 10px; font-size: 10px; font-weight: 600;">前端开发</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 加入我们 -->
+    <section class="fp-section" data-anchor="join" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.05; background-image: radial-gradient(circle, white 2px, transparent 2px); background-size: 40px 40px;"></div>
+      <div class="container" style="position: relative; z-index: 1; text-align: center; padding: 140px 20px 60px;">
+        <div style="font-size: 64px; margin-bottom: 24px;">🚀</div>
+        <h2 style="color: white; font-size: 36px; margin-bottom: 20px; font-weight: 800;">加入我们的团队</h2>
+        <p style="color: rgba(255,255,255,0.8); font-size: 18px; max-width: 700px; margin: 0 auto 40px; line-height: 1.8;">我们持续寻找对具身智能、机器人技术充满热情的优秀人才，一起推动智能辅助技术的发展</p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+          <a href="contact.html" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 40px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 10px 30px rgba(102,126,234,0.4); transition: transform 0.3s;">
+            联系我们
+          </a>
+          <a href="contact.html" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: white; padding: 16px 40px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; border: 2px solid rgba(255,255,255,0.3); transition: transform 0.3s;">
+            发送简历
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 右侧导航点 -->
+  <nav class="fp-nav" role="navigation" aria-label="页面导航">
+    <ul id="fp-nav-list"></ul>
+  </nav>
+
+  <script src="admin-data.js"></script>
+  <script src="dynamic-content-loader.js"></script>
+  <script src="script.js"></script>
+
+
+<script src="site-enhancements.js"></script>
+</body>
+</html>

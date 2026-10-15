@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>人机验证 · 滑块验证码</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* 页面居中与卡片样式 */
+    body{min-height:100vh; display:grid; place-items:center}
+    .verify-card{width:min(560px, 94vw); padding:22px 22px 26px; border-radius:16px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.06); box-shadow:0 20px 42px rgba(0,0,0,.28)}
+    .verify-card h1{margin:0 0 8px; font-size:22px}
+    .verify-card p{margin:0 0 14px; color:#a9b0be}
+    /* 滑块验证码样式 */
+    .slide-captcha{display:grid; gap:10px}
+    .captcha-track{position:relative; height:42px; border-radius:999px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); overflow:hidden}
+    .captcha-progress{position:absolute; inset:0; width:0; height:100%; background:linear-gradient(135deg, var(--primary), var(--primary-2)); opacity:.35; pointer-events:none}
+    .captcha-thumb{position:absolute; top:2px; left:2px; width:38px; height:38px; border-radius:999px; background:#fff; color:#222; display:grid; place-items:center; font-weight:700; cursor:grab; user-select:none; box-shadow:0 10px 24px rgba(0,0,0,.28)}
+    .captcha-thumb:active{cursor:grabbing}
+    .captcha-status{font-size:14px; color:#cbd5e1}
+    .tips{margin-top:10px; font-size:13px; color:#cbd5e1}
+    .header{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .header a{color:#fff; text-decoration:none; opacity:.85}
+  </style>
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="theme-huaqin">
+  <div class="verify-card">
+    <div class="header">
+      <h1 data-i18n="nav.brand">北京科技大学具身智能实验室</h1>
+    </div>
+    <p>请拖动滑块到最右端完成验证后进入网站</p>
+    <div class="slide-captcha" role="group" aria-label="滑块验证码">
+      <div class="captcha-track">
+        <div class="captcha-progress"></div>
+        <div class="captcha-thumb" aria-label="拖动完成验证">→</div>
+      </div>
+      <div class="captcha-status">请拖动滑块到最右端以解锁</div>
+    </div>
+    <div class="tips">验证通过后将自动跳转到您访问的页面</div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

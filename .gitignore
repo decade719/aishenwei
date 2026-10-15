@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db
+# Downloaded third-party reference pages are not part of the corporate site.
+/samples/

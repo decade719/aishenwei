@@ -1,0 +1,50 @@
+<svg width="2000" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 第一部分：室外导航 - 蓝色渐变 -->
+  <rect x="0" y="0" width="400" height="400" fill="url(#grad1)"/>
+  <text x="200" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">室外导航</text>
+  <text x="200" y="230" text-anchor="middle" fill="white" font-size="14">GPS + 视觉定位</text>
+
+  <!-- 第二部分：室内避障 - 绿色渐变 -->
+  <rect x="400" y="0" width="400" height="400" fill="url(#grad2)"/>
+  <text x="600" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">室内避障</text>
+  <text x="600" y="230" text-anchor="middle" fill="white" font-size="14">激光 + 深度视觉</text>
+
+  <!-- 第三部分：语音交互 - 紫色渐变 -->
+  <rect x="800" y="0" width="400" height="400" fill="url(#grad3)"/>
+  <text x="1000" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">语音交互</text>
+  <text x="1000" y="230" text-anchor="middle" fill="white" font-size="14">LLM + 情感识别</text>
+
+  <!-- 第四部分：情感陪伴 - 橙色渐变 -->
+  <rect x="1200" y="0" width="400" height="400" fill="url(#grad4)"/>
+  <text x="1400" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">情感陪伴</text>
+  <text x="1400" y="230" text-anchor="middle" fill="white" font-size="14">关怀 + 提醒</text>
+
+  <!-- 第五部分：坡道辅助 - 红色渐变 -->
+  <rect x="1600" y="0" width="400" height="400" fill="url(#grad5)"/>
+  <text x="1800" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">坡道辅助</text>
+  <text x="1800" y="230" text-anchor="middle" fill="white" font-size="14">坡度估计 + 防溜坡</text>
+
+  <!-- 渐变定义 -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

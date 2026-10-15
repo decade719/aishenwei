@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>本机管理演示 - USTB 具身智能实验室</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="theme-huaqin">
+  <div style="min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+    <!-- 背景装饰 -->
+<div aria-hidden="true" style="position:absolute; inset:0; opacity:.1; background-image:radial-gradient(circle, white 2px, transparent 2px); background-size:60px 60px;"></div>
+
+    <!-- 返回首页按钮 -->
+    <a href="index.html" style="position: absolute; top: 24px; left: 24px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 24px; transition: all 0.3s; border: 2px solid rgba(255,255,255,0.3);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+      ←
+    </a>
+
+    <!-- 登录框 -->
+    <div style="background: white; border-radius: 24px; padding: 48px 40px; width: 90%; max-width: 450px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; z-index: 1; animation: slideUp 0.5s ease;">
+      <!-- Logo区域 -->
+      <div style="text-align: center; margin-bottom: 32px;">
+        <div style="width: 80px; height: 80px; background: var(--gradient); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(102,126,234,0.3);">
+          <span style="font-size: 40px;">🔐</span>
+        </div>
+        <h1 style="font-size: 28px; color: #1f2937; margin-bottom: 8px; font-weight: 800;">本机管理演示</h1>
+        <p style="color: #6b7280; font-size: 14px;">深维智能科技-北京科技大学</p>
+      </div>
+
+      <p class="form-notice">这是本机内容管理演示，数据只保存在当前浏览器。它没有服务端登录验证，无法接收其他访客的表单，也不能发布网站修改。请勿存放真实业务资料。</p>
+<button class="btn btn-primary" type="button" onclick="sessionStorage.setItem('adminAuthenticated', 'true'); window.location.href='admin-dashboard.html'">进入本机演示</button>
+<!-- 错误提示 -->
+      <div id="errorMessage" style="display: none; background: #fee2e2; color: #dc2626; padding: 12px 16px; border-radius: 8px; font-size: 14px; text-align: center; margin-top: 16px;">
+        <span style="margin-right: 8px;">⚠️</span>
+        <span id="errorText">密码错误，请重试</span>
+      </div>
+
+      <!-- 提示信息 -->
+      <div style="margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 12px; border-left: 4px solid #3b82f6;">
+        <p style="color: #1e40af; font-size: 13px; line-height: 1.6; margin: 0;">
+          <strong>💡 提示：</strong>网站内容的正式发布请修改仓库文件；真实业务后台需要另行接入服务端。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+
+</body>
+</html>

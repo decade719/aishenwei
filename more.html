@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>具身智能介绍 · 北京科技大学具身智能实验室</title>
+  <meta name="description" content="具身智能技术介绍与应用" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    #fullpage-wrapper {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .fp-section {
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .fp-section .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 20px 140px;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .fp-section .container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .fp-section .container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+
+    .fp-section .container::-webkit-scrollbar-thumb {
+      background: rgba(30, 64, 175, 0.5);
+      border-radius: 4px;
+    }
+
+    .fp-section .container::-webkit-scrollbar-thumb:hover {
+      background: rgba(30, 64, 175, 0.7);
+    }
+
+    /* 防止底部内容被任务栏遮挡 */
+    @media screen and (max-height: 800px) {
+      .fp-section .container {
+        padding-bottom: 180px;
+      }
+      .horizontal-scroll {
+        padding-bottom: 60px;
+      }
+    }
+
+    /* 横向布局容器 */
+    .horizontal-scroll {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+      padding-bottom: 40px;
+      min-width: fit-content;
+    }
+
+    .horizontal-scroll > * {
+      flex-shrink: 0;
+    }
+
+    /* 导航点样式 */
+    .fp-nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+    }
+
+    .fp-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .fp-nav li {
+      margin: 12px 0;
+    }
+
+    .fp-nav a {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(30, 64, 175, 0.8);
+      transition: all 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .fp-nav a:hover {
+      background: rgba(30, 64, 175, 0.7);
+      transform: scale(1.3);
+    }
+
+    .fp-nav li.active a {
+      background: #1e40af;
+      transform: scale(1.2);
+      box-shadow: 0 0 12px rgba(30, 64, 175, 0.8);
+    }
+
+    .fp-nav .fp-tooltip {
+      position: absolute;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .fp-nav a:hover + .fp-tooltip {
+      opacity: 1;
+    }
+  </style>
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="description" content="了解具身智能的感知、决策与行动，以及机器人智能技术的应用方向。">
+  <meta name="theme-color" content="#09111f">
+</head>
+<body class="theme-huaqin">
+<a class="skip-link" href="#fullpage-wrapper">跳转到主要内容</a>
+  <header class="site-header theme-huaqin" style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000;">
+    <div class="container">
+      <a class="logo" href="index.html" data-i18n="nav.brand">深维智能科技-北京科技大学</a>
+      <nav class="nav" id="mainNav">
+        <button class="nav-toggle" aria-label="toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list">
+<li><a href="index.html" data-i18n="nav_home">首页</a></li>
+<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
+<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
+<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
+<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
+<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
+<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
+<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+</ul>
+        <div class="tools">
+          <select id="langSwitcher" aria-label="language">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-HK">繁体中文</option>
+            <option value="en">English</option>
+          </select>
+          <button id="themeToggle" data-i18n="theme_toggle">🌙</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div id="fullpage-wrapper" role="main" tabindex="-1">
+    <!-- 模块1: 具身智能概述 -->
+    <section id="overview" class="fp-section" data-anchor="overview" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #1e40af; margin-bottom: 12px; font-weight: 800;" data-i18n="embodied_intelligence">具身智能</h2>
+        <p style="text-align: center; color: #60a5fa; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;" data-i18n="embodied_intelligence_subtitle">Embodied Intelligence · 智能感知与自主决策的融合</p>
+
+        <!-- 核心概念 - 带图片 -->
+        <div class="reveal" style="max-width: 1200px; margin: 0 auto; background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(59,130,246,0.15);">
+          <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+              <h3 style="font-size: 26px; color: #1e40af; margin-bottom: 20px; font-weight: 700;" data-i18n="what_is_embodied_intelligence">🤖 什么是具身智能？</h3>
+              <p style="color: #334155; line-height: 1.9; font-size: 15px; margin-bottom: 16px;">
+                具身智能（Embodied Intelligence）是指智能体通过与物理世界的交互来感知、理解和行动的能力。与传统的"大脑在云端"的AI不同，具身智能强调智能体必须拥有身体（物理形态），并通过身体与环境的持续交互来学习和适应。这种智能形式使得AI不再是抽象的计算过程，而是能够真正"体验"和"理解"物理世界的智能系统。
+              </p>
+              <p style="color: #334155; line-height: 1.9; font-size: 15px; margin-bottom: 16px;">
+                具身智能的核心在于<strong style="color: #1e40af;">感知-决策-控制</strong>的闭环系统，智能体通过多模态传感器（视觉、听觉、触觉等）感知环境，基于感知信息进行智能决策，并通过执行器（如机械臂、轮式底盘）与环境交互，形成完整的智能行为循环。这种闭环反馈机制使得智能体能够不断优化自身行为，适应复杂多变的真实环境。
+              </p>
+              <p style="color: #334155; line-height: 1.9; font-size: 15px; margin: 0;">
+                在具身智能系统中，智能体不仅需要理解"是什么"，更需要理解"如何做"。它必须考虑物理约束、空间关系、时间序列等多维度因素，在动态环境中做出实时、准确的决策。这种能力使得具身智能在机器人、自动驾驶、智能家居等领域具有巨大的应用潜力。
+              </p>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+              <img src="pictures/具身智能.webp" alt="具身智能" style="width: 100%; border-radius: 16px; box-shadow: 0 4px 16px rgba(59,130,246,0.2); margin-bottom: 16px;" width="1920" height="1051" loading="lazy" decoding="async">
+              <img src="pictures/机器人导航1.webp" alt="机器人导航" style="width: 100%; border-radius: 16px; box-shadow: 0 4px 16px rgba(59,130,246,0.2);" width="1920" height="1008" loading="lazy" decoding="async">
+            </div>
+          </div>
+        </div>
+
+        <!-- 技术特点 - 横向布局带图片 -->
+        <div class="reveal" style="max-width: 1200px; margin: 16px auto 0;">
+          <h3 style="font-size: 26px; color: #1e40af; margin-bottom: 20px; font-weight: 700; text-align: center;" data-i18n="core_features">✨ 核心特点</h3>
+          <div class="horizontal-scroll">
+            <div style="background: white; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(59,130,246,0.1); border-left: 4px solid #3b82f6; width: 320px; flex-shrink: 0;">
+              <img src="pictures/室内.webp" alt="多模态感知" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h4 style="font-size: 20px; color: #1e40af; margin-bottom: 12px; font-weight: 700;" data-i18n="multimodal_perception">🌐 多模态感知</h4>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">融合视觉、语音、触觉、激光雷达等多种传感器信息，构建对环境的全面、准确理解。通过多源数据融合，智能体能够获得比单一传感器更丰富、更可靠的环境信息，实现更准确的感知与识别能力。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">多模态感知系统能够处理不同传感器的时间同步、坐标变换、数据融合等复杂问题，确保感知信息的准确性和实时性，为后续的决策和控制提供可靠的数据基础。</p>
+            </div>
+            <div style="background: white; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(59,130,246,0.1); border-left: 4px solid #10b981; width: 320px; flex-shrink: 0;">
+              <img src="pictures/室外导航.webp" alt="自主决策" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="997" loading="lazy" decoding="async">
+              <h4 style="font-size: 20px; color: #1e40af; margin-bottom: 12px; font-weight: 700;">🧠 自主决策</h4>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">基于实时感知信息，智能体能够自主规划路径、选择行为策略，在复杂动态环境中做出最优决策。决策系统综合考虑环境状态、任务目标、安全约束等多重因素，通过强化学习、规划算法等技术实现智能决策。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">自主决策能力使得智能体能够在无人干预的情况下，独立完成复杂任务，适应环境变化，处理突发情况，实现真正的智能行为。</p>
+            </div>
+            <div style="background: white; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(59,130,246,0.1); border-left: 4px solid #f59e0b; width: 320px; flex-shrink: 0;">
+              <img src="pictures/室内避障.webp" alt="实时交互" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="983" loading="lazy" decoding="async">
+              <h4 style="font-size: 20px; color: #1e40af; margin-bottom: 12px; font-weight: 700;">⚡ 实时交互</h4>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">通过物理执行器与环境进行实时交互，能够快速适应动态变化的环境，实现连续的学习、优化与行为调整。实时交互要求系统具有低延迟、高响应的特点，确保智能体能够及时响应环境变化。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">交互过程中，智能体通过执行器（如机械臂、轮式底盘）对环境施加影响，同时感知环境反馈，形成闭环控制，实现精确、稳定的操作能力。</p>
+            </div>
+            <div style="background: white; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(59,130,246,0.1); border-left: 4px solid #8b5cf6; width: 320px; flex-shrink: 0;">
+              <img src="pictures/机器人导航.webp" alt="持续学习" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1008" loading="lazy" decoding="async">
+              <h4 style="font-size: 20px; color: #1e40af; margin-bottom: 12px; font-weight: 700;">🔄 持续学习</h4>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">通过与环境的持续交互，智能体能够从经验中学习，不断改进行为策略，提升适应能力和智能水平。持续学习使得智能体能够适应新环境、新任务，无需重新训练即可快速适应。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">学习过程包括在线学习、迁移学习、元学习等多种方式，使得智能体能够在有限的数据和计算资源下，快速提升性能，实现真正的智能进化。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块2: 核心特点 -->
+    <section id="features" class="fp-section" data-anchor="features" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #059669; margin-bottom: 12px; font-weight: 800;" data-i18n="core_features_title">核心特点</h2>
+        <p style="text-align: center; color: #34d399; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;" data-i18n="core_features_subtitle">多维度智能能力，构建完整智能体系</p>
+
+        <!-- 详细介绍 -->
+        <div class="reveal" style="max-width: 1200px; margin: 0 auto 16px; background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(5,150,105,0.15);">
+          <p style="color: #334155; line-height: 1.9; font-size: 15px; margin-bottom: 16px; text-align: center;">
+            具身智能系统的核心特点体现在多个维度，从感知到决策，从交互到学习，每一个环节都体现了智能体的智能水平。这些特点相互配合，共同构建了一个完整、高效的智能体系，使得智能体能够在复杂多变的真实环境中，实现自主、智能、可靠的行为。
+          </p>
+          <p style="color: #334155; line-height: 1.9; font-size: 15px; margin: 0; text-align: center;">
+            通过多模态感知，智能体能够获得丰富的环境信息；通过自主决策，智能体能够做出最优的行为选择；通过实时交互，智能体能够与环境持续互动；通过持续学习，智能体能够不断改进和提升。这四个核心特点共同构成了具身智能系统的智能基础。
+          </p>
+        </div>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll">
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(5,150,105,0.15); border-top: 4px solid #3b82f6; width: 340px; flex-shrink: 0;">
+              <img src="pictures/室外导航1.webp" alt="多模态感知" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1908" height="1024" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #059669; margin-bottom: 14px; font-weight: 700;">🌐 多模态感知</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">融合视觉、语音、触觉、激光雷达等多种传感器信息，构建对环境的全面、准确理解。多模态感知系统能够处理不同传感器的时间同步、坐标变换、数据融合等复杂问题，确保感知信息的准确性和实时性。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过多源数据融合，智能体能够获得比单一传感器更丰富、更可靠的环境信息，实现更准确的感知与识别能力。系统能够适应不同的环境条件，在光照变化、天气变化、动态环境等复杂情况下，保持稳定的感知性能。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #dcfce7; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 多传感器数据融合与同步</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 环境感知与场景理解</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 目标识别与语义分割</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 实时数据处理与特征提取</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(5,150,105,0.15); border-top: 4px solid #10b981; width: 340px; flex-shrink: 0;">
+              <img src="pictures/坡道.webp" alt="自主决策" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1673" height="1256" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #059669; margin-bottom: 14px; font-weight: 700;">🧠 自主决策</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">基于实时感知信息，智能体能够自主规划路径、选择行为策略，在复杂动态环境中做出最优决策。决策系统综合考虑环境状态、任务目标、安全约束、资源限制等多重因素，采用强化学习、规划算法、博弈论等方法实现智能决策。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">自主决策能力使得智能体能够在无人干预的情况下，独立完成复杂任务，适应环境变化，处理突发情况，实现真正的智能行为。系统能够处理多目标优化、不确定性决策、动态环境适应等复杂问题。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #dcfce7; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 路径规划与导航算法</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 行为决策与策略选择</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 任务调度与资源分配</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 强化学习与在线优化</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(5,150,105,0.15); border-top: 4px solid #f59e0b; width: 340px; flex-shrink: 0;">
+              <img src="pictures/坡道1.webp" alt="实时交互" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="973" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #059669; margin-bottom: 14px; font-weight: 700;">⚡ 实时交互</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过物理执行器与环境进行实时交互，能够快速适应动态变化的环境，实现连续的学习、优化与行为调整。实时交互要求系统具有低延迟、高响应的特点，确保智能体能够及时响应环境变化。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">交互过程中，智能体通过执行器（如机械臂、轮式底盘）对环境施加影响，同时感知环境反馈，形成闭环控制，实现精确、稳定的操作能力。系统能够处理执行器的物理约束、动力学特性、安全限制等问题。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #dcfce7; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 运动控制与轨迹跟踪</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 执行反馈与状态监测</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 实时调整与自适应控制</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 安全保障与故障处理</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(5,150,105,0.15); border-top: 4px solid #8b5cf6; width: 340px; flex-shrink: 0;">
+              <img src="pictures/机器人导航.webp" alt="持续学习" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1008" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #059669; margin-bottom: 14px; font-weight: 700;">🔄 持续学习</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过与环境的持续交互，智能体能够从经验中学习，不断改进行为策略，提升适应能力和智能水平。持续学习使得智能体能够适应新环境、新任务，无需重新训练即可快速适应。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">学习过程包括在线学习、迁移学习、元学习等多种方式，使得智能体能够在有限的数据和计算资源下，快速提升性能，实现真正的智能进化。系统能够从失败中学习，从成功中总结，不断优化行为策略。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #dcfce7; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 在线学习与增量学习</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 迁移学习与知识复用</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 元学习与快速适应</li>
+                <li style="padding: 6px 0; color: #059669; font-size: 13px;">• 经验积累与策略优化</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块3: 技术架构 -->
+    <section id="architecture" class="fp-section" data-anchor="architecture" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #92400e; margin-bottom: 12px; font-weight: 800;">技术架构</h2>
+        <p style="text-align: center; color: #d97706; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;">感知-决策-控制的完整闭环系统</p>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll" style="margin-bottom: 16px;">
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 6px 24px rgba(146,64,14,0.15); width: 350px; flex-shrink: 0;">
+              <img src="pictures/坡道.webp" alt="感知层" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1673" height="1256" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #92400e; margin-bottom: 14px; font-weight: 700;">👁️ 感知层</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">感知层是具身智能系统的基础，负责从环境中获取信息。通过多传感器融合技术，整合视觉、听觉、触觉、激光雷达、IMU等多种传感器数据，构建对环境的全面、准确理解。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">系统能够实现目标识别、语义理解、环境建模等功能，为决策层提供丰富的环境信息。感知层的关键技术包括传感器标定、数据融合、特征提取、目标检测与跟踪等。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #fde68a; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 多传感器融合与数据同步</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 环境感知与场景理解</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 目标识别与语义分割</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 实时数据预处理与特征提取</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 6px 24px rgba(146,64,14,0.15); width: 350px; flex-shrink: 0;">
+              <img src="pictures/室外导航1.webp" alt="决策层" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1908" height="1024" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #92400e; margin-bottom: 14px; font-weight: 700;">🧠 决策层</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">决策层是具身智能系统的核心，负责基于感知信息进行智能决策。通过路径规划、行为决策、任务调度、策略优化等技术，在复杂动态环境中做出最优决策。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">决策层综合考虑环境状态、任务目标、安全约束、资源限制等多重因素，采用强化学习、规划算法、博弈论等方法，实现智能、高效、安全的决策能力。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #fde68a; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 路径规划与导航算法</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 行为决策与策略选择</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 任务调度与资源分配</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 强化学习与在线优化</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 6px 24px rgba(146,64,14,0.15); width: 350px; flex-shrink: 0;">
+              <img src="pictures/坡道1.webp" alt="控制层" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="973" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #92400e; margin-bottom: 14px; font-weight: 700;">⚙️ 控制层</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">控制层负责执行决策层的指令，通过运动控制、执行反馈、实时调整等技术，实现精确、稳定的操作能力。控制层需要处理执行器的物理约束、动力学特性、安全限制等问题。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">系统通过闭环控制、反馈调节、故障检测等技术，确保执行过程的准确性和安全性。控制层还负责实时监测执行状态，及时调整控制策略，应对突发情况。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #fde68a; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 运动控制与轨迹跟踪</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 执行反馈与状态监测</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 实时调整与自适应控制</li>
+                <li style="padding: 6px 0; color: #92400e; font-size: 13px;">• 安全保障与故障处理</li>
+        </ul>
+            </div>
+          </div>
+
+          <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(146,64,14,0.15);">
+            <h3 style="font-size: 24px; color: #92400e; margin-bottom: 20px; font-weight: 700; text-align: center;">核心技术栈</h3>
+            <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 20px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">具身智能系统采用多种前沿技术，构建完整的技术栈。从底层的传感器融合，到中层的SLAM定位与建图，再到上层的深度学习与决策规划，每一层都采用最先进的技术方案，确保系统的智能性、可靠性和高效性。</p>
+            <div class="horizontal-scroll">
+              <div style="padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; width: 240px; flex-shrink: 0;">
+                <strong style="color: #92400e; font-size: 18px; display: block; margin-bottom: 10px;">🗺️ SLAM算法</strong>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin-bottom: 8px;">实时定位与建图技术，使智能体能够在未知环境中自主导航与定位。SLAM算法能够同时估计自身位置和构建环境地图，为导航和路径规划提供基础。</p>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin: 0;">支持视觉SLAM、激光SLAM、多传感器融合SLAM等多种方案，适应不同应用场景的需求。</p>
+              </div>
+              <div style="padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; width: 240px; flex-shrink: 0;">
+                <strong style="color: #92400e; font-size: 18px; display: block; margin-bottom: 10px;">🧬 深度学习</strong>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin-bottom: 8px;">基于深度神经网络的目标检测、语义分割与行为预测，提升智能决策能力。深度学习模型能够从大量数据中学习复杂的特征表示，实现高精度的感知和决策。</p>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin: 0;">支持卷积神经网络、循环神经网络、Transformer等多种架构，适应不同的任务需求。</p>
+              </div>
+              <div style="padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; width: 240px; flex-shrink: 0;">
+                <strong style="color: #92400e; font-size: 18px; display: block; margin-bottom: 10px;">💬 大语言模型</strong>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin-bottom: 8px;">集成LLM实现自然语言理解与对话，提供更智能的人机交互体验。大语言模型能够理解复杂的自然语言指令，生成流畅的对话回复，实现真正的智能交互。</p>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin: 0;">支持多轮对话、上下文理解、情感分析等功能，提升用户体验和交互质量。</p>
+              </div>
+              <div style="padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; width: 240px; flex-shrink: 0;">
+                <strong style="color: #92400e; font-size: 18px; display: block; margin-bottom: 10px;">🔬 传感器融合</strong>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin-bottom: 8px;">多源数据融合处理，整合视觉、激光雷达、IMU等多种传感器信息，构建高精度的环境感知系统。传感器融合能够克服单一传感器的局限性，提供更可靠、更全面的感知能力。</p>
+                <p style="color: #78350f; font-size: 13px; line-height: 1.6; margin: 0;">采用卡尔曼滤波、粒子滤波、深度学习融合等多种方法，实现高精度的数据融合。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块4: 应用场景 -->
+    <section id="applications" class="fp-section" data-anchor="applications" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #7c3aed; margin-bottom: 12px; font-weight: 800;">应用场景</h2>
+        <p style="text-align: center; color: #a78bfa; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;">多领域智能应用，赋能各行各业</p>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll">
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/智能轮椅产品.webp" alt="智能轮椅" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1034" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🦽 智能轮椅</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过视觉导航、语音交互和自主避障，为行动不便者提供安全、便捷的出行辅助。智能轮椅集成了SLAM定位、路径规划、障碍物检测等先进技术，能够在室内外环境中自主导航，避开障碍物，规划最优路径。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">系统配备大语言模型，支持自然语言交互，用户可以通过语音指令控制轮椅，实现"说走就走"的便捷体验。同时，智能轮椅还具备情感陪伴功能，能够与用户进行对话交流，提供心理支持。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 室内外自主导航，支持复杂环境</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 智能避障与路径规划，确保安全</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 语音交互与情感陪伴，提升体验</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 实时环境感知，快速响应变化</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/智能运货小车产品.webp" alt="智能物流" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1043" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🚚 智能物流</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">智能运货小车和餐车通过环境感知与路径规划，在复杂环境中自主导航，实现高效的物流配送服务。系统能够实时感知周围环境，识别障碍物、行人、车辆等，动态调整路径，确保安全高效的配送。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">支持多机器人协同作业，通过云端调度系统实现任务分配、路径优化、冲突避免等功能，大幅提升物流效率，降低人力成本，实现24小时不间断的智能配送服务。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 仓储自动化管理，提升效率</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 最后一公里配送，精准送达</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 多机器人协同，智能调度</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 实时路径优化，降低成本</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/工业视觉.webp" alt="工业视觉" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1026" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🏭 工业视觉</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">结合机器视觉与智能控制，实现产品质量检测、缺陷识别与自动化分拣，提升工业生产的智能化水平。系统采用深度学习算法，能够识别微小的缺陷、色差、尺寸偏差等问题，准确率高达99%以上。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过实时图像处理和分析，系统能够在生产线上快速检测产品，自动分类和分拣，大幅提升生产效率，减少人工成本，确保产品质量的一致性。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 质量检测与分拣，精准高效</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 缺陷识别分类，智能判断</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 智能生产线控制，自动化</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 实时数据分析，持续优化</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/智能餐车产品.webp" alt="医疗康复" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1048" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🏥 医疗康复</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">辅助康复训练、智能护理、远程医疗监测等应用，为医疗健康领域提供智能化解决方案。智能康复机器人能够根据患者的身体状况，制定个性化的康复训练计划，实时监测训练效果，调整训练强度。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">系统支持远程医疗监测，医护人员可以通过云端平台实时了解患者的健康状况，及时提供医疗建议和干预，提升医疗服务的效率和质量。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 康复训练辅助，个性化方案</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 智能护理服务，24小时守护</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 健康监测管理，实时反馈</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 远程医疗支持，便捷高效</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/人机交互.webp" alt="智能家居" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1079" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🏠 智能家居</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">家庭服务机器人、智能安防、环境控制等应用，打造智慧生活空间，提升居住舒适度。智能家居系统通过具身智能技术，实现设备的自主感知、决策和控制，为用户提供更智能、更便捷的生活体验。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">系统能够学习用户的生活习惯，自动调节室内温度、湿度、光照等环境参数，提供个性化的智能服务。同时，智能安防系统能够实时监测家庭安全状况，及时发现异常情况并报警。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 家庭服务机器人，贴心服务</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 智能安防系统，安全保障</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 环境智能控制，舒适生活</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 语音交互控制，便捷操作</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 28px; border-radius: 20px; box-shadow: 0 8px 28px rgba(124,58,237,0.15); width: 380px; flex-shrink: 0;">
+              <img src="pictures/室外.webp" alt="智慧城市" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 200px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #7c3aed; margin-bottom: 12px; font-weight: 700;">🌐 智慧城市</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">城市巡检、环境监测、交通管理、公共安全等应用，助力智慧城市建设，提升管理效率。智能巡检机器人能够自主在城市中巡逻，实时监测环境状况，识别异常情况，及时上报处理。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">通过大数据分析和AI算法，系统能够预测交通流量、环境变化、安全风险等，为城市管理提供科学决策支持，实现城市资源的优化配置，提升城市运行效率和居民生活质量。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #e5e7eb; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 城市巡检监测，全面覆盖</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 智能交通管理，畅通无阻</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 公共安全防护，及时响应</li>
+                <li style="padding: 6px 0; color: #6366f1; font-size: 13px;">✓ 环境智能监测，绿色城市</li>
+          </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块5: 技术优势 -->
+    <section id="advantages" class="fp-section" data-anchor="advantages" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #be185d; margin-bottom: 12px; font-weight: 800;">技术优势</h2>
+        <p style="text-align: center; color: #f472b6; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;">前沿技术融合，构建核心竞争力</p>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll">
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/情感.webp" alt="多传感器融合" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">🔬 多传感器融合</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">整合视觉、激光雷达、IMU、GPS等多种传感器，构建高精度、高可靠性的环境感知系统。多传感器融合技术能够克服单一传感器的局限性，通过数据互补和冗余校验，提升感知系统的鲁棒性和准确性。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统采用先进的融合算法，实现不同传感器数据的时间同步、空间对齐、权重分配等功能，确保融合结果的准确性和实时性，为智能决策提供可靠的数据基础。</p>
+            </div>
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/语音.webp" alt="SLAM算法" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">🗺️ SLAM算法</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">实时定位与建图技术，使智能体能够在未知环境中自主导航与定位，实现高精度的空间感知。SLAM算法能够同时估计智能体的位置和姿态，并构建环境地图，为导航和路径规划提供基础。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统支持视觉SLAM、激光SLAM、多传感器融合SLAM等多种方案，能够适应不同的环境条件和应用需求，实现高精度、高稳定性的定位和建图能力。</p>
+            </div>
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/情感陪伴.webp" alt="深度学习" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="999" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">🧬 深度学习</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">基于深度神经网络的目标检测、语义分割与行为预测，提升智能决策能力。深度学习模型能够从大量数据中学习复杂的特征表示，实现高精度的感知和决策，适应复杂多变的真实环境。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统采用卷积神经网络、循环神经网络、Transformer等多种架构，针对不同的任务需求进行优化，实现高效、准确的智能处理能力。</p>
+            </div>
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/语音交互.webp" alt="大语言模型" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1059" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">💬 大语言模型</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">集成LLM实现自然语言理解与对话，提供更智能的人机交互体验。大语言模型能够理解复杂的自然语言指令，生成流畅的对话回复，实现真正的智能交互，大幅提升用户体验。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统支持多轮对话、上下文理解、情感分析、意图识别等功能，能够根据用户的需求和情绪，提供个性化的交互服务，实现真正的人性化智能交互。</p>
+            </div>
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/智能轮椅.webp" alt="实时控制" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1073" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">⚡ 实时控制</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">低延迟的运动控制与路径规划，确保智能体能够快速响应环境变化。实时控制系统采用高效的算法和优化的硬件架构，实现毫秒级的响应时间，确保智能体能够及时应对突发情况。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统支持多级控制架构，从底层的电机控制到上层的路径规划，每一层都经过精心优化，确保控制过程的流畅性和准确性，实现精确、稳定的操作能力。</p>
+            </div>
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(190,24,93,0.15); width: 320px; flex-shrink: 0;">
+              <img src="pictures/室内避障.webp" alt="安全保障" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="983" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #be185d; margin-bottom: 12px; font-weight: 700;">🛡️ 安全保障</h3>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin-bottom: 12px;">多重安全机制与故障检测，确保智能体在复杂环境中的安全运行。系统采用多层次的安全防护机制，包括硬件安全、软件安全、数据安全等多个方面，确保智能体的安全性和可靠性。</p>
+              <p style="color: #475569; line-height: 1.7; font-size: 14px; margin: 0;">系统具备实时故障检测、异常情况处理、紧急停止等功能，能够在检测到异常情况时及时采取安全措施，保护用户和设备的安全，确保系统的稳定运行。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块6: 发展趋势 -->
+    <section id="trends" class="fp-section" data-anchor="trends" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #0369a1; margin-bottom: 12px; font-weight: 800;">发展趋势</h2>
+        <p style="text-align: center; color: #38bdf8; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;">未来智能，无限可能</p>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll">
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #0ea5e9; width: 340px; flex-shrink: 0;">
+              <img src="pictures/机器人导航.webp" alt="更智能的决策" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1008" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">🤖 更智能的决策</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">随着大模型和强化学习技术的发展，智能体的决策能力将不断提升，能够在更复杂的环境中做出更优的决策。未来的决策系统将具备更强的推理能力、更好的泛化性能、更高的决策效率。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过结合符号推理和神经网络，系统将能够处理更复杂的任务，理解更深层的因果关系，做出更符合人类期望的智能决策，实现真正的通用人工智能。</p>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #06b6d4; width: 340px; flex-shrink: 0;">
+              <img src="pictures/室外导航.webp" alt="更广泛的连接" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="997" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">🌐 更广泛的连接</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">5G、边缘计算、物联网等技术的发展，将实现智能体之间的高效协同，构建智能化的物联网生态系统。未来的智能体将不再是孤立的个体，而是网络中的节点，能够共享信息、协同工作。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过云端协同、边缘计算、分布式学习等技术，智能体将能够实现大规模协同作业，共享知识和经验，提升整体智能水平，构建真正的智能生态系统。</p>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #3b82f6; width: 340px; flex-shrink: 0;">
+              <img src="pictures/室内.webp" alt="更精准的感知" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">🎯 更精准的感知</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">传感器技术的进步和AI算法的优化，将实现更高精度、更全面的环境感知，提升智能体的适应能力。未来的感知系统将具备更高的分辨率、更广的感知范围、更强的抗干扰能力。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过新型传感器技术、先进的信号处理算法、深度学习模型等，系统将能够感知更细微的环境变化，理解更复杂的场景信息，为智能决策提供更丰富、更准确的数据支持。</p>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #8b5cf6; width: 340px; flex-shrink: 0;">
+              <img src="pictures/人机交互.webp" alt="更人性化的交互" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1079" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">💡 更人性化的交互</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">自然语言处理、情感计算、多模态交互等技术的发展，将实现更自然、更人性化的人机交互，提升用户体验。未来的交互系统将能够理解用户的情感、意图、偏好等多维度信息。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过情感识别、个性化推荐、主动服务等技术，系统将能够提供更贴心、更智能的交互体验，实现真正的人性化智能服务，让用户感受到被理解和被关怀。</p>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #ec4899; width: 340px; flex-shrink: 0;">
+              <img src="pictures/机器人导航1.webp" alt="更高效的学习" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1008" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">🔄 更高效的学习</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">迁移学习、元学习、小样本学习等技术的发展，将实现更快速、更高效的知识迁移和学习，缩短训练周期。未来的学习系统将能够从少量数据中快速学习，快速适应新任务。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过知识蒸馏、模型压缩、增量学习等技术，系统将能够在保持高性能的同时，大幅降低计算和存储成本，实现更高效、更经济的智能学习能力。</p>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(3,105,161,0.15); border-left: 5px solid #f59e0b; width: 340px; flex-shrink: 0;">
+              <img src="pictures/室外.webp" alt="更快的响应" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 160px; object-fit: cover;" width="1920" height="1080" loading="lazy" decoding="async">
+              <h3 style="font-size: 22px; color: #0369a1; margin-bottom: 14px; font-weight: 700;">⚡ 更快的响应</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">边缘计算、硬件加速、模型优化等技术的发展，将实现更低的延迟和更快的响应速度，提升实时性能。未来的系统将能够在边缘设备上运行复杂的AI模型，实现毫秒级的响应。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin: 0;">通过专用AI芯片、模型量化、推理优化等技术，系统将能够在保证精度的同时，大幅提升处理速度，实现真正的实时智能响应，满足对实时性要求极高的应用场景。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块7: 研究领域 -->
+    <section id="research" class="fp-section" data-anchor="research" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);">
+      <div class="container">
+        <h2 class="section-title reveal" style="text-align: center; font-size: 48px; color: #c2410c; margin-bottom: 12px; font-weight: 800;">研究领域</h2>
+        <p style="text-align: center; color: #fb923c; font-size: 20px; max-width: 800px; margin: 0 auto 20px; font-weight: 500;">前沿研究方向，探索智能边界</p>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+          <div class="horizontal-scroll">
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(194,65,12,0.15); width: 360px; flex-shrink: 0;">
+              <img src="pictures/具身智能.webp" alt="机器人导航" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1051" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #c2410c; margin-bottom: 14px; font-weight: 700;">🤖 机器人导航</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究机器人在复杂环境中的自主导航技术，包括SLAM定位与建图、路径规划、障碍物避让等。通过多传感器融合和深度学习算法，实现高精度、高可靠性的导航能力。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究重点包括视觉SLAM、激光SLAM、多传感器融合SLAM、动态环境导航、长期定位与建图等关键技术，为智能轮椅、物流机器人等应用提供技术支撑。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #ffedd5; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 视觉SLAM与激光SLAM技术</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 动态环境路径规划</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 多机器人协同导航</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 长期定位与地图更新</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(194,65,12,0.15); width: 360px; flex-shrink: 0;">
+              <img src="pictures/工业视觉.webp" alt="机器视觉" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1026" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #c2410c; margin-bottom: 14px; font-weight: 700;">👁️ 机器视觉</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究基于深度学习的图像识别、目标检测、语义分割等技术，实现高精度的视觉感知能力。通过卷积神经网络、Transformer等先进架构，提升视觉系统的性能和效率。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究重点包括轻量化网络设计、实时目标检测、多尺度特征融合、小样本学习等，为工业视觉、智能监控、自动驾驶等应用提供技术基础。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #ffedd5; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 深度学习目标检测</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 语义分割与实例分割</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 轻量化网络设计</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 多模态视觉融合</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(194,65,12,0.15); width: 360px; flex-shrink: 0;">
+              <img src="pictures/语音交互.webp" alt="自然语言处理" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1059" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #c2410c; margin-bottom: 14px; font-weight: 700;">💬 自然语言处理</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究大语言模型、对话系统、情感计算等技术，实现智能的自然语言理解和生成能力。通过Transformer架构和预训练技术，构建强大的语言理解模型。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究重点包括大语言模型微调、多轮对话理解、情感识别与生成、知识图谱融合等，为智能交互、情感陪伴、知识问答等应用提供技术支撑。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #ffedd5; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 大语言模型与应用</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 多轮对话系统</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 情感计算与识别</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 知识图谱与推理</li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background: white; padding: 32px; border-radius: 20px; box-shadow: 0 8px 28px rgba(194,65,12,0.15); width: 360px; flex-shrink: 0;">
+              <img src="pictures/智能轮椅.webp" alt="强化学习" style="width: 100%; border-radius: 12px; margin-bottom: 16px; height: 180px; object-fit: cover;" width="1920" height="1073" loading="lazy" decoding="async">
+              <h3 style="font-size: 24px; color: #c2410c; margin-bottom: 14px; font-weight: 700;">🎯 强化学习</h3>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究深度强化学习、模仿学习、元学习等技术，实现智能体的自主学习和策略优化。通过与环境交互，智能体能够学习最优的行为策略，适应复杂动态环境。</p>
+              <p style="color: #475569; line-height: 1.8; font-size: 14px; margin-bottom: 12px;">研究重点包括深度Q网络、策略梯度方法、模仿学习、迁移学习等，为机器人控制、游戏AI、自动驾驶等应用提供技术基础，实现真正的自主学习和智能决策。</p>
+              <ul style="list-style: none; padding: 0; margin: 0; border-top: 1px solid #ffedd5; padding-top: 12px;">
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 深度强化学习算法</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 模仿学习与示教学习</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 多智能体强化学习</li>
+                <li style="padding: 6px 0; color: #c2410c; font-size: 13px;">• 元学习与快速适应</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 右侧导航点 -->
+  <nav class="fp-nav" role="navigation" aria-label="页面导航">
+    <ul id="fp-nav-list"></ul>
+  </nav>
+
+  <script src="script.js"></script>
+
+<script src="site-enhancements.js"></script>
+</body>
+</html>

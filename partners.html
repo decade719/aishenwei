@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>合作伙伴 - 深维智能科技</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* 全屏滚动样式 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    #fullpage-wrapper {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .fp-section {
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fp-section .container {
+      width: 100%;
+      max-width: 1400px;
+      padding: 60px 20px;
+    }
+
+    /* 导航点样式 */
+    .fp-nav {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+    }
+
+    .fp-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fp-nav li {
+      position: relative;
+    }
+
+    .fp-nav a {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      border: 2px solid rgba(102,126,234,0.8);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .fp-nav a:hover,
+    .fp-nav a.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: scale(1.4);
+      box-shadow: 0 0 20px rgba(102,126,234,0.6);
+    }
+
+    .fp-nav .fp-tooltip {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.85);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .fp-nav li:hover .fp-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(-8px);
+    }
+
+    @media (max-width: 768px) {
+      .fp-nav {
+        right: 15px;
+      }
+
+      .fp-nav a {
+        width: 10px;
+        height: 10px;
+      }
+
+      .fp-section .container {
+        padding: 40px 15px;
+      }
+    }
+  </style>
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="description" content="深维智能科技的学术研究、技术研发与人才培养合作。">
+  <meta name="theme-color" content="#09111f">
+</head>
+<body class="theme-huaqin">
+<a class="skip-link" href="#fullpage-wrapper">跳转到主要内容</a>
+  <header class="site-header theme-huaqin" style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000;">
+    <div class="container">
+      <a class="logo" href="index.html" data-i18n="nav.brand">深维智能科技</a>
+      <nav class="nav" id="mainNav">
+        <button class="nav-toggle" aria-label="toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list">
+<li><a href="index.html" data-i18n="nav_home">首页</a></li>
+<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
+<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
+<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
+<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
+<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
+<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
+<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+</ul>
+        <div class="tools">
+          <select id="langSwitcher" aria-label="language">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-HK">繁体中文</option>
+            <option value="en">English</option>
+          </select>
+          <button id="themeToggle" data-i18n="theme_toggle">🌙</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 全屏滚动容器 -->
+  <div id="fullpage-wrapper" role="main" tabindex="-1">
+
+    <!-- Hero区 -->
+    <section class="fp-section hero-plain" data-anchor="hero" style="background: var(--gradient);">
+      <div class="container hero-content" style="text-align: center; padding: 120px 20px 40px;">
+        <h1 style="color: white; font-size: 36px; margin-bottom: 12px; font-weight: 800;">合作伙伴</h1>
+        <p style="color: rgba(255,255,255,0.95); font-size: 16px; max-width: 700px; margin: 0 auto;">携手产业、学界与社区伙伴，共建开放生态与可持续发展</p>
+      </div>
+    </section>
+
+    <!-- 生态合作 -->
+    <section class="fp-section" data-anchor="partners" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+      <div class="container" style="padding: 100px 20px 40px;">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 40px; font-size: 30px; color: #1e40af;">生态合作</h2>
+        <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 600px; margin: 0 auto;">
+          <article class="card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 32px; border-radius: 20px; box-shadow: 0 10px 40px rgba(245,158,11,0.25); border: 3px solid #f59e0b; transition: all 0.3s; cursor: pointer; position: relative; overflow: hidden;" onclick="window.location.href='about.html'" onmouseover="this.style.transform='translateY(-8px) scale(1.02)'; this.style.boxShadow='0 15px 50px rgba(245,158,11,0.35)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 10px 40px rgba(245,158,11,0.25)'">
+            <div style="position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-weight: 700; z-index: 2; box-shadow: 0 4px 12px rgba(220,38,38,0.4);">
+              🏛️ 合作实验室
+            </div>
+            <div class="card-media" style="margin-bottom: 24px; position: relative;">
+              <img src="pictures/具身智能.webp" alt="北京科技大学具身智能实验室" style="width: 100%; border-radius: 12px; border: 2px solid #f59e0b;" width="1920" height="1051" loading="lazy" decoding="async">
+            </div>
+            <h3 style="font-size: 22px; color: #92400e; margin-bottom: 12px; font-weight: 700;">北京科技大学<br>具身智能实验室</h3>
+            <p style="color: #78350f; line-height: 1.7; font-weight: 500;">学术研究合作，技术研发与人才培养。</p>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 2px solid rgba(146,64,14,0.2);">
+              <span style="display: inline-block; background: rgba(255,255,255,0.6); color: #92400e; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;">了解合作团队 →</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系合作 -->
+    <section class="fp-section" data-anchor="contact" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+      <div class="container" style="text-align: center; padding: 140px 20px 60px;">
+        <h2 class="reveal" style="font-size: 36px; color: white; margin-bottom: 20px; font-weight: 800;">寻求合作伙伴</h2>
+        <p class="reveal" style="--d:.05s; font-size: 18px; color: rgba(255,255,255,0.95); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+          我们诚邀产业伙伴、高校机构、技术服务商共同探索智能机器人领域的创新机会。<br>无论是技术合作、市场拓展还是学术交流，都欢迎与我们联系！
+        </p>
+        <a href="contact.html" class="reveal" style="--d:.1s; display: inline-block; background: white; color: var(--primary); padding: 16px 40px; border-radius: 50px; font-size: 18px; font-weight: 700; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s;">
+          联系我们 →
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 右侧导航点 -->
+  <nav class="fp-nav" role="navigation" aria-label="页面导航">
+    <ul id="fp-nav-list"></ul>
+  </nav>
+
+  <script src="script.js"></script>
+
+
+<script src="site-enhancements.js"></script>
+</body>
+</html>

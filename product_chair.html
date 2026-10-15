@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>智能轮椅 · 产品页面</title>
+  <meta name="description" content="智能轮椅产品详情：导航、避障、语音交互与情感陪伴" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* 强制全屏滚动 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    #fullpage-wrapper {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .fp-section {
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* 导航点 */
+    .fp-nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+    }
+
+    .fp-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .fp-nav li {
+      margin: 12px 0;
+    }
+
+    .fp-nav a {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(102, 126, 234, 0.8);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .fp-nav a:hover {
+      background: rgba(102, 126, 234, 0.7);
+      transform: scale(1.3);
+    }
+
+    .fp-nav li.active a {
+      background: #667eea;
+      transform: scale(1.2);
+      box-shadow: 0 0 12px rgba(102, 126, 234, 0.8);
+    }
+
+    .fp-nav .fp-tooltip {
+      position: absolute;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .fp-nav a:hover + .fp-tooltip {
+      opacity: 1;
+    }
+    /* product-compact：统一微缩字体与间距（约 -2px），并保持防遮挡偏移 */
+    body.product-compact [style*="font-size:42px"]{font-size:38px !important}
+    body.product-compact [style*="font-size:36px"]{font-size:32px !important}
+    body.product-compact [style*="font-size:32px"]{font-size:28px !important}
+    body.product-compact [style*="font-size:28px"]{font-size:24px !important}
+    body.product-compact [style*="font-size:24px"]{font-size:20px !important}
+    body.product-compact [style*="font-size:20px"]{font-size:16px !important}
+    body.product-compact [style*="font-size:18px"]{font-size:14px !important}
+    body.product-compact [style*="font-size:16px"]{font-size:12px !important}
+    body.product-compact [style*="font-size:14px"]{font-size:10px !important}
+
+    /* 常用内边距/间距统一减小约 2px */
+    body.product-compact .feature-card{padding:20px 16px !important}
+    body.product-compact [style*="padding: 24px"]{padding:20px !important}
+    body.product-compact [style*="padding:24px 20px"]{padding:20px 16px !important}
+    body.product-compact [style*="padding:20px"]{padding:16px !important}
+    body.product-compact [style*="padding: 22px"]{padding:18px !important}
+    body.product-compact [style*="margin-bottom: 28px"]{margin-bottom:24px !important}
+    body.product-compact [style*="margin-bottom: 24px"]{margin-bottom:20px !important}
+    body.product-compact [style*="margin-bottom: 20px"]{margin-bottom:16px !important}
+    body.product-compact [style*="gap: 18px"]{gap:14px !important}
+    body.product-compact [style*="gap: 12px"]{gap:8px !important}
+
+    /* 图片高度略减小，让背板更紧凑 */
+    body.product-compact [style*="height:320px"],
+    body.product-compact [style*="height: 320px"]{height:280px !important}
+    body.product-compact [style*="height:240px"],
+    body.product-compact [style*="height: 240px"]{height:216px !important}
+
+    /* 容器：保持顶部 150px，左右/底部缩小 */
+    body.product-compact section .container[style*="padding: 150px"]{
+      padding-top: 150px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      padding-bottom: 21px !important;
+    }
+    /* 至尊版模块：整体上移一点（顶部轻微收紧） */
+    body.product-compact #supreme .container[style*="padding: 150px"]{
+      padding-top: 132px !important;
+    }
+
+    /* 目标用户分析区域：进一步纵向压缩 */
+    body.product-compact #users .reveal[style*="grid-template-columns:repeat(4, 1fr)"]{
+      gap:6px !important;
+      margin-bottom:8px !important;
+    }
+    /* 将图片高度再压缩，减少整行占用高度 */
+    body.product-compact #users [style*="height:240px"]{height:176px !important}
+    body.product-compact #users .feature-grid{gap:14px !important; margin-bottom:16px !important}
+    body.product-compact #users .feature-card[style*="height:145px"]{height:130px !important}
+    body.product-compact #users .feature-card[style*="padding:24px 20px"]{padding:20px 16px !important}
+    body.product-compact #users .feature-card h4{margin-bottom:8px !important}
+    body.product-compact #users .reveal[style*="padding:28px 32px"]{padding:24px 26px !important}
+    body.product-compact #users [style*="gap:20px"]{gap:14px !important}
+
+    /* 市场机遇模块：容器与卡片整体压缩 */
+    body.product-compact #opportunities .container{padding-top:84px !important; padding-bottom:16px !important}
+    body.product-compact #opportunities .grid.grid-3{gap:14px !important; margin-bottom:16px !important}
+    body.product-compact #opportunities .feature-card[style*="padding:28px 24px"]{padding:20px 16px !important}
+    /* 第二卡片定向压缩图标与标题间距 */
+    body.product-compact #opportunities .grid.grid-3 > .feature-card:nth-child(2) > div:first-child{
+      width:52px !important; height:52px !important; margin:0 auto 10px !important;
+    }
+    body.product-compact #opportunities .grid.grid-3 > .feature-card:nth-child(2) h3{margin-bottom:6px !important}
+    body.product-compact #opportunities .grid.grid-3 > .feature-card:nth-child(2) p{margin-bottom:10px !important}
+    /* 蓝色面板整体高度与内部间距压缩 */
+    body.product-compact #opportunities [style*="height:350px"]{height:260px !important}
+    body.product-compact #opportunities [style*="padding:24px 28px"]{padding:16px 18px !important}
+    body.product-compact #opportunities [style*="grid-template-columns:repeat(2, 1fr)"]{gap:10px !important; margin-top:10px !important}
+    body.product-compact #opportunities [style*="display:flex"][style*="gap:10px"]{gap:6px !important}
+    body.product-compact #opportunities [style*="background:linear-gradient(135deg, #dbeafe"] h3{margin-bottom:8px !important}
+    body.product-compact #opportunities [style*="background:linear-gradient(135deg, #dbeafe"] p{line-height:1.4 !important}
+  </style>
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="description" content="了解智能导航轮椅的室内版、室外导航版、漫游版与至尊版，以及导航、避障和语音交互功能。">
+  <meta name="theme-color" content="#09111f">
+</head>
+<body class="theme-huaqin product-compact">
+<a class="skip-link" href="#main-content">跳转到主要内容</a>
+  <header class="site-header theme-huaqin" style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000;">
+    <div class="container">
+      <a class="logo" href="index.html" data-i18n="nav.brand">深维智能科技</a>
+      <nav class="nav" id="mainNav">
+        <button class="nav-toggle" aria-label="toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list">
+<li><a href="index.html" data-i18n="nav_home">首页</a></li>
+<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
+<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
+<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
+<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
+<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
+<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
+<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+</ul>
+        <div class="tools">
+          <select id="langSwitcher" aria-label="language">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-HK">繁体中文</option>
+            <option value="en">English</option>
+          </select>
+          <button id="themeToggle" data-i18n="theme_toggle">🌙</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 导航点 -->
+  <nav class="fp-nav">
+    <ul id="fp-nav-list"></ul>
+  </nav>
+
+  <div id="fullpage-wrapper">
+  <main id="main-content" tabindex="-1">
+    <!-- 英雄区：智能轮椅产品 -->
+    <section class="hero fp-section" id="overview" data-anchor="overview">
+      <div class="decor decor-a"></div>
+      <div class="decor decor-b"></div>
+      <div class="decor decor-c"></div>
+      <div class="container hero-content" style="padding: 150px 20px 30px 20px;">
+        <h1 class="reveal" style="--d:.0s; margin-bottom: 12px;" data-i18n="product_detail_title">智能轮椅 · 产品详情</h1>
+        <p class="reveal" style="--d:.1s; margin-bottom: 24px; font-size: 20px; line-height: 1.6;" data-i18n="product_detail_desc">面向高龄与行动障碍群体的智能出行设备，融合视觉导航、语音交互、智能避障与物联网联动。</p>
+
+        <!-- 纵向并排面板：点击后扩展为全屏显示详情 -->
+        <div class="panel-gallery reveal" style="--d:.25s">
+          <article class="panel" data-title="室外导航" data-key="室外导航">
+            <img src="pictures/室外导航.webp" alt="室外导航" loading="lazy" referrerpolicy="no-referrer" width="1920" height="997" decoding="async">
+          <h3 data-i18n="feature_outdoor_nav">室外导航</h3>
+            <div class="detail">
+              <button class="close" aria-label="关闭">×</button>
+              <h3 style="font-size:28px; margin-bottom:20px;" data-i18n="feature_outdoor_nav_detail">室外导航 · 精准定位与路径规划</h3>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">智能轮椅的室外导航系统融合了多项前沿定位技术，为用户提供精准、可靠的户外出行体验。系统采用高精度GPS与惯性测量单元（IMU）融合定位技术，结合视觉SLAM算法，即使在GPS信号受限的复杂环境下，也能保持厘米级的定位精度。</p>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">在园区、公园、街区等半开放场景中，系统能够实时感知周围环境，自动规避障碍物，智能规划最优行驶路径。通过深度学习算法识别道路类型、交通标志以及动态障碍物（如行人、宠物、车辆），确保行驶安全。同时，系统支持语音导航提示，实时告知用户当前位置、目的地距离以及预计到达时间，让每一次出行都轻松自如。</p>
+              <p style="font-size:20px; line-height:1.8;"><strong style="font-size:22px;">核心技术优势：</strong>GPS与IMU融合定位 · 视觉SLAM环境建图 · 智能路径规划 · 动态障碍物识别 · 语音导航提示</p>
+            </div>
+          </article>
+          <article class="panel" data-title="室内避障" data-key="室内避障">
+            <img src="pictures/室内避障.webp" alt="室内避障" loading="lazy" referrerpolicy="no-referrer" width="1920" height="983" decoding="async">
+          <h3 data-i18n="feature_indoor_obstacle">室内避障</h3>
+            <div class="detail">
+              <button class="close" aria-label="关闭">×</button>
+              <h3 style="font-size:28px; margin-bottom:20px;" data-i18n="feature_indoor_obstacle_detail">室内避障 · 智能感知与安全防护</h3>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">在复杂的室内环境中，智能轮椅配备了先进的多传感器融合避障系统，为用户提供全方位的安全保护。系统集成激光雷达、深度视觉摄像头、超声波传感器等多种传感设备，能够实时构建360度的环境感知地图，精准识别各类障碍物。</p>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">在走廊、病房、电梯等狭窄环境下，系统能够实时识别门框、家具、台阶等静态障碍物，以及行走的人员、宠物等动态障碍物。通过智能算法规划绕行路线，在遇到障碍时自动减速或停止，确保用户在任何室内场景下都能安全通行。特别针对窄通道场景，系统可以自适应调整行驶速度和路径，轻松穿越狭窄空间。</p>
+              <p style="font-size:20px; line-height:1.8;"><strong style="font-size:22px;">核心技术优势：</strong>多传感器融合感知 · 360度全向避障 · 智能绕行规划 · 动态减速保护 · 窄通道自适应</p>
+            </div>
+          </article>
+          <article class="panel" data-title="语音交互" data-key="语音交互">
+            <img src="pictures/语音交互.webp" alt="语音交互" loading="lazy" referrerpolicy="no-referrer" width="1920" height="1059" decoding="async">
+          <h3 data-i18n="feature_voice_interaction">语音交互</h3>
+            <div class="detail">
+              <button class="close" aria-label="关闭">×</button>
+              <h3 style="font-size:28px; margin-bottom:20px;" data-i18n="feature_voice_interaction_detail">语音交互 · 大模型赋能的智能对话</h3>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">智能轮椅搭载了先进的大语言模型（LLM）技术，实现了真正意义上的自然语言交互。系统不仅能够准确识别用户的语音指令，更能深度理解用户的真实意图，支持复杂句式、模糊表达和多轮对话。用户只需用自然的语言表达需求，如"我想去公园散步"、"带我去咖啡厅"，系统就能智能解析并执行相应的导航任务。</p>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">基于先进的意图识别与自然语言理解技术，系统能够处理各类复杂指令，并与看护人员实现联动。当用户说"我有点累了"，系统会主动询问是否需要休息或联系家人；说"今天天气真好"，系统会推荐附近的公园或户外活动场所。通过持续学习用户的习惯和偏好，语音交互体验会越来越个性化，真正成为用户的贴心助手。</p>
+              <p style="font-size:20px; line-height:1.8;"><strong style="font-size:22px;">核心技术优势：</strong>大模型驱动对话 · 意图深度识别 · 多轮上下文理解 · 个性化学习 · 看护联动功能</p>
+
+
+            </div>
+          </article>
+          <article class="panel" data-title="情感陪伴" data-key="情感陪伴">
+            <img src="pictures/情感陪伴.webp" alt="情感陪伴" loading="lazy" referrerpolicy="no-referrer" width="1920" height="999" decoding="async">
+          <h3 data-i18n="feature_emotional_companion">情感陪伴</h3>
+            <div class="detail">
+              <button class="close" aria-label="关闭">×</button>
+              <h3 style="font-size:28px; margin-bottom:20px;" data-i18n="feature_emotional_companion_detail">情感陪伴 · 有温度的智能伙伴</h3>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">智能轮椅不仅是一款出行工具，更是用户生活中的贴心伙伴。通过先进的情感识别技术，系统能够感知用户的情绪状态，提供个性化、人性化的情感响应。当检测到用户情绪低落时，会主动播放舒缓的音乐或推荐有趣的活动；当用户表现愉悦时，会分享周围的美景或推荐值得探索的地点。</p>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">系统支持主动陪伴对话，不仅能够回应用户的需求，还会主动关心用户的身体状况、天气变化、日常提醒等。例如，定时提醒用户喝水、吃药，在雨天自动推荐室内活动，在阳光明媚时建议户外散步。通过持续的语音交互和情感关怀，有效缓解独居老人和行动不便人士的孤独感，提升心理舒适度与生活幸福感。系统还能与家人手机联动，让家人随时了解用户的状态，构建更紧密的情感连接。</p>
+              <p style="font-size:20px; line-height:1.8;"><strong style="font-size:22px;">核心技术优势：</strong>情感状态识别 · 主动关怀对话 · 个性化推荐 · 健康提醒管理 · 家人联动关怀</p>
+            </div>
+          </article>
+          <article class="panel" data-title="坡道辅助" data-key="坡道辅助">
+            <img src="pictures/坡道1.webp" alt="坡道辅助" loading="lazy" referrerpolicy="no-referrer" width="1920" height="973" decoding="async">
+          <h3 data-i18n="feature_slope_assist">坡道辅助</h3>
+            <div class="detail">
+              <button class="close" aria-label="关闭">×</button>
+              <h3 style="font-size:28px; margin-bottom:20px;" data-i18n="feature_slope_assist_detail">坡道辅助 · 智能地形适应系统</h3>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">针对坡道、台阶、门槛等复杂地形，智能轮椅配备了先进的地形识别与动力控制系统。通过融合激光雷达与视觉传感器，系统能够实时检测前方地形的坡度、高度和材质特征，提前做出判断和调整。在上坡时自动增加动力输出，让用户无需费力；在下坡时智能控制速度，防止溜坡和失控，确保行驶平稳安全。</p>
+              <p style="font-size:20px; line-height:1.8; margin-bottom:20px;">系统还具备智能防溜坡与自动制动功能，当检测到坡度过大或用户停止操作时，会自动启动制动系统，防止轮椅后退滑行。对于门槛、减速带等小型障碍物，系统会自动调整轮椅姿态和动力分配，以最优的方式通过障碍，最大程度减少颠簸和不适感。无论是医院走廊的缓坡，还是公园小径的石阶，智能坡道辅助系统都能让用户轻松应对，享受更加顺畅、安全的出行体验。</p>
+              <p style="font-size:20px; line-height:1.8;"><strong style="font-size:22px;">核心技术优势：</strong>地形智能识别 · 动力自适应调节 · 防溜坡保护 · 自动制动系统 · 姿态平衡控制</p>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="decor decor-a"></div>
+      <div class="decor decor-b"></div>
+      <div class="decor decor-c"></div>
+    </section>
+
+    <!-- 项目背景与市场痛点 -->
+    <section id="pain" class="section alt fp-section" data-anchor="pain" style="background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <h2 class="section-title reveal" data-i18n="pain_title" style="color:#5b21b6; margin-bottom:12px; font-size:32px;">项目背景与市场痛点</h2>
+        <p class="reveal muted" style="font-size:20px; max-width:800px; margin:0 auto 20px; text-align:center; line-height:1.6; color:#374151;">随着全球人口老化进程的加速，以及因疾病、伤残等原因导致的行动不便群体日益增多，传统轮椅在满足现代用户出行、安全和情感需求方面已显不足。</p>
+
+        <!-- 背景图片展示 -->
+        <div class="reveal" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08);">
+            <img src="pictures/产品轮椅背景1.webp" alt="老年人轮椅使用" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+          </div>
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08);">
+            <img src="pictures/产品轮椅背景2.webp" alt="医疗护理场景" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+          </div>
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,0.08);">
+            <img src="pictures/产品轮椅背景3.webp" alt="辅助出行设备" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="grid grid-4 feature-grid" style="gap:18px;">
+          <div class="feature-card reveal" style="text-align:center; padding:24px 20px; background:white;">
+            <div style="width:50px; height:50px; background:linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 6px 16px rgba(236,72,153,0.3);">
+              <span style="font-size:24px;">👍</span>
+            </div>
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;" data-i18n="pain_complexity">操作复杂性</h4>
+            <p style="font-size:18px; line-height:1.5; color:#6b7280;" data-i18n="pain_complexity_desc">传统电动轮椅多依赖摇杆或按键，学习门槛高，缺乏直观的语音交互功能。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.05s; text-align:center; padding:24px 20px; background:white;">
+            <div style="width:50px; height:50px; background:linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 6px 16px rgba(245,158,11,0.3);">
+              <span style="font-size:24px; color:white; font-weight:bold;">A</span>
+            </div>
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;" data-i18n="pain_safety">安全隐患</h4>
+            <p style="font-size:18px; line-height:1.5; color:#6b7280;" data-i18n="pain_safety_desc">在复杂环境下易发生碰撞或翻侧，缺少有效的智能避障与环境理解。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.1s; text-align:center; padding:24px 20px; background:white;">
+            <div style="width:50px; height:50px; background:linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 6px 16px rgba(139,92,246,0.3);">
+              <span style="font-size:24px;">💙</span>
+            </div>
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;" data-i18n="pain_emotional">情感陪伴缺失</h4>
+            <p style="font-size:18px; line-height:1.5; color:#6b7280;" data-i18n="pain_emotional_desc">缺乏与家人或社区的情感连接能力，无法满足陪伴与人机互动需求。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.15s; text-align:center; padding:24px 20px; background:white;">
+            <div style="width:50px; height:50px; background:linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 6px 16px rgba(6,182,212,0.3);">
+              <span style="font-size:24px;">⚙️</span>
+            </div>
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;" data-i18n="pain_functional">功能单一</h4>
+            <p style="font-size:18px; line-height:1.5; color:#6b7280;" data-i18n="pain_functional_desc">仅限基本行驶功能，难以覆盖导航、健康监测、紧急呼叫等多样场景。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 目标用户分析 -->
+  <section id="users" class="section fp-section" data-anchor="users" style="background:white;">
+      <div class="container" style="padding: 96px 20px 22px;">
+        <h2 class="section-title reveal" data-i18n="target_users_analysis" style="color:#5b21b6; margin-bottom:10px; font-size:32px;">目标用户分析</h2>
+        <p class="reveal" style="text-align:center; font-size:20px; color:#6b7280; max-width:750px; margin:0 auto 18px; line-height:1.5;" data-i18n="target_users_desc">智能轮椅项目主要面向行动不便或长期陪伴不到位的人群，包括以下四类核心用户：</p>
+
+        <!-- 用户场景图片 -->
+        <div class="reveal" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:20px;">
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative;">
+            <img src="pictures/行动不便的老人.webp" alt="老年人使用场景" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+          </div>
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative;">
+            <img src="pictures/残障人士.webp" alt="残障人士场景" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+
+          </div>
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative;">
+            <img src="pictures/康复人群.webp" alt="康复人群场景" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+
+          </div>
+          <div style="border-radius:12px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,0.08); position:relative;">
+            <img src="pictures/独居老人.webp" alt="独居老人场景" style="width:100%; height:360px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+
+          </div>
+        </div>
+        <div class="grid grid-4 feature-grid" style="gap:16px; margin-bottom:20px">
+          <div class="feature-card reveal" style="text-align:center; padding:24px 20px; border:2px solid #e5e7eb; border-radius:12px;height:145px">
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;">行动不便的老年人</h4>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280;">随着年龄增长，因关节炎、骨质疏松、神经疾病等导致的行动受限。需要安全、便捷的代步工具。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.05s; text-align:center; padding:24px 20px; border:2px solid #e5e7eb; border-radius:12px;height:145px">
+
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;">残障人士</h4>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280;">因疾病、伤残等原因导致肢体功能障碍。传统轮椅在窄通道及复杂路况下操控困难。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.1s; text-align:center; padding:24px 20px; border:2px solid #e5e7eb; border-radius:12px;height:145px">
+
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;">术后康复人群</h4>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280;">处于康复期的患者，需要辅助设备帮助其恢复步行和平衡能力。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.15s; text-align:center; padding:24px 20px; border:2px solid #e5e7eb; border-radius:12px;height:145px">
+
+            <h4 style="font-size:20px; font-weight:600; margin-bottom:10px; color:#1f2937;" data-i18n="elderly_lacking_care">独居或缺乏照料的中老年人</h4>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280;" data-i18n="elderly_lacking_care_desc">这部分人群对情感陪伴和紧急情况下的安全保障有强烈诉求。</p>
+          </div>
+        </div>
+
+        <div class="reveal" style="max-width:1100px; margin:0 auto; padding:28px 32px; background:linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius:16px; border:2px solid #f59e0b; box-shadow:0 8px 28px rgba(245,158,11,0.2);">
+          <h3 style="font-size:20px; font-weight:700; margin-bottom:18px; color:#92400e; display:flex; align-items:center; justify-content:center; gap:10px;">
+            <span style="font-size:28px;">🎯</span>
+            <span data-i18n="common_needs">共同需求</span>
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+            <div style="text-align:center; background:rgba(255,255,255,0.6); padding:20px 14px; border-radius:12px; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.9)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.6)'">
+              <div style="font-size:32px; margin-bottom:10px;">🛡️</div>
+              <div style="font-weight:700; color:#92400e; font-size:18px;">安全保障</div>
+            </div>
+            <div style="text-align:center; background:rgba(255,255,255,0.6); padding:20px 14px; border-radius:12px; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.9)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.6)'">
+              <div style="font-size:32px; margin-bottom:10px;">🎙️</div>
+              <div style="font-weight:700; color:#92400e; font-size:18px;">简单操作</div>
+            </div>
+            <div style="text-align:center; background:rgba(255,255,255,0.6); padding:20px 14px; border-radius:12px; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.9)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.6)'">
+              <div style="font-size:32px; margin-bottom:10px;">🧭</div>
+              <div style="font-weight:700; color:#92400e; font-size:18px;">自主导航</div>
+            </div>
+            <div style="text-align:center; background:rgba(255,255,255,0.6); padding:20px 14px; border-radius:12px; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.9)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.6)'">
+              <div style="font-size:32px; margin-bottom:10px;">💗</div>
+              <div style="font-weight:700; color:#92400e; font-size:18px;" data-i18n="need_companion">情感陪伴</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 市场机遇 -->
+    <section id="opportunities" class="section alt fp-section" data-anchor="opportunities" style="background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <h2 class="section-title reveal" data-i18n="market_title" style="color:#5b21b6; margin-bottom:24px; font-size:32px;">市场机遇</h2>
+        <div class="grid grid-3" style="gap:24px; margin-bottom:24px;">
+          <div class="feature-card reveal" style="text-align:center; padding:28px 24px; background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.08);">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; box-shadow:0 8px 20px rgba(59,130,246,0.35);">
+              <span style="font-size:32px; color:white; font-weight:bold;">W</span>
+            </div>
+            <h3 style="font-size:22px; font-weight:700; margin-bottom:12px; color:#1f2937;">政策支持</h3>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280; margin-bottom:16px;">国家积极推动"智慧养老"和"无障碍环境建设"，为能源助医疗器材产业提供良好政策土壤。政府通过资助项目和政策扶持，致力于改善老年与残障人士生活质量，提升养老行业数字化水平，障碍出行能力。</p>
+          </div>
+          <div class="feature-card reveal" style="--d:.05s; text-align:center; padding:28px 24px; background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.08);">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; box-shadow:0 8px 20px rgba(139,92,246,0.35);">
+              <span style="font-size:32px;">🧠</span>
+            </div>
+            <h3 style="font-size:22px; font-weight:700; margin-bottom:12px; color:#1f2937;">技术成熟</h3>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280; margin-bottom:16px;">人工智能、大模型、语音识别、自动驾驶等关键技术本已足够成熟并实现产业化，为智能轮椅的落地提供了坚实的技术支撑。</p>
+            <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:20px;">
+              <span style="background:#e0e7ff; color:#4f46e5; padding:6px 14px; border-radius:20px; font-size:18px; font-weight:600;">🤖 人工智能与大模型</span>
+              <span style="background:#ddd6fe; color:#7c3aed; padding:6px 14px; border-radius:20px; font-size:18px; font-weight:600;">🎙️ 语音识别</span>
+              <span style="background:#e0e7ff; color:#4f46e5; padding:6px 14px; border-radius:20px; font-size:18px; font-weight:600;">🚗 自动驾驶技术</span>
+              <span style="background:#ddd6fe; color:#7c3aed; padding:6px 14px; border-radius:20px; font-size:18px; font-weight:600;">📡 物联网（IoT）</span>
+            </div>
+          </div>
+          <div class="feature-card reveal" style="--d:.1s; text-align:center; padding:28px 24px; background:white; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.08);">
+            <div style="width:64px; height:64px; background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; box-shadow:0 8px 20px rgba(245,158,11,0.35);">
+              <span style="font-size:32px;">📈</span>
+            </div>
+            <h3 style="font-size:22px; font-weight:700; margin-bottom:12px; color:#1f2937;">消费升级</h3>
+            <p style="font-size:18px; line-height:1.6; color:#6b7280;">新一代中老年用户对生活品质和科技产品的接受度显著提升，他们更愿意为智能化带来的便捷、安全和品质生活体验买单。这类消费观念的转变，预示市场对高品质的智慧产品需求强劲，致力于场范围能保有更强大的内生动力。</p>
+          </div>
+        </div>
+
+        <div style="padding:24px 28px; background:linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius:14px; border:2px solid #3b82f6;height:350px">
+          <h3 style="font-size:18px; font-weight:700; color:#1e40af; margin-bottom:14px; text-align:center;">技术融合与产业化应用</h3>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:18px;">
+            <div style="display:flex; align-items:start; gap:10px;">
+              <span style="font-size:24px;">🤖</span>
+              <div>
+                <h4 style="font-weight:600; color:#1e40af; margin-bottom:3px; font-size:20px;">人工智能与大模型：</h4>
+                <p style="font-size:18px; color:#1e3a8a; line-height:1.5;">深度客户识别、自然语言理解和情感交互</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:start; gap:10px;">
+              <span style="font-size:24px;">🎙️</span>
+              <div>
+                <h4 style="font-weight:600; color:#1e40af; margin-bottom:3px; font-size:20px;">语音识别：</h4>
+                <p style="font-size:18px; color:#1e3a8a; line-height:1.5;">降低操作门槛，适合多年龄的用户</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:start; gap:10px;">
+              <span style="font-size:24px;">🗺️</span>
+              <div>
+                <h4 style="font-weight:600; color:#1e40af; margin-bottom:3px; font-size:20px;">自动驾驶：</h4>
+                <p style="font-size:18px; color:#1e3a8a; line-height:1.5;">传感器融合、SLAM、路径规划和避障算法</p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:start; gap:10px;">
+              <span style="font-size:24px;">📡</span>
+              <div>
+                <h4 style="font-weight:600; color:#1e40af; margin-bottom:3px; font-size:20px;">物联网：</h4>
+                <p style="font-size:18px; color:#1e3a8a; line-height:1.5;">实时数据传输与智能家居、健康监测设备的互联互通</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 产品矩阵概览 -->
+    <section id="matrix" class="section fp-section" data-anchor="matrix" style="background:white;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <h2 class="section-title reveal" data-i18n="matrix_title" style="color:#5b21b6; margin-bottom:16px; font-size:32px;">产品矩阵概览</h2>
+        <p class="reveal" style="text-align:center; font-size:20px; color:#6b7280; max-width:850px; margin:0 auto 24px; line-height:1.5;">为满足不同用户和应用场景需求，我们精心设计了分阶梯式的产品系列，覆盖从室内到室外、从基础功能到高阶智能的全面解决方案。</p>
+
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:28px; margin-bottom:28px;">
+          <div class="reveal" style="background:linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-radius:16px; padding:24px 20px; text-align:center; border:2px solid #10b981; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:12px; right:12px; background:#10b981; color:white; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;">基础款</div>
+            <div style="width:100%; height: 320px; margin-bottom:16px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <img src="pictures/产品轮椅室内.webp" alt="室内版智能轮椅" style="width:100%; height:320px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:12px; color:#065f46;">室内版</h3>
+            <p style="font-size:14px; line-height:1.7; color:#047857; margin-bottom:16px;">专注于室内环境的自主移动</p>
+            <div style="text-align:left; margin-top:16px; padding-top:16px; border-top:1px solid #6ee7b7;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#10b981; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#065f46;">基础语音识别</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#10b981; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#065f46;">室内定位技术</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:#10b981; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#065f46;">基础避障系统</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.05s; background:linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius:16px; padding:24px 20px; text-align:center; border:2px solid #3b82f6; position:relative;">
+            <div style="position:absolute; top:12px; right:12px; background:#3b82f6; color:white; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;">进阶款</div>
+            <div style="width:100%; height:320px; margin-bottom:16px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <img src="pictures/产品轮椅室外.webp" alt="室外导航版智能轮椅" style="width:100%; height:100%; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:12px; color:#1e40af;">室外导航版</h3>
+            <p style="font-size:14px; line-height:1.7; color:#1d4ed8; margin-bottom:16px;">户外精准导航，轻松抵达目的地</p>
+            <div style="text-align:left; margin-top:16px; padding-top:16px; border-top:1px solid #93c5fd;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#3b82f6; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#1e40af;">室精度GPS+IMU融合</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#3b82f6; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#1e40af;">SLAM技术</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:#3b82f6; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#1e40af;">大模型语音交互</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.1s; background:linear-gradient(135deg, #fed7aa 0%, #fdba74 100%); border-radius:16px; padding:24px 20px; text-align:center; border:2px solid #f97316; position:relative;">
+            <div style="position:absolute; top:12px; right:12px; background:#f97316; color:white; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;">休闲款</div>
+            <div style="width:100%; height:320px; margin-bottom:16px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <img src="pictures/产品轮椅漫游.webp" alt="室外漫游版智能轮椅" style="width:100%; height:100%; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:12px; color:#9a3412;">室外漫游版</h3>
+            <p style="font-size:14px; line-height:1.7; color:#c2410c; margin-bottom:16px;">公园、社区等半封闭场景休闲漫游</p>
+            <div style="text-align:left; margin-top:16px; padding-top:16px; border-top:1px solid #fb923c;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#f97316; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#9a3412;">视觉目标检测与跟随</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#f97316; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#9a3412;">随机路径规划</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:#f97316; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#9a3412;">智能环境感知</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.15s; background:linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%); border-radius:16px; padding:24px 20px; text-align:center; border:3px solid #a855f7; position:relative; box-shadow:0 12px 32px rgba(168,85,247,0.3);">
+            <div style="position:absolute; top:12px; right:12px; background:#a855f7; color:white; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:600;">✨旗舰款</div>
+            <div style="width:100%; height:320px; margin-bottom:16px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+              <img src="pictures/产品轮椅至尊.webp" alt="至尊版智能轮椅" style="width:100%; height:100%; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            </div>
+            <h3 style="font-size:20px; font-weight:700; margin-bottom:12px; color:#6b21a8;">至尊版</h3>
+            <p style="font-size:14px; line-height:1.7; color:#7e22ce; margin-bottom:16px;">集大成者的终极智能出行体验</p>
+            <div style="text-align:left; margin-top:16px; padding-top:16px; border-top:1px solid#c084fc;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#a855f7; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#6b21a8;">全场景无缝切换导航</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span style="color:#a855f7; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#6b21a8;">多模态大模型交互</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="color:#a855f7; font-size:14px;">✓</span>
+                <span style="font-size:13px; color:#6b21a8;">远程健康监控</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 详细版块：室内版 -->
+    <section id="indoor" class="section fp-section" data-anchor="indoor" style="background:linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <div style="text-align:center; margin-bottom:24px;">
+          <h2 class="section-title reveal" data-i18n="indoor_title" style="color:#15803d; margin-bottom:12px; font-size:28px;">🏡 室内版 - 技术组成与功能特点</h2>
+          <p class="reveal muted" data-i18n="indoor_intro" style="font-size:14px; line-height:1.6; max-width:850px; margin:0 auto; color:#166534;">室内版智能轮椅专注于解决室内环境的自主移动问题，旨在为用户提供便捷、安全的室内出行体验。通过三大核心技术的协同工作，确保用户在复杂室内环境中安全、精准地移动。</p>
+        </div>
+
+        <!-- 室内场景示意图 -->
+        <div class="reveal" style="margin-bottom:28px; border-radius:16px; overflow:hidden; box-shadow:0 8px 28px rgba(0,0,0,0.1);">
+          <img src="pictures/室内.webp" alt="智能轮椅室内使用场景" style="width:100%; height:240px; object-fit:cover;" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-bottom:28px;">
+          <div class="feature-card reveal" style="background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #10b981;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(16,185,129,0.35);">
+              <span style="font-size:28px;">🎙️</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">基础语音识别模块</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:10px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#10b981; font-weight:bold;">✓</span>
+                <span>能够准确识别用户"前进"、"后退"、"左转"、"右转"、"停止"等基础指令</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#10b981; font-weight:bold;">✓</span>
+                <span>实现简单直观的语音控制，降低操作门槛</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.05s; background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #10b981;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(20,184,166,0.35);">
+              <span style="font-size:28px;">📍</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">室内定位技术</h3>
+            <p style="font-size:13px; line-height:1.6; color:#4b5563;">采用UWB（超宽带）或Wi-Fi定位技术，在室内复杂环境中实现厘米级定位精度，确保轮椅能够高精度地确定当前位置。</p>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.1s; background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #10b981;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #059669 0%, #047857 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(5,150,105,0.35);">
+              <span style="font-size:28px;">🛡️</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">基础避障系统</h3>
+            <p style="font-size:13px; line-height:1.6; color:#4b5563;">集成超声波或红外传感器，实时探测前方障碍物并进行规避，有效防止碰撞，保障用户安全。</p>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%); padding:28px 32px; border-radius:14px; margin-bottom:24px;">
+          <h3 class="reveal" style="font-size:18px; font-weight:700; color:#065f46; text-align:center; margin-bottom:24px;">技术协同工作流程</h3>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;">
+            <div class="reveal" style="background:white; padding:20px 16px; border-radius:10px; text-align:center;">
+              <div style="font-size:38px; margin-bottom:10px;">👤</div>
+              <h4 style="font-size:14px; font-weight:600; color:#065f46;">用户发出指令</h4>
+            </div>
+            <div class="reveal" style="--d:.05s; background:white; padding:20px 16px; border-radius:10px; text-align:center;">
+              <div style="font-size:38px; margin-bottom:10px;">🎧</div>
+              <h4 style="font-size:14px; font-weight:600; color:#065f46;">语音识别转换</h4>
+            </div>
+            <div class="reveal" style="--d:.1s; background:white; padding:20px 16px; border-radius:10px; text-align:center;">
+              <div style="font-size:38px; margin-bottom:10px;">🧭</div>
+              <h4 style="font-size:14px; font-weight:600; color:#065f46;">定位与路径规划</h4>
+            </div>
+            <div class="reveal" style="--d:.15s; background:white; padding:20px 16px; border-radius:10px; text-align:center;">
+              <div style="font-size:38px; margin-bottom:10px;">🛡️</div>
+              <h4 style="font-size:14px; font-weight:600; color:#065f46;">避障与安全行驶</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" style="background:linear-gradient(135deg, #065f46 0%, #047857 100%); padding:22px 32px; border-radius:10px; text-align:center; color:white; box-shadow:0 6px 20px rgba(6,95,70,0.25);">
+          <div style="font-size:16px; font-weight:600; margin-bottom:6px;">核心技术优势</div>
+          <div style="font-size:13px; line-height:1.6; opacity:0.95;">✓ 厘米级室内定位 · ✓ 简单语音控制 · ✓ 实时障碍物检测 · ✓ 自动避障保护</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 详细版块：室外导航版 -->
+    <section id="outdoor-nav" class="section alt fp-section" data-anchor="outdoor-nav" style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <div style="text-align:center; margin-bottom:28px;">
+          <h2 class="section-title reveal" data-i18n="outdoor_nav_title" style="color:#1e40af; margin-bottom:12px; font-size:28px;">🧭 室外导航版 - 技术组成与功能特点</h2>
+          <p class="reveal muted" data-i18n="outdoor_nav_intro" style="font-size:14px; line-height:1.6; max-width:850px; margin:0 auto; color:#1e3a8a;">室外导航版在室内版的基础上进行了技术升级，专为户外精准导航设计，旨在帮助用户轻松抵达目的地。该版本集成了多项高级技术，显著提升了户外环境下的导航能力与用户体验。</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-bottom:28px;">
+          <div class="feature-card reveal" style="background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #3b82f6;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(59,130,246,0.35);">
+              <span style="font-size:28px;">📡</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">高精度GPS与惯性导航融合</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>提供用户外开阔环境下的精准定位与导航能力</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>即使在GPS信号受限区域也能保持定位连续性</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>实现厘米级的定位精度，确保户外精确导航</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.05s; background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #3b82f6;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(37,99,235,0.35);">
+              <span style="font-size:28px;">🗺️</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">基于视觉或激光雷达的SLAM技术</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>实时构建环境地图，识别动态障碍物（如行人、车辆）</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>进行路径规划与动态避障，确保安全行驶</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>通过多传感器融合，实现复杂环境下的稳定导航</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.1s; background:white; padding:24px 20px; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.06); border-top:3px solid #3b82f6;">
+            <div style="width:56px; height:56px; background:linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 6px 18px rgba(96,165,250,0.35);">
+              <span style="font-size:28px;">🗣️</span>
+            </div>
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">基于大模型的语音交互</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>首次在该系列本中引入，提供更智能的语音交互体验</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>不仅能理解导航指令，还能进行简短的陪伴式对话</span>
+              </li>
+              <li style="display:flex; align-items:start; gap:8px; font-size:13px; line-height:1.6; color:#4b5563;">
+                <span style="color:#3b82f6; font-weight:bold;">✓</span>
+                <span>通过大模型赋能，实现更自然、人性化的交互方式</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="reveal" style="background:linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); padding:24px 36px; border-radius:14px; text-align:center; color:white; box-shadow:0 8px 24px rgba(30,64,175,0.25); border:2px solid #3b82f6;">
+          <div style="font-size:17px; font-weight:700; margin-bottom:10px;">💡 核心价值亮点</div>
+          <div style="font-size:14px; line-height:1.7; opacity:0.95;">该版本首次实现了从室内到室外的无缝导航体验，为行动不便人群提供更加自由、安全的户外出行解决方案。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 详细版块：室外漫游版 -->
+    <section id="outdoor-roam" class="section fp-section" data-anchor="outdoor-roam" style="background:linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <div style="text-align:center; margin-bottom:24px;">
+          <h2 class="section-title reveal" data-i18n="outdoor_roam_title" style="color:#9a3412; margin-bottom:12px; font-size:28px;">⛰️ 室外漫游版 - 技术组成与功能特点</h2>
+          <p class="reveal muted" data-i18n="outdoor_roam_intro" style="font-size:14px; line-height:1.6; max-width:850px; margin:0 auto; color:#7c2d12;">室外漫游版专为公园、社区等半封闭场景的休闲漫游而生，旨在让用户享受自由闲逛的乐趣。该版本在基础导航功能上，引入了全新的智能技术，使轮椅能够参与复杂现实环境，提升漫游体验的趣味性与灵活度。</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:20px;">
+          <div>
+            <div class="feature-card reveal" style="background:white; padding:20px; border-radius:14px; margin-bottom:16px; border-left:4px solid #f97316; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+              <div style="display:flex; align-items:start; gap:16px;">
+                <div style="width:52px; height:52px; background:linear-gradient(135deg, #f97316 0%, #ea580c 100%); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 16px rgba(249,115,22,0.28);">
+                  <span style="font-size:26px;">🎯</span>
+                </div>
+                <div>
+                  <h3 style="font-size:16px; font-weight:700; margin-bottom:10px; color:#1f2937;">基于视觉的目标检测与跟随算法</h3>
+                  <p style="font-size:13px; line-height:1.6; color:#4b5563;">能够识别并跟随指定目标（如看护人），或在指定区域内自由漫游。通过计算机视觉技术，实时分析环境中的目标物体，让用户无需手动控制即可跟随亲友漫步，或者自动在全区域内探索，实现精准的识别与跟随。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-card reveal" style="--d:.05s; background:white; padding:20px; border-radius:14px; margin-bottom:16px; border-left:4px solid #fb923c; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+              <div style="display:flex; align-items:start; gap:16px;">
+                <div style="width:52px; height:52px; background:linear-gradient(135deg, #fb923c 0%, #f97316 100%); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 16px rgba(251,146,60,0.28);">
+                  <span style="font-size:26px;">🔀</span>
+                </div>
+                <div>
+                  <h3 style="font-size:16px; font-weight:700; margin-bottom:10px; color:#1f2937;">自由探索的随机路径规划算法</h3>
+                  <p style="font-size:13px; line-height:1.6; color:#4b5563;">允许轮椅在预设区域内自主探索，逃重复路径，增加漫游的趣味性。通过智能算法，轮椅能够自主规划最优且灵活的漫游路径，为用户带来每次不同的探索体验，避免单调枯燥的在定路线。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-card reveal" style="--d:.1s; background:white; padding:20px; border-radius:14px; border-left:4px solid #fdba74; box-shadow:0 6px 18px rgba(0,0,0,0.06);">
+              <div style="display:flex; align-items:start; gap:16px;">
+                <div style="width:52px; height:52px; background:linear-gradient(135deg, #fdba74 0%, #fb923c 100%); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 6px 16px rgba(253,186,116,0.28);">
+                  <span style="font-size:26px;">🌿</span>
+                </div>
+                <div>
+                  <h3 style="font-size:16px; font-weight:700; margin-bottom:10px; color:#1f2937;">增强的环境感知能力</h3>
+                  <p style="font-size:13px; line-height:1.6; color:#4b5563;">通过多传感器融合，确保在人群密集或路况多变的半封闭场景下，轮椅能够安全、平稳地行驶。结合激光雷达、超声波、视觉等多种传感手段，实时构建环境地图，识别动态障碍物并进行有效规避。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside>
+            <div class="feature-card reveal" style="background:linear-gradient(135deg, #fed7aa 0%, #fdba74 100%); padding:22px; border-radius:14px; margin-bottom:16px; border:2px solid #f97316;">
+              <div style="text-align:center; margin-bottom:16px;">
+                <div style="font-size:42px; margin-bottom:10px;">🧩</div>
+                <h3 style="font-size:16px; font-weight:700; color:#7c2d12; margin-bottom:12px;">技术融合效果</h3>
+              </div>
+              <ul style="list-style:none; padding:0; margin:0;">
+                <li style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; color:#7c2d12; font-weight:500;">
+                  <span style="color:#ea580c; font-size:16px;">●</span>
+                  <span>智能目标识别与跟随</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; color:#7c2d12; font-weight:500;">
+                  <span style="color:#ea580c; font-size:16px;">●</span>
+                  <span>自主探索多样化路径</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:13px; color:#7c2d12; font-weight:500;">
+                  <span style="color:#ea580c; font-size:16px;">●</span>
+                  <span>多传感器环境感知</span>
+                </li>
+                <li style="display:flex; align-items:center; gap:8px; font-size:13px; color:#7c2d12; font-weight:500;">
+                  <span style="color:#ea580c; font-size:16px;">●</span>
+                  <span>安全避障实时响应</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="reveal" style="background:#9a3412; color:white; padding:20px; border-radius:10px; text-align:center; box-shadow:0 6px 18px rgba(154,52,18,0.25);">
+              <div style="font-size:14px; font-weight:600; line-height:1.6;">💡 专为半封闭公共空间设计，提供安全、有趣的漫游体验</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 详细版块：至尊版 -->
+    <section id="supreme" class="section alt fp-section" data-anchor="supreme" style="background:linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <div style="text-align:center; margin-bottom:28px;">
+          <div style="display:inline-block; background:linear-gradient(135deg, #a855f7 0%, #9333ea 100%); padding:6px 20px; border-radius:20px; margin-bottom:12px;">
+            <span style="color:white; font-weight:700; font-size:13px;">✨ 旗舰产品 ✨</span>
+          </div>
+          <h2 class="section-title reveal" data-i18n="supreme_title" style="color:#7e22ce; margin-bottom:12px; font-size:30px;">👑 至尊版 - 技术组成与功能特点</h2>
+          <p class="reveal muted" data-i18n="supreme_intro" style="font-size:15px; line-height:1.7; max-width:900px; margin:0 auto; color:#6b21a8;">至尊版智能轮椅融合了最前沿的人工智能技术，旨在为用户提供极致的智能出行与生活体验。作为产品线的顶级版本，它集成了多项尖端技术，全面提升用户的出行安全、便捷与舒适度。</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:28px;">
+          <div class="feature-card reveal" style="background:white; padding:24px 20px; border-radius:16px; box-shadow:0 8px 24px rgba(168,85,247,0.12); border:2px solid #e9d5ff; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:0; right:0; width:100px; height:100px; background:linear-gradient(135deg, #f3e8ff 0%, transparent 100%); border-radius:0 0 0 100%;"></div>
+            <div style="width:60px; height:60px; background:linear-gradient(135deg, #a855f7 0%, #9333ea 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 8px 20px rgba(168,85,247,0.35); position:relative;">
+              <span style="font-size:32px;">🧭</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">全场景无缝切换的混合导航系统</h3>
+            <p style="font-size:13px; line-height:1.65; color:#4b5563; text-align:center;">融合室内定位与户外GPS导航，实现室内外无缝衔接的自主移动。系统能够根据环境自动切换定位方式，在复杂环境中实现厘米级定位精度，确保用户在各种场景下都能顺畅出行。</p>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.05s; background:white; padding:24px 20px; border-radius:16px; box-shadow:0 8px 24px rgba(168,85,247,0.12); border:2px solid #e9d5ff; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:0; right:0; width:100px; height:100px; background:linear-gradient(135deg, #f3e8ff 0%, transparent 100%); border-radius:0 0 0 100%;"></div>
+            <div style="width:60px; height:60px; background:linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 8px 20px rgba(147,51,234,0.35); position:relative;">
+              <span style="font-size:32px;">🤝</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">基于多模态大模型的高级人机交互</h3>
+            <p style="font-size:13px; line-height:1.65; color:#4b5563; text-align:center;">不仅能够精准理解复杂的语音指令与用户意图，还能进行情感识别与表达，提供更人性化的智能陪伴功能。系统可主动发起对话、提供天气提醒、播放音乐等，实现真正意义上的智能 companionship，使轮椅不仅是出行工具，更是用户的智能伙伴。</p>
+          </div>
+
+          <div class="feature-card reveal" style="--d:.1s; background:white; padding:24px 20px; border-radius:16px; box-shadow:0 8px 24px rgba(168,85,247,0.12); border:2px solid #e9d5ff; position:relative; overflow:hidden;">
+            <div style="position:absolute; top:0; right:0; width:100px; height:100px; background:linear-gradient(135deg, #f3e8ff 0%, transparent 100%); border-radius:0 0 0 100%;"></div>
+            <div style="width:60px; height:60px; background:linear-gradient(135deg, #c084fc 0%, #a855f7 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 8px 20px rgba(192,132,252,0.35); position:relative;">
+              <span style="font-size:32px;">🏥</span>
+            </div>
+            <h3 style="font-size:17px; font-weight:700; margin-bottom:12px; text-align:center; color:#1f2937;">远程健康监控与紧急呼叫系统</h3>
+            <p style="font-size:13px; line-height:1.65; color:#4b5563; text-align:center;">实时监测用户生命体征，在异常情况下能够自动预警并及时联系家属或急救人员，全方位保障用户的安全与健康。配合智能轮椅的辅助定位功能，救援人员可以迅速定位用户位置，提供救援效率。</p>
+          </div>
+        </div>
+
+        <div class="reveal" style="background:linear-gradient(135deg, #7e22ce 0%, #6b21a8 100%); padding:28px 36px; border-radius:16px; text-align:center; color:white; box-shadow:0 10px 30px rgba(126,34,206,0.3); border:2px solid #a855f7; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-40px; right:-40px; width:150px; height:150px; background:rgba(255,255,255,0.08); border-radius:50%;"></div>
+          <div style="position:absolute; bottom:-60px; left:-60px; width:180px; height:180px; background:rgba(255,255,255,0.06); border-radius:50%;"></div>
+          <div style="position:relative; z-index:1;">
+            <div style="font-size:40px; margin-bottom:12px;">🎖️</div>
+            <div style="font-size:19px; font-weight:700; margin-bottom:10px;">产品定位与核心价值</div>
+            <div style="font-size:14px; line-height:1.7; opacity:0.95; max-width:850px; margin:0 auto;">我们坚信，通过技术创新与人文关怀的结合，智能服务轮椅将成为行动不便人士生活中不可或缺的伙伴，为他们带来更安全、便捷、有尊严的出行体验和更具人文关怀的生活环境。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心技术一：智能导航与避障系统 -->
+    <section id="core1" class="section fp-section" data-anchor="core1" style="background: #1a1a2e;">
+      <div class="container" style="padding: 132px 20px 25px;">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <h2 style="font-size: 32px; color: white; margin-bottom: 12px; font-weight: 700;">核心技术一：智能导航与避障系统</h2>
+          <p style="font-size: 20px; color: rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto; line-height: 1.6;">通过融合多种先进传感器数据实现精准定位与环境感知，在复杂环境中为用户提供安全、平稳且高效的移动体验。</p>
+        </div>
+
+        <!-- 技术处理流程 -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 14px 20px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);">
+          <div style="display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+            <div style="flex:1; min-width:80px; text-align:center;">
+              <div style="font-size:28px; margin-bottom:6px;">🔍</div>
+              <strong style="display:block; font-size:18px; color:white;">传感器采集</strong>
+            </div>
+            <span style="font-size:20px; color:rgba(255,255,255,0.7);">→</span>
+            <div style="flex:1; min-width:80px; text-align:center;">
+              <div style="font-size:28px; margin-bottom:6px;">⚙️</div>
+              <strong style="display:block; font-size:18px; color:white;">SLAM处理</strong>
+            </div>
+            <span style="font-size:20px; color:rgba(255,255,255,0.7);">→</span>
+            <div style="flex:1; min-width:80px; text-align:center;">
+              <div style="font-size:28px; margin-bottom:6px;">🗺️</div>
+              <strong style="display:block; font-size:18px; color:white;">路径规划</strong>
+            </div>
+            <span style="font-size:20px; color:rgba(255,255,255,0.7);">→</span>
+            <div style="flex:1; min-width:80px; text-align:center;">
+              <div style="font-size:28px; margin-bottom:6px;">🚀</div>
+              <strong style="display:block; font-size:18px; color:white;">智能避障</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 核心传感器技术卡片 - 简洁版 -->
+        <h3 style="text-align:center; font-size:24px; margin-bottom:20px; color:white; font-weight:600;">核心传感器技术</h3>
+        <div id="tech-cards-container" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:20px;">
+
+          <!-- 技术卡片1：激光雷达 -->
+          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:14px; padding:20px 16px; cursor:pointer; transition:all 0.3s; text-align:center;" onclick="showTechModal('激光雷达（Lidar）', '提供高精度的环境三维点云数据，用于构建详细地图和识别障碍物。<br><br><strong>核心优势：</strong><br>• 在复杂环境中实现厘米级定位精度<br>• 实时360度环境扫描<br>• 精准障碍物检测与测距')" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(102,126,234,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size:42px; margin-bottom:8px;">🟣</div>
+            <h4 style="font-size:20px; color:white; margin:0; font-weight:700;">激光雷达</h4>
+          </div>
+
+          <!-- 技术卡片2：视觉传感器 -->
+          <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius:14px; padding:20px 16px; cursor:pointer; transition:all 0.3s; text-align:center;" onclick="showTechModal('视觉传感器（摄像头）', '提供丰富图像信息，辅助识别道路类型、交通标志以及动态障碍物。<br><br><strong>核心优势：</strong><br>• 识别行人、宠物等动态障碍物<br>• 深度学习算法分析决策<br>• 交通标志与道路类型识别')" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(240,147,251,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size:42px; margin-bottom:8px;">📷</div>
+            <h4 style="font-size:20px; color:white; margin:0; font-weight:700;">视觉传感器</h4>
+          </div>
+
+          <!-- 技术卡片3：GPS定位 -->
+          <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius:14px; padding:20px 16px; cursor:pointer; transition:all 0.3s; text-align:center;" onclick="showTechModal('高精度GPS', '在户外提供厘米级定位能力，确保轮椅在广阔空间内的精准导航。<br><br><strong>核心优势：</strong><br>• 厘米级精准定位<br>• IMU惯性测量单元辅助<br>• GPS受限区域定位保持')" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(79,172,254,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size:42px; margin-bottom:8px;">📍</div>
+            <h4 style="font-size:20px; color:white; margin:0; font-weight:700;">高精度GPS</h4>
+          </div>
+
+          <!-- 技术卡片4：SLAM技术 -->
+          <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius:14px; padding:20px 16px; cursor:pointer; transition:all 0.3s; text-align:center;" onclick="showTechModal('SLAM技术', '实时处理传感器数据，构建大规模环境地图并确定自身在地图中的精确位置。<br><br><strong>核心优势：</strong><br>• 多传感器数据融合<br>• 实时地图构建<br>• 高精度自主定位')" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(67,233,123,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size:42px; margin-bottom:8px;">🗺️</div>
+            <h4 style="font-size:20px; color:white; margin:0; font-weight:700;">SLAM技术</h4>
+          </div>
+        </div>
+
+        <!-- 核心技术优势 -->
+        <div style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%); padding:24px 28px; border-radius:16px; border:1px solid rgba(102,126,234,0.3);">
+          <h3 style="text-align:center; font-size:24px; margin-bottom:16px; color:white; font-weight:600;">✨ 核心技术优势</h3>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; max-width:900px; margin:0 auto;">
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+              <span style="color:#43e97b; font-size:20px;">✓</span>
+              <span>多传感器融合厘米级精准定位</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+              <span style="color:#43e97b; font-size:20px;">✓</span>
+              <span>实时环境感知与障碍物识别</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+              <span style="color:#43e97b; font-size:20px;">✓</span>
+              <span>智能路径规划与自主避障</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+              <span style="color:#43e97b; font-size:20px;">✓</span>
+              <span>室内外环境无缝切换导航</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      function showTechModal(title, content) {
+        const modal = document.createElement('div');
+        modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 99999; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s;';
+
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = 'background: white; border-radius: 20px; padding: 32px; max-width: 550px; width: 90%; position: relative; animation: slideUp 0.3s; max-height: 80vh; overflow-y: auto;';
+
+        modalContent.innerHTML = `
+          <button onclick="this.parentElement.parentElement.remove()" style="position: absolute; top: 16px; right: 16px; background: #f3f4f6; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 22px; color: #6b7280; transition: all 0.3s; font-weight: bold;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">×</button>
+          <h3 style="font-size: 24px; color: #1f2937; margin-bottom: 16px; font-weight: 700; padding-right: 40px;">${title}</h3>
+          <div style="font-size: 15px; color: #4b5563; line-height: 1.8;">${content}</div>
+        `;
+
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+      }
+      </script>
+    </section>
+
+    <!-- 核心技术二：智能语音交互 -->
+    <section id="llm-voice" class="section alt fp-section" data-anchor="llm-voice" style="background: #1a1a2e;">
+      <div class="container" style="padding: 88px 20px 20px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2 style="font-size: 32px; color: white; margin-bottom: 12px; font-weight: 700;">核心技术二：智能语音交互</h2>
+          <p style="font-size: 20px; color: rgba(255,255,255,0.8); max-width: 800px; margin: 0 auto; line-height: 1.6;">产品采用智能语音交互系统，通过自然语言处理技术，提升了智能轮椅的语音交互能力，使其能够理解用户指令并提供智能化的陪伴服务。</p>
+        </div>
+
+
+        <!-- 左右分栏布局 -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch;">
+
+          <!-- 左侧：2x2能力卡片（与右侧整体对称为一个容器） -->
+          <div style="display:flex; flex-direction:column; gap:12px; min-height:420px;">
+            <h3 style="text-align:center; font-size:22px; margin-bottom:14px; color:white; font-weight:600;">智能语音交互系统能力</h3>
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;">
+
+              <!-- 能力卡片1：意图识别 -->
+              <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius:14px; padding:16px; text-align:left; display:flex; gap:12px; align-items:start;height: 110px;">
+                <div style="font-size:36px; flex-shrink:0;">🧭</div>
+                <div>
+                  <h4 style="font-size:22px; color:white; margin:0 0 8px 0; font-weight:700;">意图识别</h4>
+                  <p style="font-size:18px; color:rgba(255,255,255,0.95); margin:0; line-height:1.5;">准确识别并执行复杂导航指令，如"去看病"、"帮我回家"等</p>
+                </div>
+              </div>
+
+              <!-- 能力卡片2：自然语言理解 -->
+              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:14px; padding:16px; text-align:left; display:flex; gap:12px; align-items:start;height: 110px;">
+                <div style="font-size:36px; flex-shrink:0;">🧠</div>
+                <div>
+                  <h4 style="font-size:22px; color:white; margin:0 0 8px 0; font-weight:700;">自然语言理解</h4>
+                  <p style="font-size:18px; color:rgba(255,255,255,0.95); margin:0; line-height:1.5;">处理复杂句式、模糊指令，理解用户真实需求</p>
+                </div>
+              </div>
+
+              <!-- 能力卡片3：情感识别 -->
+              <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius:14px; padding:16px; text-align:left; display:flex; gap:12px; align-items:start;height: 110px;">
+                <div style="font-size:36px; flex-shrink:0;">😊</div>
+                <div>
+                  <h4 style="font-size:22px; color:white; margin:0 0 8px 0; font-weight:700;">情感识别</h4>
+                  <p style="font-size:18px; color:rgba(255,255,255,0.95); margin:0; line-height:1.5;">识别用户情绪状态，提供个性化、人性化的响应</p>
+                </div>
+              </div>
+
+              <!-- 能力卡片4：主动陪伴 -->
+              <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius:14px; padding:16px; text-align:left; display:flex; gap:12px; align-items:start;height: 110px;">
+                <div style="font-size:36px; flex-shrink:0;">🤝</div>
+                <div>
+                  <h4 style="font-size:22px; color:white; margin:0 0 8px 0; font-weight:700;">主动陪伴</h4>
+                  <p style="font-size:18px; color:rgba(255,255,255,0.95); margin:0; line-height:1.5;">主动发起对话，播放音乐或推荐附近有趣地点</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 核心技术优势 -->
+            <div style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%); padding:24px 28px; border-radius:16px; border:1px solid rgba(102,126,234,0.3); margin-top:20px;">
+              <h3 style="text-align:center; font-size:24px; margin-bottom:16px; color:white; font-weight:600;">✨ 核心技术优势</h3>
+              <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">
+                <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+                  <span style="color:#43e97b; font-size:20px;">✓</span>
+                  <span>超越传统语音助手，实现真正智能陪伴</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+                  <span style="color:#43e97b; font-size:20px;">✓</span>
+                  <span>不仅是出行工具，更是智能伙伴</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+                  <span style="color:#43e97b; font-size:20px;">✓</span>
+                  <span>提供信息、娱乐和情感慰藉</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.9); font-size:18px;">
+                  <span style="color:#43e97b; font-size:20px;">✓</span>
+                  <span>显著提升用户生活质量</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧：智能交互示例（整体容器，与左侧等高） -->
+          <div style="display:flex; flex-direction:column; gap:12px; min-height:420px; margin-top:12px;">
+
+
+            <!-- 智能交互示例 -->
+            <div style="background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%); padding:28px; border-radius:16px; border:1px solid rgba(102,126,234,0.3); flex:1; display:flex; flex-direction:column; height:100%; min-height:0;">
+              <h3 style="text-align:center; font-size:22px; margin-bottom:14px; color:white; font-weight:600; flex-shrink:0;">💬 智能交互示例（预设对话演示）</h3>
+              <div class="chat-messages-container" style="height:280px; overflow-y:auto; margin-bottom:12px; padding-right:8px; flex-shrink:1; min-height:0;">
+              <div class="bubble user" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding:14px 18px; border-radius:18px 18px 4px 18px; margin-bottom:14px; max-width:75%; margin-left:auto; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); font-size:16px;">"我有点无聊"</div>
+              <div class="bubble ai" style="background: white; color: #1f2937; padding:14px 18px; border-radius:18px 18px 18px 4px; margin-bottom:20px; max-width:85%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size:16px; font-weight:500;">"我可以为您播放音乐，或者推荐附近的咖啡馆。您想要听听轻松的爵士乐吗？"</div>
+              <div class="bubble user" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding:14px 18px; border-radius:18px 18px 4px 18px; margin-bottom:14px; max-width:75%; margin-left:auto; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); font-size:16px;">"去公园大门"</div>
+              <div class="bubble ai" style="background: white; color: #1f2937; padding:14px 18px; border-radius:18px 18px 18px 4px; margin-bottom:20px; max-width:85%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size:16px; font-weight:500;">"正在前往公园大门，约需5分钟。沿途有一家新开的咖啡馆，需要为您导航到咖啡馆吗？"</div>
+              <div id="chatResponses"></div>
+            </div>
+
+            <!-- 输入框 -->
+            <div style="display:flex; gap:10px; align-items:center; flex-shrink:0; margin-top:4px;">
+              <input
+                type="text"
+                id="userChatInput" aria-label="体验预设对话"
+                placeholder="快来试试输入文本和我聊天吧"
+                style="flex:1; padding:14px 18px; border:2px solid rgba(102,126,234,0.3); border-radius:18px; font-size:16px; outline:none; background:white; transition:all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);"
+                onfocus="this.style.borderColor='#667eea'; this.style.boxShadow='0 4px 16px rgba(102,126,234,0.2)'"
+                onblur="this.style.borderColor='rgba(102,126,234,0.3)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'"
+                onkeydown="if(event.key==='Enter') sendChatMessage()"
+              />
+              <button
+                onclick="sendChatMessage()"
+                style="padding:14px 28px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; border:none; border-radius:18px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s; box-shadow: 0 4px 12px rgba(102,126,234,0.3); white-space:nowrap;"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102,126,234,0.5)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102,126,234,0.3)'"
+              >发送</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      function toggleLLMCard(card) {
+        const detail = card.querySelector('.ability-detail');
+        const isExpanded = card.classList.contains('expanded');
+
+        // 关闭所有其他卡片
+        document.querySelectorAll('.llm-ability-card').forEach(c => {
+          if (c !== card) {
+            c.classList.remove('expanded');
+            c.querySelector('.ability-detail').style.display = 'none';
+            c.style.transform = 'translateY(0)';
+          }
+        });
+
+        // 切换当前卡片
+        if (isExpanded) {
+          card.classList.remove('expanded');
+          detail.style.display = 'none';
+          card.style.transform = 'translateY(0)';
+        } else {
+          card.classList.add('expanded');
+          detail.style.display = 'block';
+          card.style.transform = 'translateY(-4px)';
+        }
+      }
+
+      function sendChatMessage() {
+        const input = document.getElementById('userChatInput');
+        const responsesDiv = document.getElementById('chatResponses');
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        // 添加用户消息
+        const userBubble = document.createElement('div');
+        userBubble.className = 'bubble user';
+        userBubble.style.cssText = 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding:14px 18px; border-radius:18px 18px 4px 18px; margin-bottom:14px; max-width:75%; margin-left:auto; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); animation: slideIn 0.3s ease; font-size:16px;';
+        userBubble.textContent = `"${message}"`;
+        responsesDiv.appendChild(userBubble);
+
+        input.value = '';
+
+        // 模拟AI回复
+        setTimeout(() => {
+          const responses = {
+            '公园': '好的！我可以带您去附近的公园。公园里空气清新，非常适合散步。需要我现在开始导航吗？😊',
+            '功能': '智能轮椅具有五大核心功能：🗺️ 室外导航、🛡️ 室内避障、🎙️ 语音交互、❤️ 情感陪伴、⛰️ 坡道辅助。您想了解哪个功能呢？',
+            '避障': '我们的避障系统采用多传感器融合技术，可以实时检测360度范围内的障碍物，自动规划绕行路线，确保您的安全！',
+            '天气': '今天确实是个好天气！☀️ 不如我带您去公园散散步？适度的户外活动对身心都很有益处哦。',
+            '累': '您辛苦了！要不要找个舒适的地方休息一下？我可以帮您推荐附近安静的休息区。照顾好自己很重要呢。',
+            '你好': '你好！我是智能轮椅助手，很高兴为您服务。您可以告诉我想去哪里，或者想了解哪些功能！😊',
+            '导航': '我的导航系统采用GPS和视觉SLAM融合定位，可以精准规划路线，即使在复杂环境下也能保持厘米级定位精度！',
+            '无聊': '我可以为您播放音乐，或者推荐附近有趣的地方。您想要听听轻松的音乐吗？或者我可以带您去附近的咖啡馆坐坐。'
+          };
+
+          let aiResponse = '我理解您的意思了。作为您的智能助手，我会尽力帮助您。您可以告诉我想去哪里，或者想了解轮椅的哪些功能。我随时为您服务！😊';
+
+          for (const [key, resp] of Object.entries(responses)) {
+            if (message.includes(key)) {
+              aiResponse = resp;
+              break;
+            }
+          }
+
+          const aiBubble = document.createElement('div');
+          aiBubble.className = 'bubble ai';
+          aiBubble.style.cssText = 'background: white; color: #1f2937; padding:14px 18px; border-radius:18px 18px 18px 4px; margin-bottom:20px; max-width:85%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); animation: slideIn 0.3s ease; font-size:16px; font-weight:500;';
+          aiBubble.textContent = `"${aiResponse}"`;
+          responsesDiv.appendChild(aiBubble);
+
+          // 滚动到最新消息
+          const chatContainer = document.querySelector('.chat-messages-container');
+          if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+          }
+        }, 800);
+      }
+
+      // 添加动画和滚动条样式
+      if (!document.getElementById('chatAnimationStyle')) {
+        const style = document.createElement('style');
+        style.id = 'chatAnimationStyle';
+        style.textContent = `
+          @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          /* 聊天区域滚动条样式 - 统一所有消息气泡的字体大小 */
+          .chat-messages-container .bubble.user,
+          .chat-messages-container .bubble.ai {
+            font-size: 16px !important;
+          }
+          .bubble.ai {
+            color: #1f2937 !important;
+            font-weight: 500 !important;
+          }
+          /* 聊天容器滚动条 */
+          .chat-messages-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(102,126,234,0.5) rgba(102,126,234,0.1);
+          }
+          .chat-messages-container::-webkit-scrollbar {
+            width: 8px;
+          }
+          .chat-messages-container::-webkit-scrollbar-track {
+            background: rgba(102,126,234,0.1);
+            border-radius: 10px;
+          }
+          .chat-messages-container::-webkit-scrollbar-thumb {
+            background: rgba(102,126,234,0.5);
+            border-radius: 10px;
+          }
+          .chat-messages-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(102,126,234,0.7);
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      </script>
+    </section>
+
+    <!-- 产品优势与市场竞争力 -->
+    <section id="advantage" class="section fp-section" data-anchor="advantage" style="overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 160px 20px 80px; max-width: 1600px; margin: 0 auto;">
+        <h2 class="section-title" data-i18n="productAdv.title" style="text-align: center; font-size: 32px; color: white; margin-bottom: 24px; font-weight: 700;">产品优势与市场竞争力 —— 核心优势四大维度</h2>
+
+        <!-- 四个核心优势卡片 -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 32px;">
+            <div class="feature-card" style="background: white; border-radius: 16px; padding: 28px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transition: all 0.3s; display: flex; flex-direction: column; min-height: 200px;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.18)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'">
+              <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(59,130,246,0.35); font-size: 28px;">🛡️</div>
+              <h4 style="font-size: 20px; font-weight: 700; color: #1f2937; margin: 0 0 12px 0;">安全性能</h4>
+              <p style="font-size: 14px; line-height: 1.7; color: #4b5563; margin: 0; flex: 1;">智能避障系统、全方位环境感知，确保用户在复杂环境中的安全出行，有效规避碰撞与侧翻风险。</p>
+            </div>
+
+            <div class="feature-card" style="background: white; border-radius: 16px; padding: 28px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transition: all 0.3s; display: flex; flex-direction: column; min-height: 200px;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.18)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'">
+              <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(245,158,11,0.35); font-size: 28px;">👌</div>
+              <h4 style="font-size: 20px; font-weight: 700; color: #1f2937; margin: 0 0 12px 0;">便捷操作</h4>
+              <p style="font-size: 14px; line-height: 1.7; color: #4b5563; margin: 0; flex: 1;">语音交互控制、室内精准定位、室外智能导航，阶梯式产品矩阵满足从室内到室外的多样化出行需求。</p>
+            </div>
+
+            <div class="feature-card" style="background: white; border-radius: 16px; padding: 28px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transition: all 0.3s; display: flex; flex-direction: column; min-height: 200px;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.18)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'">
+              <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(139,92,246,0.35); font-size: 28px;">🧪</div>
+              <h4 style="font-size: 20px; font-weight: 700; color: #1f2937; margin: 0 0 12px 0;">智能科技</h4>
+              <p style="font-size: 14px; line-height: 1.7; color: #4b5563; margin: 0; flex: 1;">融合大模型语音交互、全场景无缝导航、远程健康监控等前沿AI技术，提供全方位智能辅助。</p>
+            </div>
+
+            <div class="feature-card" style="background: white; border-radius: 16px; padding: 28px 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); transition: all 0.3s; display: flex; flex-direction: column; min-height: 200px;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.18)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'">
+              <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(236,72,153,0.35); font-size: 28px;">💜</div>
+              <h4 style="font-size: 20px; font-weight: 700; color: #1f2937; margin: 0 0 12px 0;">情感陪伴</h4>
+              <p style="font-size: 14px; line-height: 1.7; color: #4b5563; margin: 0; flex: 1;">人性化交互体验，主动提供陪伴对话、情感慰藉和社交互动，缓解用户孤独感，提升脑舒适度。</p>
+            </div>
+          </div>
+
+          <!-- 差异化竞争力分析 -->
+          <h3 class="section-subtitle" data-i18n="productAdv.diff" style="text-align: center; font-size: 22px; color: rgba(255,255,255,0.9); margin-bottom: 20px; font-weight: 600;">差异化竞争力分析</h3>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 1200px; margin: 0 auto;">
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px 24px;">
+              <h4 style="font-size: 18px; font-weight: 700; color: white; margin: 0 0 16px 0; padding-bottom: 10px; border-bottom: 2px solid rgba(255,255,255,0.2);">传统轮椅对比优势</h4>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>操作升级：语音交互代替复杂操纵杆</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>安全提升：智能避障系统预知碰撞</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>功控升级：从基础代步到智能辅助</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>体验升级：情感陪伴与社交孤独缓解</span>
+                </li>
+              </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px 24px;">
+              <h4 style="font-size: 18px; font-weight: 700; color: white; margin: 0 0 16px 0; padding-bottom: 10px; border-bottom: 2px solid rgba(255,255,255,0.2);">市场竞品差异化优势</h4>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>技术领先：全场景无缝切换的混合导航系统</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>全面产品线：从入门到高端完整产品矩阵</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; margin-bottom: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>用户需求洞察：深入理解行动不便人士痛点</span>
+                </li>
+                <li style="display: flex; align-items: start; gap: 12px; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.9);">
+                  <span style="color: #43e97b; font-size: 18px; font-weight: bold; flex-shrink: 0;">✓</span>
+                  <span>创新架构：前沿AI技术与辅助出行深度融合</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 产品图片展示Gallery -->
+    <section class="section fp-section" data-anchor="gallery" style="background:#f9fafb; overflow: hidden; display: flex; flex-direction: column; justify-content: center;">
+      <div class="container" style="padding: 150px 20px 25px;">
+        <h2 class="section-title reveal" style="color:#5b21b6; margin-bottom:16px;">📸 产品展示</h2>
+        <p class="reveal" style="text-align:center; font-size:16px; color:#6b7280; max-width:800px; margin:0 auto 48px;">智能轮椅在不同场景下的真实应用与功能演示</p>
+
+        <!-- 产品功能横向滚动卡片 -->
+        <div class="product-features-scroll" style="display: flex; gap: 20px; overflow-x: auto; overflow-y: hidden; padding: 16px 40px 16px 0; scroll-behavior: smooth; max-width: 1600px; margin: 0 auto;">
+          <div class="reveal" style="width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示1.webp" alt="智能轮椅室外导航" style="width:100%; height:280px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">室外导航功能</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">GPS+IMU融合定位，精准导航</p>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.05s; width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示2.webp" alt="智能轮椅室内避障" style="width:100%; height:280px; object-fit:cover;"  width="1024" height="1536" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">室内避障系统</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">360度全向感知，智能避障</p>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.1s; width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示3.webp" alt="智能轮椅语音交互" style="width:100%; height:280px; object-fit:cover;"  width="1024" height="1024" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">语音交互功能</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">大模型驱动，自然对话</p>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.15s; width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示4.webp" alt="智能轮椅情感陪伴" style="width:100%; height:280px; object-fit:cover;"  width="1024" height="1024" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">情感陪伴系统</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">有温度的智能伙伴</p>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.2s; width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示5.webp" alt="智能轮椅坡道辅助" style="width:100%; height:280px; object-fit:cover;"  width="1024" height="1536" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">坡道辅助功能</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">智能地形识别，平稳通过</p>
+            </div>
+          </div>
+
+          <div class="reveal" style="--d:.25s; width: 320px; min-width: 320px; flex-shrink: 0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.1); transition:all 0.3s; cursor:pointer; background:white; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'">
+            <img src="pictures/产品展示6.webp" alt="团队成员展示" style="width:100%; height:280px; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+            <div style="padding:20px; flex: 1; display: flex; flex-direction: column;">
+              <h4 style="font-size:17px; font-weight:700; color:#1f2937; margin-bottom:8px;">专业研发团队</h4>
+              <p style="font-size:14px; color:#6b7280; line-height:1.6;">汇聚顶尖人才，技术创新</p>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          /* 产品功能横向滚动样式 */
+          .product-features-scroll::-webkit-scrollbar {
+            height: 12px;
+          }
+
+          .product-features-scroll::-webkit-scrollbar-track {
+            background: rgba(96,165,250,0.1);
+            border-radius: 10px;
+            margin: 0 20px;
+          }
+
+          .product-features-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+          }
+
+          .product-features-scroll::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+          }
+
+          .product-features-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(59,130,246,0.6) rgba(96,165,250,0.1);
+          }
+        </style>
+
+        <!-- 技术展示横幅 -->
+        <div class="reveal" style="border-radius:20px; overflow:hidden; box-shadow:0 15px 50px rgba(0,0,0,0.15); position:relative; height:400px;">
+          <img src="pictures/技术服务.webp" alt="智能轮椅技术展示" style="width:100%; height:100%; object-fit:cover;"  width="1536" height="1024" loading="lazy" decoding="async">
+          <div style="position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(135deg, rgba(102,126,234,0.8), rgba(118,75,162,0.8)); display:flex; align-items:center; justify-content:center; flex-direction:column; color:white; padding:40px; text-align:center;">
+            <h3 style="font-size:36px; font-weight:800; margin-bottom:16px;">先进技术 · 贴心服务</h3>
+            <p style="font-size:18px; max-width:700px; line-height:1.8; opacity:0.95;">融合人工智能、大模型、物联网等前沿技术，打造新一代智能轮椅，让每一次出行都充满温暖与安全</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 未来发展与展望 -->
+    <section id="future" class="section alt fp-section" data-anchor="future" style="overflow: hidden; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, #1a1a2e 0%, #0f172a 100%);">
+      <div class="container" style="padding: 140px 20px 60px; max-width: 1600px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 48px;">
+          <h2 class="section-title" data-i18n="future.title" style="font-size: 36px; color: white; margin-bottom: 16px; font-weight: 700;">未来发展与展望</h2>
+          <p style="font-size: 18px; color: rgba(255,255,255,0.85); max-width: 900px; margin: 0 auto; line-height: 1.8;">未来，我们持续深耕智能辅助出行领域，不断迭代产品功能，探索更多应用场景，致力于构建一个无障碍、有温度的智慧生活生态系统。</p>
+        </div>
+
+        <!-- 2x2网格布局，每个卡片包含未来规划 -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-bottom: 48px;">
+          <!-- 卡片1: 技术迭代与创新 -->
+          <div class="feature-card" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 32px rgba(0,0,0,0.15); transition: all 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 32px rgba(0,0,0,0.15)'">
+            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; backdrop-filter: blur(10px);">🛠️</div>
+              <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; opacity: 0.6;">未来规划</div>
+            </div>
+            <div style="padding: 28px 24px;">
+              <h4 style="font-size: 24px; font-weight: 700; color: #1f2937; margin: 0 0 16px 0;">技术迭代与创新</h4>
+              <p style="font-size: 16px; line-height: 1.8; color: #4b5563; margin: 0;">持续优化大模型语音交互系统，提升意图识别和自然语言理解能力；完善智能导航与避障算法；提高复杂环境下的自主动移能力；增强远程健康监控功能，实现更全面的生命体征监测与预警。</p>
+            </div>
+          </div>
+
+          <!-- 卡片2: 场景拓展延伸 -->
+          <div class="feature-card" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 32px rgba(0,0,0,0.15); transition: all 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 32px rgba(0,0,0,0.15)'">
+            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; backdrop-filter: blur(10px);">🧭</div>
+              <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; opacity: 0.6;">未来规划</div>
+            </div>
+            <div style="padding: 28px 24px;">
+              <h4 style="font-size: 24px; font-weight: 700; color: #1f2937; margin: 0 0 16px 0;">场景拓展延伸</h4>
+              <p style="font-size: 16px; line-height: 1.8; color: #4b5563; margin: 0;">从室内到室外，从城市到乡村，逐步拓展智能轮椅的应用场景。针对不同环境特点，开发定制化解决方案，如复杂地形导航、极端天气适应、特定场所智能辅助等功能，最大化提升用户的独立生活能力。</p>
+            </div>
+          </div>
+
+          <!-- 卡片3: 社区生态建设 -->
+          <div class="feature-card" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 32px rgba(0,0,0,0.15); transition: all 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 32px rgba(0,0,0,0.15)'">
+            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; backdrop-filter: blur(10px);">👥</div>
+              <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; opacity: 0.6;">未来规划</div>
+            </div>
+            <div style="padding: 28px 24px;">
+              <h4 style="font-size: 24px; font-weight: 700; color: #1f2937; margin: 0 0 16px 0;">社区生态建设</h4>
+              <p style="font-size: 16px; line-height: 1.8; color: #4b5563; margin: 0;">打造智能轮椅用户社区，提供资源共享、经验交流和互助支持；开发社交功能，让用户在出行过程中建立联系，减少孤独感；与医疗机构合作，构建健康数据共享平台，实现个性化康复方案与生活建议。</p>
+            </div>
+          </div>
+
+          <!-- 卡片4: 全球市场布局 -->
+          <div class="feature-card" style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 32px rgba(0,0,0,0.15); transition: all 0.3s; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 32px rgba(0,0,0,0.15)'">
+            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; backdrop-filter: blur(10px);">🌍</div>
+              <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; opacity: 0.6;">未来规划</div>
+            </div>
+            <div style="padding: 28px 24px;">
+              <h4 style="font-size: 24px; font-weight: 700; color: #1f2937; margin: 0 0 16px 0;">全球市场布局</h4>
+              <p style="font-size: 16px; line-height: 1.8; color: #4b5563; margin: 0;">深化国际市场合作，根据各国法规和用户需求，定制本地化产品解决方案；积极参与"智慧养老"和"无障碍环境建设"全球议题，推动智能辅助设备的普及应用，为全球行动不便人士带来出行新体验。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部总结 -->
+        <div style="background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%); border: 2px solid rgba(102,126,234,0.3); border-radius: 20px; padding: 40px 48px; text-align: center; max-width: 1200px; margin: 0 auto;">
+          <p style="font-size: 18px; line-height: 1.9; color: rgba(255,255,255,0.95); margin: 0; font-weight: 500;">我们坚信，通过技术创新与人文关怀的结合，智能服务轮椅将成为行动不便人士生活中不可或缺的伙伴，为他们带来更安全、便捷、有尊严的出行体验和更具人文关怀的生活环境。</p>
+        </div>
+      </div>
+    </section>
+
+<!-- 购买咨询区域 -->
+<section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 140px 0; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1; background-image: radial-gradient(circle, white 2px, transparent 2px); background-size: 40px 40px;"></div>
+  <div class="container" style="position: relative; z-index: 1; text-align: center;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h2 class="reveal" style="--d:0s; font-size: 42px; color: white; margin-bottom: 20px; font-weight: 800;">购买咨询</h2>
+      <p class="reveal" style="--d:0.1s; font-size: 18px; color: rgba(255,255,255,0.9); line-height: 1.8; margin-bottom: 40px;">
+        如果您对智能导航轮椅感兴趣，欢迎联系我们的销售团队。<br>
+        我们将为您提供专业的产品咨询、定制化解决方案以及完善的售后服务。
+      </p>
+
+      <div class="reveal" style="--d:0.2s; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+        <a href="contact.html" style="display: inline-flex; align-items: center; gap: 12px; background: white; color: #667eea; padding: 16px 40px; border-radius: 50px; font-size: 18px; font-weight: 700; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3)'">
+          <span style="font-size: 24px;">📞</span>
+          <span>联系销售</span>
+        </a>
+
+        <a href="contact.html" style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: white; padding: 16px 40px; border-radius: 50px; font-size: 18px; font-weight: 700; text-decoration: none; border: 2px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.2)'">
+          <span style="font-size: 24px;">✉️</span>
+          <span>预约演示</span>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 50px;">
+        <div class="reveal scale" style="--d:0.3s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">🏆</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">专业团队</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">10年+研发经验</p>
+        </div>
+
+        <div class="reveal scale" style="--d:0.4s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">快速响应</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">24小时内回复</p>
+        </div>
+
+        <div class="reveal scale" style="--d:0.5s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">🛠️</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">定制服务</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">量身定制方案</p>
+        </div>
+
+        <div class="reveal scale" style="--d:0.6s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">💎</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">完善售后</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">全程跟踪服务</p>
+        </div>
+
+        <div class="reveal scale" style="--d:0.7s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">🎓</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">技术培训</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">免费操作指导</p>
+        </div>
+
+        <div class="reveal scale" style="--d:0.8s; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+          <div style="font-size: 32px; margin-bottom: 12px;">📍</div>
+          <h4 style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 8px;">上门安装</h4>
+          <p style="color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.6;">专业安装调试</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 订购模块 -->
+<section class="section fp-section" data-anchor="order" style="background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%); padding: 140px 20px 200px; position: relative; overflow: hidden;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+    <div style="text-align: center; margin-bottom: 32px;">
+      <h2 class="section-title reveal" style="font-size: 42px; color: #1e293b; margin-bottom: 12px; font-weight: 800;">📦 产品需求草稿</h2>
+      <p style="font-size: 18px; color: #64748b; max-width: 700px; margin: 0 auto 24px; line-height: 1.8;">可先整理产品需求并保存为本机草稿。此页面不会发送咨询或生成订单，正式方案与报价请与企业另行确认。</p>
+
+      <!-- 订购按钮 -->
+      <button id="openOrderModal" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 18px 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50px; font-size: 20px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(102,126,234,0.3);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(102,126,234,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(102,126,234,0.3)'">
+        <span style="font-size: 24px;">📝</span>
+        <span>填写需求草稿</span>
+      </button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1000px; margin: 0 auto;">
+      <!-- 订购流程 -->
+      <div class="reveal" style="background: white; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
+        <h3 style="font-size: 28px; color: #1e293b; margin-bottom: 24px; font-weight: 700;">📋 订购流程</h3>
+
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: flex; gap: 20px; align-items: start;">
+            <div style="min-width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700; flex-shrink: 0;">1</div>
+            <div>
+              <h4 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">填写需求草稿</h4>
+              <p style="font-size: 15px; color: #64748b; line-height: 1.6; margin: 0;">填写产品型号、数量及联系方式等信息</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: start;">
+            <div style="min-width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700; flex-shrink: 0;">2</div>
+            <div>
+              <h4 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">专业团队对接</h4>
+              <p style="font-size: 15px; color: #64748b; line-height: 1.6; margin: 0;">主动联系企业并提供已整理的需求</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: start;">
+            <div style="min-width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700; flex-shrink: 0;">3</div>
+            <div>
+              <h4 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">定制方案确认</h4>
+              <p style="font-size: 15px; color: #64748b; line-height: 1.6; margin: 0;">根据您的需求提供定制化产品方案和报价</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: start;">
+            <div style="min-width: 48px; height: 48px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 700; flex-shrink: 0;">4</div>
+            <div>
+              <h4 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">签订合同交付</h4>
+              <p style="font-size: 15px; color: #64748b; line-height: 1.6; margin: 0;">确认订单后签订合同，安排生产与交付</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订购优势 -->
+      <div class="reveal" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(102,126,234,0.3);">
+        <h3 style="font-size: 28px; color: white; margin-bottom: 24px; font-weight: 700;">✨ 订购优势</h3>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="font-size: 24px; flex-shrink: 0;">✓</div>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.95); line-height: 1.6; margin: 0;">专业团队一对一服务，全程跟踪订单进度</p>
+          </div>
+
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="font-size: 24px; flex-shrink: 0;">✓</div>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.95); line-height: 1.6; margin: 0;">支持定制化配置，满足不同使用场景需求</p>
+          </div>
+
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="font-size: 24px; flex-shrink: 0;">✓</div>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.95); line-height: 1.6; margin: 0;">快速响应，24小时内专业顾问与您联系</p>
+          </div>
+
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="font-size: 24px; flex-shrink: 0;">✓</div>
+            <p style="font-size: 16px; color: rgba(255,255,255,0.95); line-height: 1.6; margin: 0;">完善的售后服务，免费培训与技术支持</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 订购表单浮窗 -->
+<div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 10000; align-items: center; justify-content: center; padding: 20px;">
+  <div style="background: white; border-radius: 24px; padding: 0; max-width: 600px; width: 100%; max-height: 90vh; box-shadow: 0 25px 80px rgba(0,0,0,0.3); position: relative; display: flex; flex-direction: column; overflow: hidden;">
+    <!-- 关闭按钮 -->
+    <button id="closeOrderModal" style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #64748b; transition: all 0.3s; z-index: 1;" onmouseover="this.style.background='rgba(0,0,0,0.1)'; this.style.color='#1e293b'" onmouseout="this.style.background='rgba(0,0,0,0.05)'; this.style.color='#64748b'">×</button>
+
+    <!-- 表单内容 -->
+    <div style="padding: 48px 32px 40px 40px; overflow-y: auto; max-height: 90vh; flex: 1;">
+      <h3 style="font-size: 32px; color: #1e293b; margin-bottom: 8px; font-weight: 700; text-align: center;">填写需求草稿</h3>
+      <p style="font-size: 16px; color: #64748b; text-align: center; margin-bottom: 32px;">请整理需求并保存为本机草稿；信息不会发送给企业。</p>
+
+      <form id="orderForm" style="display: flex; flex-direction: column; gap: 20px;"><p class="form-notice">当前表单仅保存到本机浏览器，不会发送给企业。请勿填写敏感信息；正式咨询或投递请使用已确认的企业联系方式。附件仅记录文件名，不会上传。</p><p class="form-result" role="status" aria-live="polite"></p>
+        <!-- 产品选择 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">选择产品型号 <span style="color: #ef4444;">*</span></label>
+          <select name="product" required style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; background: white; transition: all 0.3s;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+            <option value="">请选择产品型号</option>
+            <option value="indoor">室内版智能轮椅</option>
+            <option value="outdoor-nav">室外导航版智能轮椅</option>
+            <option value="outdoor-wander">室外漫游版智能轮椅</option>
+            <option value="premium">至尊版智能轮椅</option>
+          </select>
+        </div>
+
+        <!-- 订购数量 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">订购数量 <span style="color: #ef4444;">*</span></label>
+          <input type="number" name="quantity" min="1" required placeholder="请输入订购数量" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; transition: all 0.3s; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+        </div>
+
+        <!-- 姓名 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">姓名 <span style="color: #ef4444;">*</span></label>
+          <input type="text" name="name" required placeholder="请输入您的姓名" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; transition: all 0.3s; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+        </div>
+
+        <!-- 联系电话 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">联系电话 <span style="color: #ef4444;">*</span></label>
+          <input type="tel" name="phone" required placeholder="请输入您的联系电话" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; transition: all 0.3s; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+        </div>
+
+        <!-- 邮箱 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">邮箱地址</label>
+          <input type="email" name="email" placeholder="请输入您的邮箱地址（选填）" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; transition: all 0.3s; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+        </div>
+
+        <!-- 公司/机构 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">公司/机构名称</label>
+          <input type="text" name="company" placeholder="请输入公司或机构名称（选填）" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; transition: all 0.3s; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'">
+        </div>
+
+        <!-- 备注信息 -->
+        <div>
+          <label style="display: block; font-size: 16px; font-weight: 600; color: #334155; margin-bottom: 12px;">备注信息</label>
+          <textarea name="message" rows="4" placeholder="请输入您的特殊需求或备注信息（选填）" style="width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 16px; color: #1e293b; resize: vertical; transition: all 0.3s; font-family: inherit; box-sizing: border-box;" onfocus="this.style.borderColor='#667eea'; this.style.outline='none'" onblur="this.style.borderColor='#e2e8f0'"></textarea>
+        </div>
+
+        <!-- 提交按钮 -->
+        <button type="submit" style="width: 100%; padding: 16px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(102,126,234,0.3); margin-top: 8px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 40px rgba(102,126,234,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(102,126,234,0.3)'">
+          <span style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <span>立即保存需求草稿</span>
+            <span>→</span>
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+/* 浮窗滚动条样式 */
+#orderModal > div > div::-webkit-scrollbar {
+  width: 8px;
+}
+
+#orderModal > div > div::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+#orderModal > div > div::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+#orderModal > div > div::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Firefox */
+#orderModal > div > div {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+</style>
+
+<script>
+// 订购浮窗控制
+(function() {
+  const modal = document.getElementById('orderModal');
+  const openBtn = document.getElementById('openOrderModal');
+  const closeBtn = document.getElementById('closeOrderModal');
+  const orderForm = document.getElementById('orderForm');
+
+  // 打开浮窗
+  openBtn?.addEventListener('click', function() {
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // 防止背景滚动
+    }
+  });
+
+  // 关闭浮窗
+  function closeModal() {
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = ''; // 恢复滚动
+    }
+  }
+
+  closeBtn?.addEventListener('click', closeModal);
+
+  // 点击背景关闭浮窗
+  modal?.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // ESC键关闭浮窗
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+
+  // 订购表单提交处理
+  orderForm?.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+
+    // 保存到 localStorage
+    try {
+      if (window.formSubmissionManager) {
+      const orderData = window.formSubmissionManager.saveOrder(data);
+      this.querySelector('.form-result').textContent = '需求草稿已保存在本机浏览器，尚未发送或生成订单。草稿编号：' + orderData.id;
+    } else {
+      alert('❌ 系统错误，请稍后再试。');
+      return;
+        // FormSubmissionManager unavailable
+    }
+      } catch (error) {
+        e.target.querySelector('.form-result').textContent = '本机保存失败，请检查浏览器存储空间或隐私设置。输入内容已保留。';
+        return;
+      }
+
+    // 重置表单并关闭浮窗
+    this.reset();
+  });
+})();
+</script>
+
+</main>
+  </div><!-- #fullpage-wrapper -->
+
+
+
+<script src="form-submission-manager.js"></script>
+<script src="script.js"></script>
+<script src="site-enhancements.js"></script>
+</body>
+</html>

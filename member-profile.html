@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">成员介绍 - USTB 具身智能实验室</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-enhancements.css">
+  <meta name="description" content="团队成员介绍与研究方向。">
+  <meta name="theme-color" content="#09111f">
+</head>
+<body class="theme-huaqin">
+<a class="skip-link" href="#memberProfile">跳转到主要内容</a>
+  <header class="site-header theme-huaqin">
+    <div class="container">
+      <a class="logo" href="index.html">深维智能科技-北京科技大学</a>
+      <nav class="nav" id="mainNav">
+        <button class="nav-toggle" aria-label="toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list">
+<li><a href="index.html" data-i18n="nav_home">首页</a></li>
+<li><a href="product_chair.html" data-i18n="nav_products">产品</a></li>
+<li><a href="more.html" data-i18n="hero1_title">具身智能</a></li>
+<li><a href="cases.html" data-i18n="cases_title">成果案例</a></li>
+<li><a href="members.html" data-i18n="members_title">成员介绍</a></li>
+<li><a href="partners.html" data-i18n="partners_title">合作伙伴</a></li>
+<li><a href="about.html" data-i18n="nav_sub_about">关于我们</a></li>
+<li><a href="contact.html" data-i18n="nav_sub_contact">联系我们</a></li>
+</ul>
+        <div class="tools">
+          <select id="langSwitcher" aria-label="language">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-HK">繁體中文</option>
+            <option value="en">English</option>
+          </select>
+          <button id="themeToggle">深色</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="memberProfile">
+    <!-- 返回按钮 -->
+    <a href="members.html" style="position: fixed; top: 80px; left: 24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; font-size: 24px; text-decoration: none; color: var(--primary); box-shadow: 0 4px 16px rgba(0,0,0,0.1); z-index: 100; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 24px rgba(102,126,234,0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'">
+      ←
+    </a>
+
+    <!-- Hero区 -->
+    <section id="heroSection" style="background: var(--gradient); padding: 140px 0 80px; position: relative; overflow: hidden;">
+<div aria-hidden="true" style="position:absolute; inset:0; opacity:.1; background-image:radial-gradient(circle, white 2px, transparent 2px); background-size:60px 60px;"></div>
+
+      <div class="container" style="position: relative; z-index: 1;">
+        <div style="display: flex; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto;">
+          <!-- 头像 -->
+          <div id="avatarContainer" style="flex-shrink: 0;"></div>
+
+          <!-- 基本信息 -->
+          <div style="flex: 1; color: white;">
+            <div id="positionBadge" style="display: inline-block; margin-bottom: 16px;"></div>
+            <h1 id="memberName" style="font-size: 48px; margin-bottom: 16px; font-weight: 800;"></h1>
+            <p id="memberTitle" style="font-size: 20px; opacity: 0.95; margin-bottom: 24px; line-height: 1.6;"></p>
+
+            <div id="statsContainer" style="display: flex; gap: 40px; margin-top: 32px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 研究方向 -->
+    <section class="section" style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 80px 0;">
+      <div class="container" style="max-width: 1100px;">
+        <h2 class="reveal" style="font-size: 32px; color: #1f2937; margin-bottom: 40px; text-align: center; font-weight: 700;">🔬 研究方向</h2>
+        <div id="researchAreas" class="reveal" style="--d:.1s;"></div>
+      </div>
+    </section>
+
+    <!-- 主要成果 -->
+    <section class="section" style="background: white; padding: 80px 0;">
+      <div class="container" style="max-width: 1100px;">
+        <h2 class="reveal" style="font-size: 32px; color: #1f2937; margin-bottom: 40px; text-align: center; font-weight: 700;">🏆 主要成果</h2>
+        <div id="achievements" class="reveal" style="--d:.1s;"></div>
+      </div>
+    </section>
+
+    <!-- 项目经历 -->
+    <section class="section" style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); padding: 80px 0;">
+      <div class="container" style="max-width: 1100px;">
+        <h2 class="reveal" style="font-size: 32px; color: #1f2937; margin-bottom: 40px; text-align: center; font-weight: 700;">💼 项目经历</h2>
+        <div id="projects" class="reveal" style="--d:.1s;"></div>
+      </div>
+    </section>
+
+    <!-- 代表性论文/专利 -->
+    <section class="section" style="background: white; padding: 80px 0;">
+      <div class="container" style="max-width: 1100px;">
+        <h2 class="reveal" style="font-size: 32px; color: #1f2937; margin-bottom: 40px; text-align: center; font-weight: 700;">📚 代表性成果</h2>
+        <div id="publications" class="reveal" style="--d:.1s;"></div>
+      </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section class="section" style="background: var(--gradient); padding: 60px 0;">
+      <div class="container" style="text-align: center; max-width: 800px;">
+        <h2 class="reveal" style="font-size: 28px; color: white; margin-bottom: 20px; font-weight: 700;">📮 联系方式</h2>
+        <div id="contactInfo" class="reveal" style="--d:.05s; color: rgba(255,255,255,0.95); font-size: 16px; line-height: 2;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 自定义模态框 -->
+  <div id="customModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10000; backdrop-filter: blur(8px); align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 24px; padding: 48px 40px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; animation: modalFadeIn 0.3s ease;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 72px; margin-bottom: 16px;">🚧</div>
+        <h2 id="modalTitle" style="font-size: 28px; font-weight: 800; color: #1f2937; margin-bottom: 12px;">产品开发中</h2>
+        <p id="modalMessage" style="font-size: 16px; line-height: 1.8; color: #6b7280; margin: 0;"></p>
+      </div>
+      <button onclick="closeModal()" style="width: 100%; background: var(--gradient); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 16px rgba(102,126,234,0.4);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 24px rgba(102,126,234,0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(102,126,234,0.4)'">
+        知道了
+      </button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+  </style>
+
+  <script>
+    function showModal(title, message) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMessage').textContent = message;
+      const modal = document.getElementById('customModal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('customModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeModal(); }
+    });
+
+    document.getElementById('customModal').addEventListener('click', function(e) {
+      if (e.target === this) { closeModal(); }
+    });
+
+    // 成员数据库
+    const membersData = {
+      'zhangtaohong': {
+        name: '张桃红',
+        title: '教授 · 博士生导师',
+        position: '实验室负责人',
+        positionColor: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+        avatar: 'pictures/老师.webp',
+        description: '北京科技大学计算机与通信工程学院教授、博士生导师。中国科学院研究生院博士毕业，曾赴美国哈佛-麻省理工HST（健康科学与技术）、英国拉夫堡大学3D打印组访学。现任北京图形图像学会女性科技工作者委员会副主任、中国体视学学会智慧医疗专委会常委、中国人工智能学会智慧医疗专委会委员。研究方向为人工智能、具身智能、机器视觉、计算机建模与仿真。',
+        externalLink: 'https://scce.ustb.edu.cn/shiziduiwu/jiaoshixinxi/2018-04-12/57.html',
+        stats: [
+          { label: '发表论文', value: '80+' },
+          { label: 'SCI/EI论文', value: '80篇' },
+          { label: '授权专利', value: '20项' },
+          { label: '出版教材', value: '2部' }
+        ],
+        researchAreas: [
+          { icon: '🤖', title: '人工智能', desc: '深度学习、机器学习在智能系统中的应用研究' },
+          { icon: '🦾', title: '具身智能', desc: '智能机器人、智能导航轮椅等具身智能系统研发' },
+          { icon: '👁️', title: '机器视觉', desc: '目标检测、图像分类、缺陷检测等计算机视觉技术' },
+          { icon: '🔬', title: '计算机建模与仿真', desc: '材料降解建模、分子属性预测等交叉学科研究' }
+        ],
+        achievements: [
+          '发表SCI/EI检索论文80余篇，其中SCI一区、二区论文多篇',
+          '授权国家发明专利近20项',
+          '出版教材2部（累计印刷19次，发行量22110册，销售量20000多册，被国内100多所高校使用）',
+          '2022年度北京图象图形学学会最美女科技工作者光荣称号',
+          '2022年中国人工智能学会智慧医疗会议优秀论文奖',
+          '指导研究生多人次获得国家奖学金、优秀学位论文等荣誉',
+          '北京市高等教育学会教学成果奖一等奖',
+          '中国高等教育学会教学成果奖一等奖',
+          '北京科技大学第24届教学成果奖特等奖'
+        ],
+        projects: [
+          { year: '2020-2023', name: '科技创新2030-重大项目：低资源场景的复杂领域知识迁移关键技术', role: '项目负责人', desc: '科技部项目编号：2020AAA0108703' },
+          { year: '2017-2021', name: '国家重点研发计划云计算和大数据专项', role: '项目负责人', desc: '科技部项目编号：2017YFB1002304' },
+          { year: '2010', name: '国家自然科学基金：基于大规模复杂结构知识库的知识发现机理、模型与算法研究', role: '项目负责人', desc: '项目编号：60875029' },
+          { year: '2008', name: '国家自然科学基金：多关系频繁模式挖掘模型、方法与一般架构的研究', role: '项目负责人', desc: '项目编号：60675030' },
+          { year: '2010', name: '创新方法工作专项项目：基于战略视角的企业技术创新能力评价模型及持续改进方法库研发', role: '项目负责人', desc: '项目编号：2010IM020900' },
+          { year: '2010', name: '教育部留学归国人员科研启动基金（第48批）', role: '项目负责人', desc: '研究方向：计算机建模与仿真' },
+          { year: '2020-至今', name: '厂企合作项目', role: '项目负责人', desc: '与多家企业合作开展智能检测、机器视觉等应用研究，累计10余项' }
+        ],
+        publications: [
+          'A Review of Artificial Intelligent Methods for Machined Surface Roughness Prediction, Tribology International, 2024, 199:109935. (SCI 一区, IF:6.1)',
+          'CASMatching Strategy for Automated Detection and Quantification of Carotid Artery Stenosis Based on Digital Subtraction Angiography, Computer Methods and Programs in Biomedicine, 2024, 243:107871. (SCI 二区, IF:6.1)',
+          'FE-Trans-Net: Feature enhancement based single branch deep learning model for surface roughness detection, Journal of Manufacturing Processes, 2023, 105:324-337. (SCI 二区, IF:6.2)',
+          'MD-GNN: A Mechanism-Data-Driven Graph Neural Network for Molecular Properties Prediction and New Material Discovery, Journal of Molecular Graphics and Modelling, 2023, 123:108506. (SCI, IF:2.9)',
+          'Innovative surface roughness detection method based on white light interference images. Machine Vision and Applications, 2025, 36:26.',
+          'SGNN-T: Space Graph Neural Network Based Transformer for Molecular Property Prediction, Computational Materials Science, 2025, 246:113358.',
+          'AMS-Net: Attention mechanism based multi-size dual light source network for surface roughness prediction, Journal of Manufacturing Processes, 2022, 81:371-385. (SCI 二区, 6.2)',
+          'TransG-Net: Transformer and Graph Neural Network Molecular Properties Prediction, Applied Intelligence, 2023, 53(12):16077-16088.',
+          'A structure dynamic interaction multiscale method for degradation modeling of bioresorbable polyesters, Polymer Degradation and Stability, 2021, 192:109704. (SCI一区, 影响因子:5.9)',
+          'WPC-SS: Multi Label Wear Particle Classification Based on Semantic Segmentation, Machine Vision and Applications, 2022, 33(3):1-10.',
+          'FFWR-Net: A feature fusion wear particle recognition network for wear particle classification, Journal of Mechanical Science and Technology, 2021, 35(4):1699-1710. (SCI)',
+          'DPVF: Dual-Path Vision Transformer用于急性缺血性脑卒中辅助诊断, 电子科技大学学报, 2024, 53(02):307-314.',
+          '发明专利：一种基于Lightweight CNN与SVM的磨粒两阶段识别方法 (ZL201911235914.5)',
+          '发明专利：一种图神经网络的数据-机理驱动的材料属性预测方法 (ZL202210483568.8)',
+          '发明专利：一种基于特征融合的图像分类方法 (ZL202011140530.8)',
+          '发明专利：一种基于语义分割的磨粒图像分类方法及装置 (ZL202110428069.4)',
+          '发明专利：一种基于机器视觉的铜表面氧化检测及氧化程度判断方法 (ZL202111265836.0)',
+          '发明专利：一种目标特征注意力与金字塔相耦合的微小目标检测方法 (ZL202210483555.0)',
+          '发明专利：基于强度相图的聚合物降解强度的计算方法和装置 (ZL201910525798.4)',
+          '发明专利：一种可以识别新类的磨粒分类模型与方法 (ZL202010526027.X)',
+          '发明专利：一种基于特征增强的单分支粗糙度检测方法 (ZL202310814642.4)',
+          '教材：《计算机基础与实践》（英文版）第2版, 清华大学出版社, 2019.7, ISBN:978-7-302-52854-8',
+          '教材：《计算机基础实践操作手册》（英文版）, 清华大学出版社, 2021.10, ISBN:978-7-302-58555-8'
+        ],
+        contact: {
+          email: 'zth_ustb@163.com',
+          office: '机电楼1003',
+          department: '计算机科学与技术系',
+          school: '计算机与通信工程学院',
+          university: '北京科技大学',
+          position: '教授、博士生导师'
+        }
+      },
+      'xingbowen': {
+        name: '邢博文',
+        title: '副教授 · 硕士生导师',
+        position: '学术顾问',
+        positionColor: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+        avatar: 'pictures/老师.webp',
+        description: '北京科技大学计算机与通信工程学院副教授、硕士生导师。长期从事人工智能和自然语言处理的前沿研究，专注于基于大语言模型的异构语言信息处理及其在垂直领域的应用。',
+        externalLink: 'https://scce.ustb.edu.cn/shiziduiwu/jiaoshixinxi/2025-01-10/234.html',
+        stats: [
+          { label: '发表论文', value: '10+篇' },
+          { label: '顶级期刊', value: '5篇' },
+          { label: '顶级会议', value: '5篇' },
+          { label: '科研项目', value: '4项' }
+        ],
+        researchAreas: [
+          { icon: '💬', title: '大语言模型对话系统', desc: '基于大语言模型的对话系统研究与应用' },
+          { icon: '🧠', title: '知识学习', desc: '基于大语言模型的知识学习：三元组抽取、知识库问答等复杂指令遵循' },
+          { icon: '🔤', title: '自然语言处理', desc: '异构语言信息处理及其在垂直领域的应用' },
+          { icon: '🤖', title: '人工智能', desc: '人工智能和自然语言处理的前沿研究' }
+        ],
+        achievements: [
+          '2024年国家优秀自费留学生奖学金(归国类)',
+          '研究生国家奖学金',
+          '悉尼科技大学ARC Discovery全额奖学金',
+          '近三年以第一作者在人工智能和自然语言处理领域顶级期刊和会议发表多篇高水平论文',
+          '长期担任ACL, NeurIPS, ICML, EMNLP, AAAI等会议以及IEEE TNNLS, IEEE TASLP等期刊的审稿人',
+          '中国计算机学会会员',
+          '自然语言处理专委会委员',
+          '人工智能与模式识别专委会委员'
+        ],
+        projects: [
+          { year: '2022-2025', name: '国家重点研发计划"中医药现代化"重点专项：广义望诊多维信息采集与智能处理技术的数智中医诊疗研究', role: '参与', desc: '纵向项目' },
+          { year: '2024-2026', name: '北京市科技计划项目：心脑血管、肿瘤等重大慢病中医防治数智化关键技术及应用研究', role: '参与', desc: '纵向项目' },
+          { year: '2024-2025', name: '铁矿石期货价格影响因素分析与价格预测技术研究', role: '参与', desc: '横向项目' },
+          { year: '2024', name: '基于人工智能的业务智能编排优化算法研发', role: '参与', desc: '横向项目' },
+          { year: '2024', name: '黑灯工厂模式下选矿设备大模型创新技术研究', role: '参与', desc: '横向项目' }
+        ],
+        publications: [
+          'Bowen Xing, Ivor W. Tsang. HC2L: Hybrid and Cooperative Contrastive Learning for Cross-lingual Spoken Language Understanding. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024. (CCF A类期刊, 人工智能领域顶级期刊, 中科院一区top, IF: 23.6)',
+          'Bowen Xing, Ivor W. Tsang. Co-guiding for Multi-intent Spoken Language Understanding. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024. (CCF A类期刊, 人工智能领域顶级期刊, 中科院一区top, IF: 23.6)',
+          'Bowen Xing, Ivor W. Tsang. Relational Temporal Graph Reasoning for Dual-task Dialogue Language Understanding. IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2023. (CCF A类期刊, 人工智能领域顶级期刊, 中科院一区top, IF: 23.6)',
+          'Bowen Xing, Ivor W. Tsang. Exploiting Contextual Target Attributes for Target Sentiment Classification. Journal of Artificial Intelligence Research (JAIR), 2024. (CCF B类期刊, 人工智能领域顶级期刊)',
+          'Bowen Xing, Ivor W. Tsang. Out of Context: A New Clue for Context Modeling of Aspect-based Sentiment Analysis. Journal of Artificial Intelligence Research (JAIR), 2022. (CCF B类期刊, 人工智能领域顶级期刊)',
+          'Bowen Xing, Ivor W. Tsang. DARER: Dual-task Temporal Relational Recurrent Reasoning Network for Joint Dialog Sentiment Classification and Act Recognition. EMNLP 2024. (CCF A类会议, 自然语言处理领域顶级会议)',
+          'Bowen Xing, Ivor W. Tsang. Co-guiding Net: Achieving Mutual Guidances between Multiple Intent Detection and Slot Filling via Heterogeneous Semantics-Label Graphs. ACL 2022. (CCF A类会议, 清华A类, 自然语言处理领域顶级会议)',
+          'Bowen Xing, Ivor W. Tsang. Group is better than individual: Exploiting Label Topologies and Label Relations for Joint Multiple Intent Detection and Slot Filling. EMNLP 2022. (CCF A类会议, 自然语言处理领域顶级会议)',
+          'Bowen Xing, Ivor W. Tsang. Neural Subgraph Explorer: Reducing Noisy Information via Target-oriented Syntax Graph Pruning. IJCAI 2022. (CCF B类会议, 人工智能领域顶级会议)'
+        ],
+        contact: {
+          email: 'bwxing714@gmail.com',
+          office: '机电楼1219',
+          phone: '62334547',
+          department: '计算机科学与技术系',
+          school: '计算机与通信工程学院',
+          university: '北京科技大学',
+          position: '副教授、硕士生导师'
+        }
+      },
+      'yuchunlin': {
+        name: '俞纯林',
+        title: '博士 · 在读',
+        position: '算法研究',
+        positionColor: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+        avatar: 'pictures/成员1.webp',
+        description: 'SLAM算法与视觉导航方向研究者，专注于复杂环境下的机器人定位与建图',
+        stats: [
+          { label: '发表论文', value: '5篇' },
+          { label: '参与项目', value: '3项' },
+          { label: '授权专利', value: '2项' }
+        ],
+        researchAreas: [
+          { icon: '🗺️', title: 'SLAM算法', desc: '研究视觉SLAM、激光SLAM及多传感器融合定位技术' },
+          { icon: '📸', title: '视觉导航', desc: '基于深度学习的语义导航与场景理解' },
+          { icon: '⚡', title: '实时优化', desc: '研究高效的位姿优化与回环检测算法' }
+        ],
+        achievements: [
+          '发表SCI/EI论文5篇，其中第一作者3篇',
+          '授权发明专利2项',
+          '获研究生国家奖学金1次',
+          '参与国家自然科学基金项目1项',
+          '开发开源SLAM工具包，GitHub星标200+'
+        ],
+        projects: [
+          { year: '2022-至今', name: '智能轮椅视觉导航系统', role: '核心开发', desc: '负责视觉SLAM模块开发，实现室内外无缝定位' },
+          { year: '2021-2022', name: '移动机器人语义建图', role: '算法研究', desc: '提出基于深度学习的语义地图构建方法' }
+        ],
+        publications: [
+          '俞纯林等. 基于多传感器融合的移动机器人定位方法[J]. 传感器技术学报, 2023.',
+          '俞纯林等. 语义SLAM在动态环境中的应用[C]. 中国机器人大会, 2022.',
+          '发明专利：一种基于视觉的室内外融合定位方法 (申请中)'
+        ],
+        contact: {
+          email: 'yuchunlin@xs.ustb.edu.cn',
+          github: 'github.com/yuchunlin',
+          wechat: 'ycl_slam'
+        }
+      },
+      'wanghaoyu': {
+        name: '王浩宇',
+        title: '博士 · 在读',
+        position: '深度学习',
+        positionColor: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+        avatar: 'pictures/成员2.webp',
+        description: '计算机视觉与深度学习方向研究者，专注于目标检测与图像分割算法',
+        stats: [
+          { label: '发表论文', value: '6篇' },
+          { label: '参与项目', value: '4项' },
+          { label: '授权专利', value: '3项' }
+        ],
+        researchAreas: [
+          { icon: '🎯', title: '目标检测', desc: '研究高效的目标检测算法，适用于实时场景' },
+          { icon: '✂️', title: '语义分割', desc: '开发道路分割、场景理解等分割算法' },
+          { icon: '🔍', title: '缺陷检测', desc: '工业视觉质检与表面缺陷智能识别' }
+        ],
+        achievements: [
+          '发表SCI/EI论文6篇，其中Top会议论文2篇',
+          '授权发明专利3项',
+          '获研究生学业奖学金一等奖2次',
+          '参与国家重点研发计划子课题1项',
+          'CVPR 2023挑战赛Top 10'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅环境感知系统', role: '视觉算法负责人', desc: '开发目标检测与道路分割算法，检测准确率98%+' },
+          { year: '2022-2023', name: '工业缺陷检测系统', role: '算法开发', desc: '研发多尺度缺陷检测模型，已部署于生产线' },
+          { year: '2021-2022', name: '智能分拣机器人', role: '视觉模块', desc: '实现高速目标识别与定位，分拣速度30FPS+' }
+        ],
+        publications: [
+          'Wang H, et al. Multi-scale Feature Fusion for Defect Detection[C]. CVPR Workshop, 2023.',
+          '王浩宇等. 基于注意力机制的道路分割算法[J]. 计算机学报, 2023.',
+          '发明专利：一种基于深度学习的多尺度目标检测方法 (ZL202210XXXXXX.X)'
+        ],
+        contact: {
+          email: 'wanghaoyu@xs.ustb.edu.cn',
+          github: 'github.com/wanghaoyu-cv',
+          scholar: 'scholar.google.com/wanghaoyu'
+        }
+      },
+      'libotao': {
+        name: '李博涛',
+        title: '硕士 · 在读',
+        position: '机器学习',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员3.webp',
+        description: '机器学习与数据分析方向研究者，专注于智能算法在机器人系统中的应用',
+        stats: [
+          { label: '参与项目', value: '2项' },
+          { label: '发表论文', value: '2篇' },
+          { label: '开源项目', value: '3个' }
+        ],
+        researchAreas: [
+          { icon: '🧠', title: '机器学习', desc: '研究强化学习、迁移学习等算法在机器人中的应用' },
+          { icon: '📊', title: '数据分析', desc: '传感器数据处理与特征提取' },
+          { icon: '🎮', title: '决策规划', desc: '基于学习的路径规划与决策算法' }
+        ],
+        achievements: [
+          '发表会议论文2篇',
+          '参与国家级项目1项',
+          '获研究生学业奖学金二等奖',
+          '开发数据处理工具库，团队内部广泛使用'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅决策系统', role: '算法开发', desc: '负责路径规划与避障决策模块' },
+          { year: '2022-2023', name: '传感器数据融合', role: '数据处理', desc: '开发多传感器数据融合与预处理工具' }
+        ],
+        publications: [
+          '李博涛等. 基于强化学习的移动机器人路径规划[C]. 中国自动化大会, 2023.',
+          '李博涛等. 多传感器数据融合方法研究[J]. 传感器学报, 2023.'
+        ],
+        contact: {
+          email: 'libotao@xs.ustb.edu.cn',
+          github: 'github.com/libotao'
+        }
+      },
+      'xiachenglong': {
+        name: '夏成龙',
+        title: '硕士 · 在读',
+        position: '嵌入式开发',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员4.webp',
+        description: '嵌入式系统与硬件集成方向研究者，专注于机器人底层控制与硬件开发',
+        stats: [
+          { label: '参与项目', value: '3项' },
+          { label: '硬件设计', value: '5套' },
+          { label: '系统集成', value: '2个' }
+        ],
+        researchAreas: [
+          { icon: '⚙️', title: '嵌入式系统', desc: '机器人底层控制系统开发与优化' },
+          { icon: '🔌', title: '硬件集成', desc: '传感器选型、电路设计与系统集成' },
+          { icon: '🎛️', title: '电机控制', desc: '直流电机、舵机等执行器的精准控制' }
+        ],
+        achievements: [
+          '完成智能轮椅硬件系统设计与集成',
+          '开发嵌入式控制板3套',
+          '参与项目获校级优秀成果奖',
+          '获研究生学业奖学金'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅硬件系统', role: '硬件负责人', desc: '负责电机控制、传感器集成、电源管理等硬件模块' },
+          { year: '2022-2023', name: '移动机器人底盘', role: '系统集成', desc: '设计并实现差速驱动底盘控制系统' }
+        ],
+        publications: [
+          '夏成龙等. 智能轮椅控制系统设计与实现[J]. 机电工程技术, 2023.'
+        ],
+        contact: {
+          email: 'xiachenglong@xs.ustb.edu.cn'
+        }
+      },
+      'chenzhen': {
+        name: '陈震',
+        title: '硕士 · 在读',
+        position: '软件工程',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员5.webp',
+        description: '软件工程与系统架构方向研究者，专注于机器人软件系统开发',
+        stats: [
+          { label: '参与项目', value: '2项' },
+          { label: '开发模块', value: '5个' },
+          { label: '代码贡献', value: '10k+行' }
+        ],
+        researchAreas: [
+          { icon: '💻', title: '软件开发', desc: 'ROS系统开发与模块化设计' },
+          { icon: '🏗️', title: '系统架构', desc: '机器人软件系统架构设计与优化' },
+          { icon: '🔧', title: '工具开发', desc: '开发调试工具与可视化界面' }
+        ],
+        achievements: [
+          '主导智能轮椅软件架构设计',
+          '开发ROS功能包5个',
+          '贡献代码10000+行',
+          '获团队技术贡献奖'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅软件系统', role: '软件架构师', desc: '设计整体软件架构，开发核心功能模块' },
+          { year: '2022-2023', name: '机器人调试工具', role: '开发负责人', desc: '开发可视化调试与数据记录工具' }
+        ],
+        publications: [
+          '陈震等. 基于ROS的智能轮椅软件架构设计[J]. 软件工程, 2023.'
+        ],
+        contact: {
+          email: 'chenzhen@xs.ustb.edu.cn',
+          github: 'github.com/chenzhen-robot'
+        }
+      },
+      'lin': {
+        name: '临',
+        title: '硕士 · 在读',
+        position: '语音交互',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员6.webp',
+        description: '自然语言处理与语音交互方向研究者，专注于大模型应用',
+        stats: [
+          { label: '参与项目', value: '2项' },
+          { label: '模型调优', value: '3个' },
+          { label: '交互设计', value: '5套' }
+        ],
+        researchAreas: [
+          { icon: '🎤', title: '语音交互', desc: '语音识别、语音合成与对话系统' },
+          { icon: '🤖', title: '大模型应用', desc: '基于大语言模型的智能问答与情感陪伴' },
+          { icon: '💬', title: 'NLP', desc: '自然语言理解与意图识别' }
+        ],
+        achievements: [
+          '完成智能轮椅语音交互系统开发',
+          '集成大语言模型实现情感陪伴',
+          '语音识别准确率达98%+',
+          '获研究生创新项目资助'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅语音助手', role: '核心开发', desc: '开发基于大模型的语音交互与情感陪伴系统' },
+          { year: '2022-2023', name: '多模态交互系统', role: '语音模块', desc: '研发语音+视觉的多模态交互方案' }
+        ],
+        publications: [
+          '临等. 基于大模型的智能轮椅语音交互系统[J]. 人工智能技术, 2023.'
+        ],
+        contact: {
+          email: 'lin@xs.ustb.edu.cn'
+        }
+      },
+      'xulonglong': {
+        name: '许龙龙',
+        title: '硕士 · 在读',
+        position: '图像处理',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员7.webp',
+        description: '图像处理与特征提取方向研究者，专注于工业视觉检测',
+        stats: [
+          { label: '参与项目', value: '2项' },
+          { label: '算法优化', value: '4个' },
+          { label: '发表论文', value: '1篇' }
+        ],
+        researchAreas: [
+          { icon: '🖼️', title: '图像处理', desc: '图像增强、滤波与特征提取' },
+          { icon: '🔬', title: '表面检测', desc: '纳米级粗糙度检测与缺陷识别' },
+          { icon: '⚡', title: '算法优化', desc: '实时图像处理算法加速与优化' }
+        ],
+        achievements: [
+          '参与粗糙度检测系统开发',
+          '优化图像处理算法，速度提升3倍',
+          '发表会议论文1篇',
+          '获研究生学业奖学金'
+        ],
+        projects: [
+          { year: '2023-至今', name: '粗糙度在线检测', role: '算法优化', desc: '优化图像处理算法，实现实时检测' },
+          { year: '2022-2023', name: '缺陷检测系统', role: '图像处理', desc: '开发图像预处理与特征提取模块' }
+        ],
+        publications: [
+          '许龙龙等. 基于白光干涉的表面粗糙度快速检测方法[C]. 光学技术大会, 2023.'
+        ],
+        contact: {
+          email: 'xulonglong@xs.ustb.edu.cn'
+        }
+      },
+      'zhuzhuangzhuang': {
+        name: '朱状状',
+        title: '硕士 · 在读',
+        position: '系统测试',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员8.webp',
+        description: '系统测试与质量保障方向研究者，专注于机器人系统可靠性',
+        stats: [
+          { label: '参与项目', value: '3项' },
+          { label: '测试案例', value: '200+' },
+          { label: '发现问题', value: '100+' }
+        ],
+        researchAreas: [
+          { icon: '🧪', title: '系统测试', desc: '功能测试、性能测试与压力测试' },
+          { icon: '📈', title: '质量评估', desc: '系统可靠性评估与质量保障' },
+          { icon: '🔍', title: '故障诊断', desc: '系统故障分析与问题定位' }
+        ],
+        achievements: [
+          '完成智能轮椅系统全面测试',
+          '编写测试案例200+个',
+          '发现并推动解决关键问题100+',
+          '建立测试规范与质量标准'
+        ],
+        projects: [
+          { year: '2023-至今', name: '智能轮椅系统测试', role: '测试负责人', desc: '制定测试方案，完成系统级测试与验证' },
+          { year: '2022-2023', name: '机器人可靠性测试', role: '测试工程师', desc: '进行长时间稳定性测试与性能评估' }
+        ],
+        publications: [
+          '朱状状等. 智能轮椅系统测试方法研究[J]. 测试技术学报, 2023.'
+        ],
+        contact: {
+          email: 'zhuzhuangzhuang@xs.ustb.edu.cn'
+        }
+      },
+      'ganyutong': {
+        name: '甘语桐',
+        title: '硕士 · 在读',
+        position: '前端开发',
+        positionColor: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        avatar: 'pictures/成员9.webp',
+        description: 'Web开发与人机交互界面设计方向研究者',
+        stats: [
+          { label: '参与项目', value: '2项' },
+          { label: '开发界面', value: '8个' },
+          { label: '优化体验', value: '50+' }
+        ],
+        researchAreas: [
+          { icon: '🎨', title: 'UI/UX设计', desc: '用户界面设计与交互体验优化' },
+          { icon: '💻', title: 'Web开发', desc: '前端开发与可视化展示' },
+          { icon: '📱', title: '跨平台开发', desc: '响应式设计与多端适配' }
+        ],
+        achievements: [
+          '设计并开发实验室官网',
+          '开发智能轮椅监控界面',
+          '创建数据可视化平台',
+          '获研究生学业奖学金'
+        ],
+        projects: [
+          { year: '2023-至今', name: '实验室官网开发', role: '全栈开发', desc: '设计并实现实验室官方网站' },
+          { year: '2023-至今', name: '智能轮椅监控系统', role: '前端开发', desc: '开发实时监控与数据可视化界面' },
+          { year: '2022-2023', name: '机器人调试平台', role: 'UI设计', desc: '设计用户友好的调试与配置界面' }
+        ],
+        publications: [
+          '甘语桐等. 机器人监控系统人机交互设计[J]. 计算机应用, 2023.'
+        ],
+        contact: {
+          email: 'ganyutong@xs.ustb.edu.cn',
+          github: 'github.com/ganyutong',
+          portfolio: 'ganyutong.github.io'
+        }
+      }
+    };
+
+    // 从URL获取成员ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberId = urlParams.get('id');
+
+    if (memberId && membersData[memberId]) {
+      const member = membersData[memberId];
+
+      // 设置页面标题
+      document.getElementById('pageTitle').textContent = `${member.name} - USTB 具身智能实验室`;
+
+      // 设置头像
+      document.getElementById('avatarContainer').innerHTML = `
+        <div style="width: 200px; height: 200px; border-radius: 50%; overflow: hidden; border: 6px solid white; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+          <img src="${member.avatar}" alt="${member.name}" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      `;
+
+      // 设置职位徽章
+      document.getElementById('positionBadge').innerHTML = `
+        <span style="background: ${member.positionColor}; color: white; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 700;">
+          ${member.position}
+        </span>
+      `;
+
+      // 设置基本信息
+      document.getElementById('memberName').textContent = member.name;
+      document.getElementById('memberTitle').textContent = member.title + ' · ' + member.description;
+
+      // 设置统计数据
+      const statsHTML = member.stats.map(stat => `
+        <div style="text-align: center;">
+          <div style="font-size: 32px; font-weight: 800; margin-bottom: 8px;">${stat.value}</div>
+          <div style="opacity: 0.9; font-size: 14px;">${stat.label}</div>
+        </div>
+      `).join('');
+      document.getElementById('statsContainer').innerHTML = statsHTML;
+
+      // 设置研究方向
+      const researchHTML = `
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 900px; margin: 0 auto;">
+          ${member.researchAreas.map(area => `
+            <div style="background: white; padding: 36px; border-radius: 20px; box-shadow: 0 6px 30px rgba(0,0,0,0.1); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 40px rgba(102,126,234,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 30px rgba(0,0,0,0.1)'">
+              <div style="font-size: 56px; margin-bottom: 20px;">${area.icon}</div>
+              <h3 style="font-size: 22px; color: var(--primary); margin-bottom: 16px; font-weight: 800;">${area.title}</h3>
+              <p style="color: #6b7280; line-height: 1.8; margin: 0; font-size: 15px;">${area.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('researchAreas').innerHTML = researchHTML;
+
+      // 设置主要成果
+      const achievementsHTML = `
+        <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 40px; border-radius: 20px; border-left: 6px solid var(--primary);">
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            ${member.achievements.map((achievement, index) => `
+              <li style="padding: 16px 0; border-bottom: ${index < member.achievements.length - 1 ? '1px solid rgba(102,126,234,0.1)' : 'none'}; display: flex; align-items: start; gap: 16px;">
+                <span style="background: var(--gradient); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">${index + 1}</span>
+                <span style="color: #374151; font-size: 16px; line-height: 1.8; flex: 1;">${achievement}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('achievements').innerHTML = achievementsHTML;
+
+      // 设置项目经历
+      const projectsHTML = `
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          ${member.projects.map(project => `
+            <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 4px solid var(--primary);">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <h3 style="font-size: 20px; color: #1f2937; font-weight: 700; margin: 0;">${project.name}</h3>
+                <span style="background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%); color: #7c3aed; padding: 6px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; white-space: nowrap;">${project.year}</span>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
+                <span style="background: var(--gradient); color: white; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;">担任角色</span>
+                <span style="color: var(--primary); font-weight: 600;">${project.role}</span>
+              </div>
+              <p style="color: #6b7280; line-height: 1.8; margin: 0;">${project.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('projects').innerHTML = projectsHTML;
+
+      // 设置代表性成果
+      const publicationsHTML = `
+        <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 40px; border-radius: 20px;">
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            ${member.publications.map((pub, index) => `
+              <li style="padding: 20px 0; border-bottom: ${index < member.publications.length - 1 ? '2px solid rgba(102,126,234,0.1)' : 'none'}; color: #374151; line-height: 1.8; font-size: 15px;">
+                <span style="display: inline-block; background: var(--gradient); color: white; width: 24px; height: 24px; border-radius: 6px; text-align: center; line-height: 24px; font-size: 12px; font-weight: 700; margin-right: 12px;">${index + 1}</span>
+                ${pub}
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('publications').innerHTML = publicationsHTML;
+
+      // 设置联系方式
+      const contactHTML = Object.entries(member.contact).map(([key, value]) => {
+        const labels = {
+          email: '📧 邮箱',
+          office: '🏢 办公室',
+          phone: '📱 电话',
+          github: '💻 GitHub',
+          wechat: '💬 微信',
+          scholar: '📚 Google Scholar',
+          portfolio: '🌐 个人主页',
+          department: '📋 系所',
+          school: '🏛️ 学院',
+          university: '🎓 大学',
+          position: '💼 职位'
+        };
+        return `<div>${labels[key] || key}: <strong>${value}</strong></div>`;
+      }).join('');
+
+      // 添加官网链接（如果有）
+      const externalLinkHTML = member.externalLink ? `
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 2px solid rgba(255,255,255,0.2);">
+          <a href="${member.externalLink}" target="_blank" rel="noopener noreferrer"
+             style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.2);
+                    backdrop-filter: blur(10px); color: white; padding: 14px 32px; border-radius: 50px;
+                    text-decoration: none; font-weight: 700; border: 2px solid white; transition: all 0.3s;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.2);"
+             onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(255,255,255,0.3)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(255,255,255,0.2)'">
+            <span style="font-size: 20px;">🔗</span>
+            <span>访问官网个人主页</span>
+          </a>
+        </div>
+      ` : '';
+
+      document.getElementById('contactInfo').innerHTML = contactHTML + externalLinkHTML;
+
+    } else {
+      // 如果没有找到成员，显示错误信息
+      document.getElementById('memberProfile').innerHTML = `
+        <section style="min-height: 60vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 24px;">
+          <div style="font-size: 80px;">😕</div>
+          <h1 style="font-size: 32px; color: #1f2937;">未找到该成员</h1>
+          <a href="members.html" style="background: var(--gradient); color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: 700;">返回成员列表</a>
+        </section>
+      `;
+    }
+  </script>
+
+  <script src="script.js"></script>
+<script src="site-enhancements.js"></script>
+</body>
+</html>

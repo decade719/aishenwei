@@ -1,0 +1,12 @@
+{
+  "name": "shenwei-corporate-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "深维智能科技静态企业网站",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "check": "node tools/check-site.mjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": { "node": ">=20" }
+}
