@@ -38,7 +38,11 @@ for output in target.glob('*.webp'):
             if image.width <= width:
                 continue
             small = image.resize((width, round(image.height * width / image.width)), Image.Resampling.LANCZOS)
-            small.save(responsive / f'{output.stem}-{width}.webp', quality=78 if diagram else 72, method=6)
+            # Mobile WeChat often reports a 2x/3x device-pixel ratio. Keep these
+            # variants deliberately light because the HTML caps the advertised
+            # mobile display width and prevents a jump to the 1440 px original.
+            quality = (74 if diagram else 64) if width == 480 else (78 if diagram else 68)
+            small.save(responsive / f'{output.stem}-{width}.webp', quality=quality, method=6)
             count += 1
 after = sum(p.stat().st_size for p in target.glob('*.webp'))
 print(f'Base images: {before:,} -> {after:,} bytes; reduced {(1-after/before)*100:.1f}%. Generated {count} responsive variants.')

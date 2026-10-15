@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { mkdtemp, mkdir, open, readFile, readdir, rm, writeFile } = require('node:fs/promises');
+const { mkdtemp, mkdir, open, readFile, readdir, rm, stat, writeFile } = require('node:fs/promises');
 const { tmpdir } = require('node:os');
 const { join, resolve, sep } = require('node:path');
 
@@ -42,4 +42,13 @@ test('oversized public assets fail before replacing an existing build', async t 
   finally { await oversized.close(); }
   await assert.rejects(buildSite(root), /25 MiB limit/);
   assert.equal(await readFile(join(root, 'dist/index.html'), 'utf8'), 'previous build');
+});
+
+test('mobile hero uses a preloaded lightweight candidate', async () => {
+  const root = resolve(__dirname, '..');
+  const html = await readFile(join(root, 'index.html'), 'utf8');
+  assert.match(html, /rel="preload"[^>]+智能轮椅产品-480\.webp/);
+  assert.match(html, /sizes="\(max-width: 640px\) 160px/);
+  const mobileHero = await stat(join(root, 'pictures', 'responsive', '智能轮椅产品-480.webp'));
+  assert.ok(mobileHero.size < 30 * 1024, `mobile hero is ${mobileHero.size} bytes`);
 });
