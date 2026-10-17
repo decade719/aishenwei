@@ -3,7 +3,7 @@ import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const maxAssetBytes = 25 * 1024 * 1024;
-const imagePattern = /\.(avif|gif|ico|jpe?g|png|svg|webp)$/i;
+const assetPattern = /\.(avif|gif|ico|jpe?g|mp4|png|svg|webm|webp)$/i;
 
 export async function buildSite(sourceRoot) {
   const root = await realpath(sourceRoot);
@@ -20,10 +20,10 @@ export async function buildSite(sourceRoot) {
     }
   }
   await collect('', /\.(html|css|js)$|^_(redirects|headers)$/i);
-  for (const directory of ['images', 'pictures']) {
+  for (const directory of ['images', 'pictures', 'media']) {
     const info = await lstat(join(root, directory));
     if (!info.isDirectory() || info.isSymbolicLink()) throw new Error(`Invalid asset directory: ${directory}`);
-    await collect(directory, imagePattern);
+    await collect(directory, assetPattern);
   }
   if (!files.includes('index.html')) throw new Error('Missing index.html');
 

@@ -7,7 +7,7 @@
 <meta name="description" content="深维智能科技的机器视觉、自主导航和自然交互技术方向。">
 <meta name="theme-color" content="#10243c">
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="company.css?v=20261015-layout2">
+<link rel="stylesheet" href="company.css?v=20261017-media1">
 <script src="company.js" defer>
 </script>
 </head>
@@ -99,6 +99,9 @@
 <a href="#interaction">
 <span data-en="Interaction">自然交互</span>
 </a>
+<a href="#architecture">
+<span data-en="Technical route">技术路线</span>
+</a>
 </nav>
 </div>
 </section>
@@ -146,6 +149,41 @@
 </div>
 </div>
 </article>
+</div>
+</section>
+<section class="section architecture-section" id="architecture">
+<div class="wrap">
+<div class="section-heading">
+<div><span class="small-label" data-en="Technical route from project materials">项目资料中的技术路线</span><h2 data-en="Connect understanding, perception and device control.">让理解、感知与设备控制形成闭环。</h2></div>
+<p data-en="The following is a structured presentation of the supplied project material. Target metrics are development references rather than current service commitments.">以下内容依据本次提供的项目材料整理；目标指标用于说明研发方向，不作为现阶段产品承诺。</p>
+</div>
+<div class="research-grid">
+<article><span>01</span><h3 data-en="Multimodal command understanding">多模态指令理解</h3><p data-en="Combine speech, vision and environmental context to resolve natural, sometimes ambiguous instructions.">结合语音、视觉和环境上下文，理解自然表达中的模糊指令。</p></article>
+<article><span>02</span><h3 data-en="All-round environmental perception">全向环境感知</h3><p data-en="Fuse ranging and imaging information for corridors, turning and dynamic obstacle response.">融合测距与图像信息，面向窄道、转向和动态障碍开展感知。</p></article>
+<article><span>03</span><h3 data-en="On-device privacy computing">端侧隐私计算</h3><p data-en="Keep sensitive health and environmental data on the device where the solution allows.">在方案条件允许时，让敏感的健康与环境数据优先在设备侧处理。</p></article>
+<article><span>04</span><h3 data-en="Cross-modal adaptation">跨模态适应</h3><p data-en="Align signals from different sensors to improve robustness as the environment changes.">对齐不同传感器信号，提升环境变化时的适应能力。</p></article>
+</div>
+<div class="architecture-layout">
+<div class="architecture-copy">
+<span class="small-label" data-en="Semantic understanding module">语义理解模块</span>
+<h3 data-en="Turn natural requests into constrained instructions.">把自然表达转成受约束的指令。</h3>
+<p data-en="The project material separates movement commands, destinations and conversational intent, then sends structured results to motion, navigation or dialogue modules.">项目材料将运动指令、目的地和陪伴对话等意图分别解析，再把结构化结果交给运动、导航或对话模块。</p>
+<ul class="architecture-list">
+<li><strong data-en="Movement">运动</strong><span data-en="Forward, turn, stop and other executable actions.">前进、转向、停止等可执行动作。</span></li>
+<li><strong data-en="Destination">目的地</strong><span data-en="Extract a place and pass it to route planning.">提取地点并交给路径规划。</span></li>
+<li><strong data-en="Conversation">对话</strong><span data-en="Keep companion dialogue separate from motion control.">将陪伴交流与运动控制分开处理。</span></li>
+</ul>
+</div>
+<a class="diagram-link" href="media/semantic-understanding.webp" target="_blank" rel="noopener" aria-label="查看完整语义理解模块示意图">
+<img src="media/semantic-understanding-720.webp" srcset="media/semantic-understanding-720.webp 720w, media/semantic-understanding.webp 1203w" sizes="(max-width: 960px) calc(100vw - 40px), 56vw" width="1203" height="666" alt="多意图理解与结构化输出设计示意图" loading="lazy" decoding="async">
+<span data-en="Open full diagram">查看完整示意图</span>
+</a>
+</div>
+<div class="metric-panel">
+<div><strong data-en="Target metrics">目标指标</strong><span data-en="From supplied project materials">来自项目资料</span></div>
+<dl><div><dt data-en="Speech recognition">语音识别</dt><dd>≥95%</dd></div><div><dt data-en="Mapless navigation">无图导航</dt><dd>≤0.5s</dd></div><div><dt data-en="Obstacle response">避障响应</dt><dd>≤0.3s</dd></div><div><dt data-en="Ambiguous intent parsing">模糊指令解析</dt><dd>≥92%</dd></div></dl>
+</div>
+<p class="disclosure" data-en="The values above are goals recorded in project materials. Test methods, applicable environments and measured results require separate confirmation.">以上数值为项目材料记录的目标；测试方法、适用环境与实测结果需另行确认。</p>
 </div>
 </section>
 <section class="section wash">

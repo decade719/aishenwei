@@ -34,10 +34,18 @@ npm test
 
 87 张基础图片进一步从 11,084,176 字节压缩到 5,109,790 字节，减少约 53.9%。另提供响应式小图；手机端限制图片候选宽度，避免微信浏览器因 2x / 3x 屏幕像素密度直接下载 960 或 1440 px 版本。首屏图片预加载，其余图片懒加载。普通图最大边长 1440 px、图表 1600 px、头像 480 px。原始素材保留在仓库外。
 
+产品页的新素材位于 `media/`：产品图和界面图压缩为 WebP，两段测试视频统一转为微信浏览器兼容的 H.264 MP4，并生成独立封面。视频使用 `preload="none"`，不会在打开页面时随首屏内容一起下载。约 61 秒的视频压缩为约 4.24 MiB，约 9 秒的视频压缩为约 0.52 MiB；两段视频均移除现场环境音。
+
 安装 Pillow 后，从原始图片生成（不要将压缩后的 pictures 作为输入）：
 
 ```sh
 python tools/prepare-responsive-images.py /path/to/original/pictures
+```
+
+安装 Pillow 与 PyAV 后，可从本地原始产品素材重新生成 `media/` 内容：
+
+```sh
+python tools/prepare-product-media.py --product-photo /path/to/product.png --control-ui /path/to/ui.jpg --semantic-diagram /path/to/diagram.png --following-video /path/to/following.mp4 --maneuver-video /path/to/maneuver.mp4
 ```
 
 `_headers` 为图片与共享样式设置浏览器缓存。更换同名图片后缓存最多保留七天；需要即时更新时使用新文件名。
@@ -67,7 +75,7 @@ python tools/prepare-responsive-images.py /path/to/original/pictures
 
 保存后部署最新提交。资源目录由已提交的 `wrangler.jsonc` 指定为 `./dist`，不要改成 `.`，也不要在部署命令中添加 `--assets .`。
 
-构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则、`_headers` 缓存规则和 `images/`、`pictures/` 中的图片，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
+构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则、`_headers` 缓存规则以及 `images/`、`pictures/`、`media/` 中的公开素材，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
 
 Cloudflare Workers Builds 的构建命令需在控制台显式设置；仓库中 `build.command` 为本地 Wrangler 调用提供同样的构建步骤。配置说明见 [Cloudflare Workers Builds 文档](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)。
 

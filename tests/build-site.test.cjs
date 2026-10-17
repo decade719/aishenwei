@@ -11,7 +11,7 @@ async function fixture(t) {
     assert.ok(resolve(root).startsWith(parent + sep + 'aishenwei-build-test-'));
     await rm(root, { recursive: true, force: true });
   });
-  for (const directory of ['images', 'pictures']) await mkdir(join(root, directory));
+  for (const directory of ['images', 'media', 'pictures']) await mkdir(join(root, directory));
   await writeFile(join(root, 'index.html'), '<h1>Website</h1>');
   return root;
 }
@@ -19,14 +19,15 @@ async function fixture(t) {
 test('deployment includes public assets and excludes tooling, dependencies and stale output', async t => {
   const { buildSite } = await import('../tools/build-site.mjs');
   const root = await fixture(t);
-  for (const file of ['styles.css', 'script.js', '_redirects', '_headers', 'images/icon.svg', 'pictures/产品.webp', 'pictures/responsive/产品-480.webp', 'package.json', '.env', 'README.md', 'node_modules/workerd/bin/workerd', 'tools/internal.js', 'samples/example.html', 'dist/stale.html']) {
+  for (const file of ['styles.css', 'script.js', '_redirects', '_headers', 'images/icon.svg', 'media/demo.mp4', 'pictures/产品.webp', 'pictures/responsive/产品-480.webp', 'package.json', '.env', 'README.md', 'node_modules/workerd/bin/workerd', 'tools/internal.js', 'samples/example.html', 'dist/stale.html']) {
     const destination = join(root, file);
     await mkdir(require('node:path').dirname(destination), { recursive: true });
     await writeFile(destination, file);
   }
   const result = await buildSite(root);
-  assert.equal(result.files, 8);
-  assert.deepEqual((await readdir(join(root, 'dist'))).sort(), ['_headers', '_redirects', 'images', 'index.html', 'pictures', 'script.js', 'styles.css']);
+  assert.equal(result.files, 9);
+  assert.deepEqual((await readdir(join(root, 'dist'))).sort(), ['_headers', '_redirects', 'images', 'index.html', 'media', 'pictures', 'script.js', 'styles.css']);
+  assert.equal(await readFile(join(root, 'dist/media/demo.mp4'), 'utf8'), 'media/demo.mp4');
   assert.equal(await readFile(join(root, 'dist/pictures/responsive/产品-480.webp'), 'utf8'), 'pictures/responsive/产品-480.webp');
   assert.equal(await readFile(join(root, 'dist/pictures/产品.webp'), 'utf8'), 'pictures/产品.webp');
   assert.equal(await readFile(join(root, 'node_modules/workerd/bin/workerd'), 'utf8'), 'node_modules/workerd/bin/workerd');
@@ -51,4 +52,14 @@ test('mobile hero uses a preloaded lightweight candidate', async () => {
   assert.match(html, /sizes="\(max-width: 640px\) 160px/);
   const mobileHero = await stat(join(root, 'pictures', 'responsive', '智能轮椅产品-480.webp'));
   assert.ok(mobileHero.size < 30 * 1024, `mobile hero is ${mobileHero.size} bytes`);
+});
+
+test('product demos stay click-to-load and within the mobile media budget', async () => {
+  const root = resolve(__dirname, '..');
+  const html = await readFile(join(root, 'product_chair.html'), 'utf8');
+  assert.equal((html.match(/<video[^>]+preload="none"/g) || []).length, 2);
+  for (const file of ['following-test.mp4', 'maneuver-test.mp4']) {
+    const media = await stat(join(root, 'media', file));
+    assert.ok(media.size < 5 * 1024 * 1024, `${file} is ${media.size} bytes`);
+  }
 });

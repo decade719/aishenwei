@@ -38,7 +38,7 @@ for (const file of files) {
     const path = decodeURIComponent(value.split(/[?#]/)[0]);
     if (!path || path.includes('<')) continue;
     // Ignore JavaScript string expressions which are not literal asset URLs.
-    if (!/\.(html|css|js|svg|webp|png|jpe?g)$/i.test(path)) continue;
+    if (!/\.(html|css|js|svg|webp|png|jpe?g|mp4|webm)$/i.test(path)) continue;
     references++;
     try { await access(resolve(dirname(resolve(root, file)), path)); }
     catch { failures.push(`${file}: missing ${path}`); }
