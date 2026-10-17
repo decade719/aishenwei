@@ -63,3 +63,13 @@ test('product demos stay click-to-load and within the mobile media budget', asyn
     assert.ok(media.size < 5 * 1024 * 1024, `${file} is ${media.size} bytes`);
   }
 });
+
+test('official company identity uses the supplied name and lightweight logo', async () => {
+  const root = resolve(__dirname, '..');
+  const html = await readFile(join(root, 'index.html'), 'utf8');
+  assert.match(html, /深维智能科技（镇江）有限公司/);
+  assert.match(html, /Shenwei Intelligent Technology \(Zhenjiang\) Co\., Ltd/);
+  assert.match(html, /shenwei-logo-mark-96\.png/);
+  const logo = await stat(join(root, 'images', 'shenwei-logo-mark.webp'));
+  assert.ok(logo.size < 20 * 1024, `website logo is ${logo.size} bytes`);
+});

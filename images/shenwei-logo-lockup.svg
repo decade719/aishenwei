@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="600" viewBox="0 0 720 600" role="img" aria-labelledby="title desc">
+  <title id="title">深维智能科技（镇江）有限公司</title>
+  <desc id="desc">蓝银色立体几何标志，上方环绕公司中文全称，下方为英文全称。</desc>
+  <defs>
+    <path id="company-arc" d="M 70 325 A 290 225 0 0 1 650 325"/>
+  </defs>
+  <text fill="#111820" font-family="'Noto Serif SC','Source Han Serif SC','SimSun',serif" font-size="38" font-weight="700" letter-spacing="2">
+    <textPath href="#company-arc" startOffset="50%" text-anchor="middle">深维智能科技（镇江）有限公司</textPath>
+  </text>
+  <image href="shenwei-logo-mark.webp" x="232" y="205" width="256" height="256" preserveAspectRatio="xMidYMid meet"/>
+  <text x="360" y="540" text-anchor="middle" fill="#111820" font-family="Georgia,'Times New Roman',serif" font-size="20" font-weight="700" letter-spacing="0.4">Shenwei Intelligent Technology (Zhenjiang) Co., Ltd</text>
+</svg>
