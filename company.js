@@ -62,6 +62,134 @@
   setLanguage(requested === 'en' || (!requested && read('company-language') === 'en') ? 'en' : 'zh-CN');
   language?.addEventListener('change', () => { setLanguage(language.value); write('company-language', language.value); });
 
+  // One lightweight decorative canvas per page; no image downloads or animation library.
+  function initializeParticleLight() {
+  const effectHost = document.querySelector('.home-hero, .page-head, .product-hero');
+  if (effectHost) {
+    const layer = document.createElement('div');
+    layer.className = 'particle-light';
+    layer.setAttribute('aria-hidden', 'true');
+    const canvas = document.createElement('canvas');
+    layer.append(canvas);
+    effectHost.classList.add('particle-stage');
+    effectHost.prepend(layer);
+    const context = canvas.getContext('2d');
+    if (context) {
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointer = matchMedia('(pointer: fine)');
+      const isDark = effectHost.classList.contains('home-hero');
+      const pointer = { x: -1000, y: -1000 };
+      let width = 0, height = 0, particles = [], frame = 0, previous = 0;
+      let inView = true;
+
+      function paint(time = 0) {
+        context.clearRect(0, 0, width, height);
+        const move = reduceMotion.matches ? 0 : Math.min((time - previous) / 33.33 || 1, 2);
+        previous = time;
+        const cyan = isDark ? '103,231,235' : '14,142,148';
+        const blue = isDark ? '95,164,255' : '36,104,216';
+        const reach = width < 640 ? 96 : 142;
+        particles.forEach((particle, index) => {
+          particle.x += particle.vx * move;
+          particle.y += particle.vy * move;
+          if (particle.x < -15) particle.x = width + 15;
+          if (particle.x > width + 15) particle.x = -15;
+          if (particle.y < -15) particle.y = height + 15;
+          if (particle.y > height + 15) particle.y = -15;
+          const color = index % 3 ? cyan : blue;
+          const pulse = reduceMotion.matches ? .8 : .65 + Math.sin(time / 1100 + index) * .25;
+          context.fillStyle = `rgba(${color},${pulse * (isDark ? .85 : .58)})`;
+          context.beginPath();
+          context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          context.fill();
+          if (index % 6 === 0) {
+            const glow = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, 12);
+            glow.addColorStop(0, `rgba(${color},${isDark ? .3 : .12})`);
+            glow.addColorStop(1, `rgba(${color},0)`);
+            context.fillStyle = glow;
+            context.fillRect(particle.x - 12, particle.y - 12, 24, 24);
+          }
+          for (let other = index + 1; other < particles.length; other++) {
+            const target = particles[other];
+            const distance = Math.hypot(particle.x - target.x, particle.y - target.y);
+            if (distance >= reach) continue;
+            context.strokeStyle = `rgba(${color},${(1 - distance / reach) * (isDark ? .28 : .14)})`;
+            context.lineWidth = .7;
+            context.beginPath();
+            context.moveTo(particle.x, particle.y);
+            context.lineTo(target.x, target.y);
+            context.stroke();
+          }
+          const distanceToPointer = Math.hypot(particle.x - pointer.x, particle.y - pointer.y);
+          if (finePointer.matches && distanceToPointer < 180) {
+            context.strokeStyle = `rgba(${cyan},${(1 - distanceToPointer / 180) * .55})`;
+            context.beginPath();
+            context.moveTo(particle.x, particle.y);
+            context.lineTo(pointer.x, pointer.y);
+            context.stroke();
+          }
+        });
+        if (pointer.x > 0 && finePointer.matches && !reduceMotion.matches) {
+          const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 170);
+          glow.addColorStop(0, `rgba(${cyan},${isDark ? .13 : .06})`);
+          glow.addColorStop(1, `rgba(${cyan},0)`);
+          context.fillStyle = glow;
+          context.fillRect(pointer.x - 170, pointer.y - 170, 340, 340);
+        }
+      }
+
+      function animate(time) {
+        frame = requestAnimationFrame(animate);
+        if (time - previous >= 33) paint(time);
+      }
+      function syncAnimation() {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        previous = 0;
+        effectHost.classList.toggle('particles-paused', document.hidden || !inView);
+        if (document.hidden || !inView) return;
+        paint();
+        if (!reduceMotion.matches) frame = requestAnimationFrame(animate);
+      }
+      function resize() {
+        width = effectHost.clientWidth;
+        height = effectHost.clientHeight;
+        const ratio = Math.min(devicePixelRatio || 1, width < 640 ? 1 : 1.5);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = width < 640 ? 26 : Math.min(76, Math.max(40, Math.round(width * height / 12500)));
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * width, y: Math.random() * height,
+          vx: (Math.random() - .5) * .55, vy: (Math.random() - .5) * .4,
+          radius: .8 + Math.random() * 1.5
+        }));
+        syncAnimation();
+      }
+      effectHost.addEventListener('pointermove', event => {
+        if (!finePointer.matches || reduceMotion.matches) return;
+        const bounds = effectHost.getBoundingClientRect();
+        pointer.x = event.clientX - bounds.left;
+        pointer.y = event.clientY - bounds.top;
+      }, { passive: true });
+      effectHost.addEventListener('pointerleave', () => { pointer.x = pointer.y = -1000; });
+      document.addEventListener('visibilitychange', syncAnimation);
+      reduceMotion.addEventListener('change', syncAnimation);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(entries => {
+          inView = entries[0].isIntersecting;
+          syncAnimation();
+        }).observe(effectHost);
+      }
+      if ('ResizeObserver' in window) new ResizeObserver(resize).observe(effectHost);
+      else window.addEventListener('resize', resize, { passive: true });
+      window.addEventListener('pagehide', () => cancelAnimationFrame(frame));
+      window.addEventListener('pageshow', syncAnimation);
+      resize();
+    }
+  }
+  }
+
   const form = document.querySelector('#companyContact');
   if (form) {
     form.elements.formStartedAt.value = String(Date.now());
@@ -95,4 +223,7 @@
       }
     });
   }
+  // Decorative failures must never prevent enquiry submission or navigation.
+  try { initializeParticleLight(); }
+  catch { document.querySelector('.particle-light canvas')?.remove(); }
 })();
