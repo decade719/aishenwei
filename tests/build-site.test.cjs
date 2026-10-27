@@ -92,8 +92,11 @@ test('online enquiries use the protected worker API instead of browser-only stor
   const worker = await readFile(join(root, 'worker', 'index.js'), 'utf8');
   assert.match(company, /fetch\('\/api\/contact'/);
   assert.doesNotMatch(contact, /form-submission-manager\.js/);
+  assert.match(contact, /name="website" type="hidden"/);
+  assert.match(contact, /class="admin-entry-icon"/);
   assert.match(admin, /\/api\/admin\/inquiries/);
   assert.match(worker, /env\.ADMIN_PASSWORD/);
   assert.doesNotMatch(worker, /20261027/);
   assert.doesNotMatch(admin, /20261027|adminAuthenticated/);
+  assert.doesNotMatch(admin, /togglePassword/);
 });

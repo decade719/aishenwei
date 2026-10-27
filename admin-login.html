@@ -8,8 +8,8 @@
 <title>管理登录 | 深维智能科技（镇江）有限公司</title>
 <link rel="icon" href="images/shenwei-logo-mark-96.png" type="image/png">
 <link rel="stylesheet" href="company.css?v=20261027-admin1">
-<link rel="stylesheet" href="admin.css?v=20261027-admin1">
-<script src="admin.js?v=20261027-admin1" defer></script>
+<link rel="stylesheet" href="admin.css?v=20261027-admin2">
+<script src="admin.js?v=20261027-admin2" defer></script>
 </head>
 <body class="admin-page">
 <main class="admin-login-shell">
@@ -27,13 +27,12 @@
 <form id="adminLoginForm" class="admin-login-form">
 <label for="adminPassword">管理员密码</label>
 <div class="password-field">
-<input id="adminPassword" name="password" type="password" autocomplete="current-password" required autofocus>
-<button id="togglePassword" type="button" aria-label="显示密码">显示</button>
+<input id="adminPassword" name="admin_access_code" type="password" autocomplete="new-password" aria-describedby="passwordPrivacyNote" required>
 </div>
 <button class="admin-primary" type="submit">登录管理后台</button>
 <p id="adminLoginResult" class="admin-result" role="status" aria-live="polite"></p>
 </form>
-<p class="admin-security-note">密码只在本次浏览器会话中临时使用，关闭窗口后需要重新登录。</p>
+<p id="passwordPrivacyNote" class="admin-security-note">密码只在本次浏览器会话中临时使用，输入状态不会显示密码长度，关闭窗口后需要重新登录。</p>
 </section>
 </main>
 </body>

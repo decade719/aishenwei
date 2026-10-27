@@ -4,12 +4,13 @@
   const loginResult = document.querySelector('#adminLoginResult');
   const passwordInput = document.querySelector('#adminPassword');
 
-  document.querySelector('#togglePassword')?.addEventListener('click', event => {
-    const visible = passwordInput.type === 'text';
-    passwordInput.type = visible ? 'password' : 'text';
-    event.currentTarget.textContent = visible ? '显示' : '隐藏';
-    event.currentTarget.setAttribute('aria-label', visible ? '显示密码' : '隐藏密码');
-  });
+  if (passwordInput) {
+    const updateMask = () => passwordInput.parentElement.classList.toggle('has-value', passwordInput.value.length > 0);
+    passwordInput.value = '';
+    passwordInput.addEventListener('input', updateMask);
+    window.addEventListener('pageshow', event => { if (event.persisted) { passwordInput.value = ''; updateMask(); } });
+    updateMask();
+  }
 
   loginForm?.addEventListener('submit', async event => {
     event.preventDefault();
