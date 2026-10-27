@@ -73,3 +73,13 @@ test('official company identity uses the supplied name and lightweight logo', as
   const logo = await stat(join(root, 'images', 'shenwei-logo-mark.webp'));
   assert.ok(logo.size < 20 * 1024, `website logo is ${logo.size} bytes`);
 });
+
+test('prototype front views are compressed and included on the wheelchair page', async () => {
+  const root = resolve(__dirname, '..');
+  const html = await readFile(join(root, 'product_chair.html'), 'utf8');
+  for (const file of ['wheelchair-prototype-front-dark.webp', 'wheelchair-prototype-front-light.webp']) {
+    assert.match(html, new RegExp(`media/${file.replace('.', '\\.')}`));
+    const image = await stat(join(root, 'media', file));
+    assert.ok(image.size < 10 * 1024, `${file} is ${image.size} bytes`);
+  }
+});
