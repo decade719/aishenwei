@@ -5,7 +5,8 @@
   const passwordInput = document.querySelector('#adminPassword');
 
   if (passwordInput) {
-    const updateMask = () => passwordInput.parentElement.classList.toggle('has-value', passwordInput.value.length > 0);
+    const entryState = document.querySelector('#passwordEntryState');
+    const updateMask = () => { entryState.textContent = passwordInput.value.length > 0 ? '密码已输入' : ''; };
     passwordInput.value = '';
     passwordInput.addEventListener('input', updateMask);
     window.addEventListener('pageshow', event => { if (event.persisted) { passwordInput.value = ''; updateMask(); } });
