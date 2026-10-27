@@ -89,6 +89,7 @@ test('online enquiries use the protected worker API instead of browser-only stor
   const contact = await readFile(join(root, 'contact.html'), 'utf8');
   const company = await readFile(join(root, 'company.js'), 'utf8');
   const admin = await readFile(join(root, 'admin.js'), 'utf8');
+  const adminCss = await readFile(join(root, 'admin.css'), 'utf8');
   const worker = await readFile(join(root, 'worker', 'index.js'), 'utf8');
   assert.match(company, /fetch\('\/api\/contact'/);
   assert.doesNotMatch(contact, /form-submission-manager\.js/);
@@ -99,4 +100,5 @@ test('online enquiries use the protected worker API instead of browser-only stor
   assert.doesNotMatch(worker, /20261027/);
   assert.doesNotMatch(admin, /20261027|adminAuthenticated/);
   assert.doesNotMatch(admin, /togglePassword/);
+  assert.match(adminCss, /input::\-ms-reveal/);
 });
