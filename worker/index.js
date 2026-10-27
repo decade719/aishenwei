@@ -5,6 +5,7 @@ const JSON_HEADERS = {
 };
 const MAX_BODY_BYTES = 16 * 1024;
 const loginAttempts = new Map();
+const ADMIN_PASSWORD = '20261027';
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: JSON_HEADERS });
 const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
@@ -45,14 +46,9 @@ function sameOrigin(request) {
   return !origin || origin === new URL(request.url).origin;
 }
 
-function configuredPassword(env) {
-  return typeof env.ADMIN_PASSWORD === 'string' && env.ADMIN_PASSWORD.length >= 8 ? env.ADMIN_PASSWORD : null;
-}
-
-function isAuthorized(request, env) {
-  const configured = configuredPassword(env);
+function isAuthorized(request) {
   const supplied = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') || '';
-  return Boolean(configured && supplied && timingSafeEqual(supplied, configured));
+  return Boolean(supplied && timingSafeEqual(supplied, ADMIN_PASSWORD));
 }
 
 export class InquiryStore {
@@ -136,14 +132,12 @@ export default {
       }
 
       if (request.method === 'POST' && url.pathname === '/api/admin/login') {
-        const configured = configuredPassword(env);
-        if (!configured) return json({ error: '管理员密码尚未在 Cloudflare 中配置。' }, 503);
         const client = request.headers.get('cf-connecting-ip') || 'unknown';
         const now = Date.now();
         const attempts = (loginAttempts.get(client) || []).filter(time => now - time < 15 * 60 * 1000);
         if (attempts.length >= 8) return json({ error: '尝试次数过多，请 15 分钟后再试。' }, 429);
         const { password } = await readJson(request);
-        if (!timingSafeEqual(password, configured)) {
+        if (!timingSafeEqual(password, ADMIN_PASSWORD)) {
           attempts.push(now);
           loginAttempts.set(client, attempts);
           return json({ error: '密码错误。' }, 401);
@@ -153,8 +147,7 @@ export default {
       }
 
       if (url.pathname.startsWith('/api/admin/')) {
-        if (!configuredPassword(env)) return json({ error: '管理员密码尚未在 Cloudflare 中配置。' }, 503);
-        if (!isAuthorized(request, env)) return json({ error: '登录已失效，请重新登录。' }, 401);
+        if (!isAuthorized(request)) return json({ error: '登录已失效，请重新登录。' }, 401);
         if (request.method === 'GET' && url.pathname === '/api/admin/inquiries') {
           return store.fetch(new Request('https://store/inquiries'));
         }

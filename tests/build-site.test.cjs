@@ -96,8 +96,7 @@ test('online enquiries use the protected worker API instead of browser-only stor
   assert.match(contact, /name="website" type="hidden"/);
   assert.match(contact, /class="admin-entry-icon"/);
   assert.match(admin, /\/api\/admin\/inquiries/);
-  assert.match(worker, /env\.ADMIN_PASSWORD/);
-  assert.doesNotMatch(worker, /20261027/);
+  assert.match(worker, /const ADMIN_PASSWORD = '20261027'/);
   assert.doesNotMatch(admin, /20261027|adminAuthenticated/);
   assert.doesNotMatch(admin, /togglePassword/);
   assert.doesNotMatch(admin, /passwordEntryState|updateMask/);

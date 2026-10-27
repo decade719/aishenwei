@@ -56,8 +56,7 @@ python tools/prepare-product-media.py --product-photo /path/to/product.png --con
 
 - 公司联系页通过 `/api/contact` 在线提交姓名、邮箱、电话、机构和需求说明；不接收附件，也不会自动生成订单。
 - 记录在 `InquiryStore` 的 `inquiries.json` 存储键中，以序列化 JSON 数组字符串保存；不使用 D1，也不依赖浏览器缓存。管理员可以在 `admin-login.html` 登录、搜索、查看和逐条删除。
-- 管理员密码不得写入 HTML 或 JavaScript。请在 Cloudflare Worker → Settings → Variables and Secrets 中新增加密 Secret：名称为 `ADMIN_PASSWORD`，值为管理员约定的密码。
-- 本地联调可创建不会提交到 Git 的 `.dev.vars`，内容为 `ADMIN_PASSWORD=本地测试密码`。
+- 按当前项目要求，管理员密码直接定义在 `worker/index.js` 的 `ADMIN_PASSWORD` 常量中，不需要额外配置 Cloudflare Secret。仓库公开时该密码也会公开，应仅用于低风险演示；正式收集业务资料前建议改回加密 Secret。
 - 接口包含同源检查、字段与长度校验、隐藏蜜罐字段和基础提交频率限制。业务正式运行后仍应定期导出重要记录，并按实际隐私制度确定保存期限。
 - `samples/` 为原目录中的第三方参考页面，不是企业网站页面，已排除在 Git 提交之外。
 
