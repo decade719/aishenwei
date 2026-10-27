@@ -83,3 +83,17 @@ test('prototype front views are compressed and included on the wheelchair page',
     assert.ok(image.size < 10 * 1024, `${file} is ${image.size} bytes`);
   }
 });
+
+test('online enquiries use the protected worker API instead of browser-only storage', async () => {
+  const root = resolve(__dirname, '..');
+  const contact = await readFile(join(root, 'contact.html'), 'utf8');
+  const company = await readFile(join(root, 'company.js'), 'utf8');
+  const admin = await readFile(join(root, 'admin.js'), 'utf8');
+  const worker = await readFile(join(root, 'worker', 'index.js'), 'utf8');
+  assert.match(company, /fetch\('\/api\/contact'/);
+  assert.doesNotMatch(contact, /form-submission-manager\.js/);
+  assert.match(admin, /\/api\/admin\/inquiries/);
+  assert.match(worker, /env\.ADMIN_PASSWORD/);
+  assert.doesNotMatch(worker, /20261027/);
+  assert.doesNotMatch(admin, /20261027|adminAuthenticated/);
+});

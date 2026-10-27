@@ -2,12 +2,29 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "aishenwei",
   "compatibility_date": "2026-10-12",
+  "main": "worker/index.js",
   "build": {
     "command": "npm run build"
   },
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "html_handling": "none",
-    "not_found_handling": "none"
-  }
+    "not_found_handling": "none",
+    "run_worker_first": ["/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "INQUIRY_STORE",
+        "class_name": "InquiryStore"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["InquiryStore"]
+    }
+  ]
 }

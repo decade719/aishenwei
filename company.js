@@ -64,21 +64,34 @@
 
   const form = document.querySelector('#companyContact');
   if (form) {
+    form.elements.formStartedAt.value = String(Date.now());
     const product = new URL(location.href).searchParams.get('product');
     const message = form.elements.message;
     const products = { indoor: ['室内版', 'Indoor'], outdoor: ['室外导航版', 'Outdoor navigation'], roaming: ['室外漫游版', 'Outdoor roaming'], flagship: ['综合版', 'Integrated'] };
     if (products[product]) message.value = document.documentElement.lang === 'en' ? `I would like to learn about the ${products[product][1]} wheelchair.` : `我想了解智能轮椅${products[product][0]}的产品方案。`;
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', async event => {
       event.preventDefault();
       const result = document.querySelector('#contactResult');
       const english = document.documentElement.lang === 'en';
+      const submit = form.querySelector('[type="submit"]');
+      submit.disabled = true;
+      result.textContent = english ? 'Submitting…' : '正在提交…';
       try {
-        if (!window.formSubmissionManager) throw new Error('Draft storage unavailable');
         const data = Object.fromEntries(new FormData(form));
-        window.formSubmissionManager.saveMessage(data);
-        result.textContent = english ? 'Draft saved in this browser. It has not been sent to the company.' : '需求草稿已保存在本机浏览器，尚未发送给企业。';
-      } catch {
-        result.textContent = english ? 'Could not save locally. Your text is retained; please check browser storage settings.' : '本机保存失败，输入内容已保留。请检查浏览器存储设置。';
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || 'Submit failed');
+        form.reset();
+        form.elements.formStartedAt.value = String(Date.now());
+        result.textContent = english ? 'Thank you. Your enquiry has been submitted.' : '提交成功，感谢你的咨询，我们会尽快跟进。';
+      } catch (error) {
+        result.textContent = english ? 'Submission failed. Your text has been retained; please try again later.' : (error.message || '提交失败，输入内容已保留，请稍后重试。');
+      } finally {
+        submit.disabled = false;
       }
     });
   }

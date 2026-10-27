@@ -4,13 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>联系我们 | 深维智能科技（镇江）有限公司</title>
-<meta name="description" content="整理产品与应用场景咨询需求。目前表单仅保存本机草稿，不会在线发送。">
+<meta name="description" content="向深维智能科技（镇江）有限公司提交产品、应用场景与合作咨询。">
 <meta name="theme-color" content="#10243c">
 <link rel="icon" href="images/shenwei-logo-mark-96.png" type="image/png">
 <link rel="stylesheet" href="company.css?v=20261027-logofix1">
 <script src="company.js" defer>
-</script>
-<script src="form-submission-manager.js" defer>
 </script>
 </head>
 <body class="company-page">
@@ -108,12 +106,17 @@
 <small data-en="Explore technology and research collaboration">了解技术与研究合作方向</small>
 </a>
 </div>
-<p class="disclosure" data-en="Online submission is not yet available. The form saves a draft in your browser only and does not send it to the company.">网页目前尚未开通在线发送。表单内容仅保存到你的本机浏览器，不会发送给企业。</p>
+<p class="disclosure" data-en="Your enquiry is securely submitted to the company and used only for requirement follow-up and communication.">提交的信息将在线发送给企业，仅用于需求跟进和沟通。</p>
 </aside>
 <div class="form-shell">
 <h2 data-en="Prepare an enquiry">整理咨询需求</h2>
-<p data-en="Save a local draft to continue preparing your requirements.">填写后可在本机保存，方便继续整理。</p>
+<p data-en="Tell us about the application, environment and functions you need. We will follow up using the contact details provided.">请说明应用场景、使用环境和功能需求，我们会通过你填写的联系方式跟进。</p>
 <form id="companyContact">
+<div class="contact-trap" aria-hidden="true">
+<label for="website">请勿填写此项</label>
+<input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+</div>
+<input id="formStartedAt" name="formStartedAt" type="hidden">
 <div class="field-grid">
 <div class="field">
 <label for="name">
@@ -147,11 +150,15 @@
 </textarea>
 </div>
 </div>
+<label class="consent-row">
+<input name="consent" type="checkbox" required>
+<span data-en="I agree that the information above may be used to contact me and discuss my requirements.">我同意将以上信息用于联系和需求沟通。</span>
+</label>
 <button type="submit" class="button">
-<span data-en="Save a local draft">保存本机草稿</span>
+<span data-en="Submit enquiry">提交咨询需求</span>
 </button>
 <p class="draft-note">
-<span data-en="Saved in this browser only. This does not send an enquiry or create an order. Clearing browser data removes drafts.">仅在此浏览器保存，不会发送或生成订单。清除浏览器数据会移除草稿。</span>
+<span data-en="Submitting an enquiry does not create an order. Please do not include passwords or other sensitive information.">提交咨询不会自动生成订单，请勿填写密码等敏感信息。</span>
 </p>
 <p id="contactResult" class="form-result" role="status" aria-live="polite">
 </p>
@@ -187,6 +194,9 @@
 </a>
 <a href="contact.html">
 <span data-en="Contact">联系我们</span>
+</a>
+<a href="admin-login.html" rel="nofollow">
+<span data-en="Admin">管理入口</span>
 </a>
 </div>
 </div>

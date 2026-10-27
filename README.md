@@ -1,6 +1,6 @@
 # 深维智能科技（镇江）有限公司企业网站
 
-以 HTML、CSS 和原生 JavaScript 构建的静态多页面网站。无运行时依赖，本地预览无需构建；发布时将网站文件收集到独立的 `dist/` 目录。Wrangler 仅用于 Cloudflare 部署。
+以 HTML、CSS 和原生 JavaScript 构建的多页面企业网站。公开页面作为静态资源发布；联系表单及管理员接口运行在 Cloudflare Worker 中，咨询记录以一个 JSON 数组保存到持久存储对象。发布时网站文件会收集到独立的 `dist/` 目录。
 
 ## 本地预览与检查
 
@@ -10,7 +10,7 @@
 npm run dev
 ```
 
-访问 `http://127.0.0.1:4173`。预览服务器只监听本机，不缓存页面。
+访问 `http://127.0.0.1:4173`。完整预览会同时启动公开网页、表单接口和本地持久存储。只检查静态页面时可运行 `npm run dev:static`。
 
 ```sh
 npm run check
@@ -52,14 +52,13 @@ python tools/prepare-product-media.py --product-photo /path/to/product.png --con
 
 `_headers` 为图片与共享样式设置浏览器缓存。更换同名图片后缓存最多保留七天；需要即时更新时使用新文件名。
 
-## 静态表单与本机演示的范围
+## 在线咨询与管理员入口
 
-网站尚未接入服务器、数据库或邮件发送服务：
-
-- 公司联系页只保存需求草稿到当前浏览器，不会发送给企业；已从公司页面移除招聘和订购入口。旧演示数据不代表真实业务记录。
-- 简历附件仅记录文件名，不上传文件。清除浏览器站点数据会清除本机草稿。
-- `admin-login.html` 与 `admin-dashboard.html` 是本机内容管理演示，不提供身份验证，不能读取其他访客的草稿或在线发布内容。不要存放真实业务资料。
-- 正式收集咨询、订单或简历前，应接入服务端表单接口、身份验证与访问控制，并确认页面中的企业联系方式和内容。浏览器存储不能替代业务后台。
+- 公司联系页通过 `/api/contact` 在线提交姓名、邮箱、电话、机构和需求说明；不接收附件，也不会自动生成订单。
+- 记录在 `InquiryStore` 中按一个 JSON 数组保存，不使用 D1，也不依赖浏览器缓存。管理员可以在 `admin-login.html` 登录、搜索、查看和逐条删除。
+- 管理员密码不得写入 HTML 或 JavaScript。请在 Cloudflare Worker → Settings → Variables and Secrets 中新增加密 Secret：名称为 `ADMIN_PASSWORD`，值为管理员约定的密码。
+- 本地联调可创建不会提交到 Git 的 `.dev.vars`，内容为 `ADMIN_PASSWORD=本地测试密码`。
+- 接口包含同源检查、字段与长度校验、隐藏蜜罐字段和基础提交频率限制。业务正式运行后仍应定期导出重要记录，并按实际隐私制度确定保存期限。
 - `samples/` 为原目录中的第三方参考页面，不是企业网站页面，已排除在 Git 提交之外。
 
 ## 静态托管
@@ -75,7 +74,7 @@ python tools/prepare-product-media.py --product-photo /path/to/product.png --con
 | 构建命令 | `npm run build` |
 | 部署命令 | `npx wrangler deploy` |
 
-保存后部署最新提交。资源目录由已提交的 `wrangler.jsonc` 指定为 `./dist`，不要改成 `.`，也不要在部署命令中添加 `--assets .`。
+保存后部署最新提交。资源目录由已提交的 `wrangler.jsonc` 指定为 `./dist`，Worker 入口为 `worker/index.js`；不要把资源目录改成 `.`，也不要在部署命令中添加 `--assets .`。
 
 构建只复制根目录 HTML、CSS、JS、`_redirects` 路由规则、`_headers` 缓存规则以及 `images/`、`pictures/`、`media/` 中的公开素材，并验证生成目录里的页面引用及每个文件不超过 25 MiB。`node_modules/`、Git 文件、测试、工具脚本和示例页面不会发布。每次构建会重新生成 `dist/`，无需把它提交到 Git。页面保留 `.html` 地址，`_redirects` 将 `/` 映射到首页，保持原有导航与页面脚本行为。
 

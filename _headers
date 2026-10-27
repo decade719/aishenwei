@@ -8,3 +8,9 @@
   Cache-Control: public, max-age=3600, must-revalidate
 /company.js
   Cache-Control: public, max-age=3600, must-revalidate
+/admin*.html
+  Cache-Control: no-store
+/admin.css
+  Cache-Control: no-store
+/admin.js
+  Cache-Control: no-store
