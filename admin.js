@@ -4,15 +4,6 @@
   const loginResult = document.querySelector('#adminLoginResult');
   const passwordInput = document.querySelector('#adminPassword');
 
-  if (passwordInput) {
-    const entryState = document.querySelector('#passwordEntryState');
-    const updateMask = () => { entryState.textContent = passwordInput.value.length > 0 ? '密码已输入' : ''; };
-    passwordInput.value = '';
-    passwordInput.addEventListener('input', updateMask);
-    window.addEventListener('pageshow', event => { if (event.persisted) { passwordInput.value = ''; updateMask(); } });
-    updateMask();
-  }
-
   loginForm?.addEventListener('submit', async event => {
     event.preventDefault();
     const submit = loginForm.querySelector('[type="submit"]');

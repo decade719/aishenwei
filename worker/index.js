@@ -61,6 +61,25 @@ export class InquiryStore {
     this.recent = new Map();
   }
 
+  async readRecords() {
+    const stored = await this.storage.get('inquiries.json');
+    if (stored !== undefined) {
+      if (typeof stored !== 'string') throw new Error('Invalid inquiries.json storage value');
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed)) throw new Error('Invalid inquiries.json document');
+      return parsed;
+    }
+    const legacy = await this.storage.get('inquiries');
+    if (!Array.isArray(legacy)) return [];
+    await this.writeRecords(legacy);
+    await this.storage.delete('inquiries');
+    return legacy;
+  }
+
+  async writeRecords(records) {
+    await this.storage.put('inquiries.json', JSON.stringify(records));
+  }
+
   async fetch(request) {
     const url = new URL(request.url);
     if (request.method === 'POST' && url.pathname === '/submit') {
@@ -71,23 +90,23 @@ export class InquiryStore {
       attempts.push(now);
       this.recent.set(ip, attempts);
       const inquiry = await request.json();
-      const records = (await this.storage.get('inquiries')) || [];
+      const records = await this.readRecords();
       const record = { id: crypto.randomUUID(), createdAt: new Date().toISOString(), status: 'new', ...inquiry };
       records.push(record);
       if (records.length > 2000) records.splice(0, records.length - 2000);
-      await this.storage.put('inquiries', records);
+      await this.writeRecords(records);
       return json({ ok: true, id: record.id }, 201);
     }
     if (request.method === 'GET' && url.pathname === '/inquiries') {
-      const records = (await this.storage.get('inquiries')) || [];
+      const records = await this.readRecords();
       return json({ inquiries: [...records].reverse() });
     }
     if (request.method === 'DELETE' && url.pathname.startsWith('/inquiries/')) {
       const id = decodeURIComponent(url.pathname.slice('/inquiries/'.length));
-      const records = (await this.storage.get('inquiries')) || [];
+      const records = await this.readRecords();
       const remaining = records.filter(record => record.id !== id);
       if (remaining.length === records.length) return json({ error: '未找到该记录。' }, 404);
-      await this.storage.put('inquiries', remaining);
+      await this.writeRecords(remaining);
       return json({ ok: true });
     }
     return json({ error: 'Not found' }, 404);

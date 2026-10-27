@@ -100,5 +100,24 @@ test('online enquiries use the protected worker API instead of browser-only stor
   assert.doesNotMatch(worker, /20261027/);
   assert.doesNotMatch(admin, /20261027|adminAuthenticated/);
   assert.doesNotMatch(admin, /togglePassword/);
+  assert.doesNotMatch(admin, /passwordEntryState|updateMask/);
   assert.match(adminCss, /input::\-ms-reveal/);
+});
+
+test('inquiry store persists a serialized JSON document and migrates legacy arrays', async () => {
+  const root = resolve(__dirname, '..');
+  const source = await readFile(join(root, 'worker', 'index.js'), 'utf8');
+  const worker = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+  const values = new Map([['inquiries', [{ id: 'legacy', createdAt: '2026-10-27T00:00:00.000Z', name: '旧记录' }]]]);
+  const storage = {
+    get: key => values.get(key),
+    put: (key, value) => values.set(key, value),
+    delete: key => values.delete(key)
+  };
+  const store = new worker.InquiryStore({ storage });
+  const migrated = await store.fetch(new Request('https://store/inquiries'));
+  assert.equal((await migrated.json()).inquiries[0].id, 'legacy');
+  assert.equal(typeof values.get('inquiries.json'), 'string');
+  assert.deepEqual(JSON.parse(values.get('inquiries.json'))[0].id, 'legacy');
+  assert.equal(values.has('inquiries'), false);
 });
