@@ -1,13 +1,17 @@
-/* A compact reading scale: headings stay 3–4 px above body copy. */
-:root{--type-body:18px;--type-heading:22px;--type-card:21px;--type-note:16px;--type-small:14px}
+/* Readable body copy, with a modest extra step for page and section titles. */
+:root{--type-body:18px;--type-page-title:28px;--type-section-title:26px;--type-heading:22px;--type-card:21px;--type-note:16px;--type-small:14px}
 body.company-page,body.partner-profile-page{font-size:var(--type-body);line-height:1.8}
-body.company-page main :is(h1,h2),body.partner-profile-page main :is(h1,h2){font-size:var(--type-heading);line-height:1.5;letter-spacing:0;font-weight:700}
+body.company-page main :is(h1,h2),body.partner-profile-page main :is(h1,h2){line-height:1.5;letter-spacing:0;font-weight:700;text-wrap:wrap}
+body.company-page main h1,body.partner-profile-page main h1{font-size:var(--type-page-title)}
+body.company-page main h2,body.partner-profile-page main h2{font-size:var(--type-section-title)}
 body.company-page main h3,body.partner-profile-page main h3{font-size:var(--type-card);line-height:1.5;letter-spacing:0;font-weight:650}
 body.company-page main :is(p,li,dd){font-size:var(--type-body);line-height:1.8}
 body.company-page .intro-text,body.company-page .home-hero .intro-text,body.company-page .product-hero .intro-text{font-size:var(--type-body);line-height:1.85}
 .company-page .home-hero h1{font-weight:750;line-height:1.55}
 .company-page .section-heading h2{max-width:38em}
 .company-page .balanced-heading>span{display:inline}
+body.company-page main .heading-lines>span{display:inline}
+html[lang=en] .company-page .heading-lines>span+span:before{content:' '}
 .company-page .small-label,.company-page .status,.company-page .breadcrumb,.company-page .hero-topics{font-size:var(--type-note);line-height:1.65;letter-spacing:.02em}
 .company-page .hero-topics{gap:16px}
 .company-page .feature-list :is(strong,span),.company-page .architecture-list :is(strong,span){font-size:var(--type-body);line-height:1.8}
@@ -52,14 +56,16 @@ body.company-page .intro-text,body.company-page .home-hero .intro-text,body.comp
 .company-footer .company-brand{max-width:100%;white-space:normal}
 .company-footer .company-brand>span{min-width:0}
 .company-footer .brand-name{font-size:var(--type-body);line-height:1.6}
-.company-footer .brand-en{font-size:var(--type-small);line-height:1.6}
+.company-footer .brand-en{max-width:none;font-size:var(--type-small);line-height:1.6;letter-spacing:0;text-wrap:balance}
+.company-footer .footer-main>div:first-child{min-width:0}
 .company-footer .footer-main p,.company-footer .footer-links a{font-size:var(--type-note);line-height:1.8}
 .company-footer .footer-bottom{font-size:var(--type-small);line-height:1.8}
 
 /* Research profiles have legacy inline sizes; override text, leaving icon sizes alone. */
-#memberProfile :is(h1,h2){font-size:var(--type-heading)!important;line-height:1.5!important}
+#memberProfile h1{font-size:var(--type-page-title)!important;line-height:1.5!important}
+#memberProfile h2{font-size:var(--type-section-title)!important;line-height:1.5!important}
 #memberProfile h3{font-size:var(--type-card)!important;line-height:1.5!important}
-#memberProfile #memberName{font-size:var(--type-heading)!important;line-height:1.5!important}
+#memberProfile #memberName{font-size:var(--type-page-title)!important;line-height:1.5!important}
 #memberProfile #memberTitle,#memberProfile :is(p,li),#memberProfile #contactInfo{font-size:var(--type-body)!important;line-height:1.8!important}
 #memberProfile :is([style*="font-size: 12px"],[style*="font-size: 13px"],[style*="font-size: 14px"],[style*="font-size: 15px"]):not(h1,h2,h3){font-size:var(--type-note)!important}
 #memberProfile :is([style*="font-size: 16px"],[style*="font-size: 18px"],[style*="font-size: 20px"]):not(h1,h2,h3){font-size:var(--type-body)!important}
@@ -83,7 +89,7 @@ body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!im
   .company-header .theme-switch{width:44px;height:44px}
 }
 @media(max-width:640px){
-  :root{--type-body:16px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
+  :root{--type-body:16px;--type-page-title:24px;--type-section-title:23px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
   .company-header .header-row{min-height:72px;gap:12px}
   .company-header .company-brand{flex:1;white-space:normal;gap:8px}
   .company-header .brand-name{font-size:16px;line-height:1.45;overflow-wrap:anywhere}
