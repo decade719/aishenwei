@@ -16,7 +16,7 @@
   document.querySelector('.company-header')?.addEventListener('focusout', event => {
     if (event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) closeMenu();
   });
-  matchMedia('(min-width:1181px)').addEventListener('change', closeMenu);
+  matchMedia('(min-width:1361px)').addEventListener('change', closeMenu);
 
   const read = key => { try { return localStorage.getItem(key); } catch { return null; } };
   const write = (key, value) => { try { localStorage.setItem(key, value); } catch {} };

@@ -1,0 +1,109 @@
+/* A compact reading scale: headings stay 3–4 px above body copy. */
+:root{--type-body:18px;--type-heading:22px;--type-card:21px;--type-note:16px;--type-small:14px}
+body.company-page,body.partner-profile-page{font-size:var(--type-body);line-height:1.8}
+body.company-page main :is(h1,h2),body.partner-profile-page main :is(h1,h2){font-size:var(--type-heading);line-height:1.5;letter-spacing:0;font-weight:700}
+body.company-page main h3,body.partner-profile-page main h3{font-size:var(--type-card);line-height:1.5;letter-spacing:0;font-weight:650}
+body.company-page main :is(p,li,dd){font-size:var(--type-body);line-height:1.8}
+body.company-page .intro-text,body.company-page .home-hero .intro-text,body.company-page .product-hero .intro-text{font-size:var(--type-body);line-height:1.85}
+.company-page .home-hero h1{font-weight:750;line-height:1.55}
+.company-page .section-heading h2{max-width:38em}
+.company-page .balanced-heading>span{display:inline}
+.company-page .small-label,.company-page .status,.company-page .breadcrumb,.company-page .hero-topics{font-size:var(--type-note);line-height:1.65;letter-spacing:.02em}
+.company-page .hero-topics{gap:16px}
+.company-page .feature-list :is(strong,span),.company-page .architecture-list :is(strong,span){font-size:var(--type-body);line-height:1.8}
+.company-page .feature-list li{grid-template-columns:110px minmax(0,1fr)}
+.company-page .capability-points,.company-page .variant ul,.company-page .variant .text-link,.company-page .platform-card .text-link,.company-page .range-link{font-size:var(--type-body)}
+.company-page .button,.company-page .text-link,.company-page .section-nav a,.company-page .product-section-nav a{font-size:var(--type-body);line-height:1.6}
+.company-page summary{font-size:var(--type-card);line-height:1.6}
+.company-page .prototype-view-card strong{font-size:var(--type-card);line-height:1.5}
+.company-page .prototype-view-card span{font-size:var(--type-body);line-height:1.8}
+.company-page .case-tags span,.company-page .process-list>li>span,.company-page .diagram-link>span{font-size:var(--type-note);line-height:1.7}
+.company-page .card-index,.company-page .capability-index,.company-page .range-code,.company-page .edge-point-index,.company-page .research-grid article>span{font-size:var(--type-note);letter-spacing:.04em}
+.company-page .edge-box-points dt,.company-page .edge-box-points dd{font-size:var(--type-body);line-height:1.8}
+.company-page .edge-box-points>div{grid-template-columns:160px minmax(0,1fr)}
+.company-page .comparison-table{font-size:var(--type-body);min-width:1050px;line-height:1.75}
+.company-page .comparison-table th,.company-page .comparison-table td{font-size:inherit}
+.company-page .comparison-table tbody th{min-width:130px}
+.company-page .metric-panel dt,.company-page .metric-panel>div strong{font-size:var(--type-body)}
+.company-page .metric-panel dd{font-size:var(--type-heading);line-height:1.5}
+.company-page .metric-panel>div span{font-size:var(--type-note)}
+.company-page .field label,.company-page .consent-row,.company-page .draft-note{font-size:var(--type-note);line-height:1.75}
+.company-page .field :is(input,textarea,select){font-size:var(--type-body);line-height:1.6}
+.company-page .form-result{font-size:var(--type-body)}
+.company-page .contact-detail strong{font-size:var(--type-body)}
+.company-page .contact-detail small,.company-page .contact-detail>span>span{font-size:var(--type-note)}
+.company-page .contact-options small{font-size:var(--type-note);line-height:1.75}
+.company-page .platform-visual figcaption{font-size:var(--type-note)}
+.company-page .signal-core strong{font-size:var(--type-body)}
+.company-page .signal-core small,.company-page .signal-node span{font-size:var(--type-small);letter-spacing:.04em}
+.company-page .signal-node strong{font-size:var(--type-note);line-height:1.6}
+.company-page .signal-node{min-width:114px}
+
+/* Navigation remains readable without squeezing the company name. */
+.company-header .company-brand{min-width:0}
+.company-header .company-brand>span{min-width:0}
+.company-header .brand-name{font-size:20px;line-height:1.5;letter-spacing:0}
+.company-header .brand-en{font-size:12px;line-height:1.6;letter-spacing:.01em}
+.company-header .company-links a{font-size:18px;font-weight:600;line-height:1.6}
+.company-header .company-links{gap:18px}
+.company-header .nav-panel{gap:18px}
+.company-header .nav-tools select{font-size:16px}
+.company-header .header-row{gap:22px}
+.company-footer .company-brand{max-width:100%;white-space:normal}
+.company-footer .company-brand>span{min-width:0}
+.company-footer .brand-name{font-size:var(--type-body);line-height:1.6}
+.company-footer .brand-en{font-size:var(--type-small);line-height:1.6}
+.company-footer .footer-main p,.company-footer .footer-links a{font-size:var(--type-note);line-height:1.8}
+.company-footer .footer-bottom{font-size:var(--type-small);line-height:1.8}
+
+/* Research profiles have legacy inline sizes; override text, leaving icon sizes alone. */
+#memberProfile :is(h1,h2){font-size:var(--type-heading)!important;line-height:1.5!important}
+#memberProfile h3{font-size:var(--type-card)!important;line-height:1.5!important}
+#memberProfile #memberName{font-size:var(--type-heading)!important;line-height:1.5!important}
+#memberProfile #memberTitle,#memberProfile :is(p,li),#memberProfile #contactInfo{font-size:var(--type-body)!important;line-height:1.8!important}
+#memberProfile :is([style*="font-size: 12px"],[style*="font-size: 13px"],[style*="font-size: 14px"],[style*="font-size: 15px"]):not(h1,h2,h3){font-size:var(--type-note)!important}
+#memberProfile :is([style*="font-size: 16px"],[style*="font-size: 18px"],[style*="font-size: 20px"]):not(h1,h2,h3){font-size:var(--type-body)!important}
+body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!important;line-height:1.8!important}
+#memberProfile #statsContainer>div>div:first-child{font-size:var(--type-heading)!important}
+#memberProfile #positionBadge>span{font-size:var(--type-note)!important}
+#memberProfile #contactInfo{overflow-wrap:anywhere}
+#memberProfile #projects [style*="justify-content: space-between"]{flex-wrap:wrap;gap:12px}
+
+@media(max-width:1360px){
+  .company-header .menu-button{display:block;flex:none}
+  .company-header .header-row{min-height:76px}
+  .company-header .company-nav .nav-panel{display:none;position:absolute;top:100%;inset-inline:0;background:var(--header-glass);border-bottom:1px solid var(--line);padding:24px var(--gutter);max-height:calc(100dvh - 76px);overflow-y:auto;box-shadow:0 14px 24px #10243c0a}
+  .company-header .company-nav[data-open=true] .nav-panel{display:block}
+  .company-header .company-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px}
+  .company-header .company-links a{display:block;padding:12px;white-space:normal}
+  .company-header .company-links a[aria-current=page]{background:var(--wash);border-radius:6px}
+  .company-header .company-links a[aria-current=page]:after{display:none}
+  .company-header .nav-tools{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+  .company-header .nav-tools select{min-width:140px;height:44px}
+  .company-header .theme-switch{width:44px;height:44px}
+}
+@media(max-width:640px){
+  :root{--type-body:16px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
+  .company-header .header-row{min-height:72px;gap:12px}
+  .company-header .company-brand{flex:1;white-space:normal;gap:8px}
+  .company-header .brand-name{font-size:16px;line-height:1.45;overflow-wrap:anywhere}
+  .company-header .brand-en{display:none}
+  .company-header .brand-symbol{width:32px;height:32px;flex:none}
+  .company-header .company-nav{flex:none}
+  .company-header .company-nav .nav-panel{max-height:calc(100dvh - 72px)}
+  .company-page .platform-grid,.company-page .capability-grid,.company-page .product-range-grid,.company-page .prototype-view-grid{grid-template-columns:minmax(0,1fr)}
+  .company-page .platform-card,.company-page .capability-grid .capability{padding:24px}
+  .company-page .range-card>div{padding:22px}
+  .company-page .feature-list li{grid-template-columns:90px minmax(0,1fr);gap:12px}
+  .company-page .edge-box-points>div{grid-template-columns:1fr;gap:8px}
+  .company-page .prototype-view-card figcaption{padding:22px}
+  .company-page .comparison-table{min-width:960px}
+  .company-page .signal-constellation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;min-height:0;padding:24px 16px}
+  .company-page .signal-core{grid-column:1/-1;justify-self:center;width:150px;height:150px;gap:9px;margin-bottom:8px}
+  .company-page .signal-node{position:static;min-width:0;padding:12px 8px;transform:none}
+  .company-page .signal-node strong{font-size:16px}
+  .company-page .signal-orbit{left:10%;top:8%;width:80%;height:68%}
+  #memberProfile #researchAreas>div{grid-template-columns:minmax(0,1fr)!important}
+  #memberProfile #heroSection>.container>div{flex-direction:column;align-items:flex-start!important}
+  #memberProfile #avatarContainer>div{width:140px!important;height:140px!important}
+}
