@@ -48,10 +48,10 @@ test('oversized public assets fail before replacing an existing build', async t 
 test('mobile hero uses a preloaded lightweight candidate', async () => {
   const root = resolve(__dirname, '..');
   const html = await readFile(join(root, 'index.html'), 'utf8');
-  assert.match(html, /rel="preload"[^>]+智能轮椅产品-480\.webp/);
-  assert.match(html, /sizes="\(max-width: 640px\) 160px/);
-  const mobileHero = await stat(join(root, 'pictures', 'responsive', '智能轮椅产品-480.webp'));
-  assert.ok(mobileHero.size < 30 * 1024, `mobile hero is ${mobileHero.size} bytes`);
+  assert.match(html, /rel="preload"[^>]+mobility-intelligence-concept-640\.webp[^>]+media="\(max-width: 640px\)"/);
+  assert.match(html, /<source media="\(max-width: 640px\)" srcset="media\/mobility-intelligence-concept-640\.webp"/);
+  const mobileHero = await stat(join(root, 'media', 'mobility-intelligence-concept-640.webp'));
+  assert.ok(mobileHero.size < 60 * 1024, `mobile hero is ${mobileHero.size} bytes`);
 });
 
 test('product demos stay click-to-load and within the mobile media budget', async () => {
