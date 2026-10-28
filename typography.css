@@ -8,6 +8,8 @@ body.company-page main h3,body.partner-profile-page main h3{font-size:var(--type
 body.company-page main :is(p,li,dd){font-size:var(--type-body);line-height:1.8}
 body.company-page .intro-text,body.company-page .home-hero .intro-text,body.company-page .product-hero .intro-text{font-size:var(--type-body);line-height:1.85}
 .company-page .home-hero h1{font-weight:750;line-height:1.55}
+.company-page .product-hero .product-hero-title{font-size:32px;line-height:1.35;font-weight:750;color:var(--teal)}
+.company-page .product-hero .product-hero-tagline{margin-top:16px;font-size:24px;line-height:1.5;font-weight:600;color:var(--ink)}
 .company-page .section-heading h2{max-width:38em}
 .company-page .balanced-heading>span{display:inline}
 body.company-page main .heading-lines>span{display:inline}
@@ -90,6 +92,8 @@ body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!im
 }
 @media(max-width:640px){
   :root{--type-body:16px;--type-page-title:24px;--type-section-title:23px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
+  .company-page .product-hero .product-hero-title{font-size:28px}
+  .company-page .product-hero .product-hero-tagline{margin-top:14px;font-size:20px}
   .company-header .header-row{min-height:72px;gap:12px}
   .company-header .company-brand{flex:1;white-space:normal;gap:8px}
   .company-header .brand-name{font-size:16px;line-height:1.45;overflow-wrap:anywhere}
