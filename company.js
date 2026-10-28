@@ -25,11 +25,13 @@
     document.documentElement.dataset.companyTheme = value;
     theme?.setAttribute('aria-pressed', String(value === 'dark'));
     if (theme) theme.textContent = value === 'dark' ? '☀' : '☾';
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', value === 'dark' ? '#050b18' : '#f9fbfd');
   }
-  setTheme(read('company-theme') === 'light' ? 'light' : 'dark');
+  // Every page opens in the brand's dark presentation, including returning visits.
+  setTheme('dark');
   theme?.addEventListener('click', () => {
     const value = document.documentElement.dataset.companyTheme === 'dark' ? 'light' : 'dark';
-    setTheme(value); write('company-theme', value);
+    setTheme(value);
   });
 
   // Company pages carry their own complete Chinese/English text, without the old academic dictionary.
