@@ -1,6 +1,5 @@
 /* Readable body copy, with a modest extra step for page and section titles. */
-:root{--type-body:clamp(18px,calc(12px + .3vw),22px);--type-page-title:clamp(28px,calc(18px + .5vw),34px);--type-section-title:clamp(26px,calc(18px + .4vw),32px);--type-heading:clamp(22px,calc(16px + .3vw),26px);--type-card:clamp(21px,calc(15px + .3vw),25px);--type-note:clamp(16px,calc(12px + .2vw),19px);--type-small:clamp(14px,calc(11px + .15vw),17px);--type-module-title:clamp(28px,calc(18px + .5vw),34px);--type-module-subtitle:clamp(22px,calc(16px + .3vw),27px)}
-.company-page .wrap{width:min(100%,clamp(1392px,72vw,2400px))}
+:root{--type-body:18px;--type-page-title:28px;--type-section-title:26px;--type-heading:22px;--type-card:21px;--type-note:16px;--type-small:14px}
 body.company-page,body.partner-profile-page{font-size:var(--type-body);line-height:1.8}
 body.company-page main :is(h1,h2),body.partner-profile-page main :is(h1,h2){line-height:1.5;letter-spacing:0;font-weight:700;text-wrap:wrap}
 body.company-page main h1,body.partner-profile-page main h1{font-size:var(--type-page-title)}
@@ -9,16 +8,16 @@ body.company-page main h3,body.partner-profile-page main h3{font-size:var(--type
 body.company-page main :is(p,li,dd){font-size:var(--type-body);line-height:1.8}
 body.company-page .intro-text,body.company-page .home-hero .intro-text,body.company-page .product-hero .intro-text{font-size:var(--type-body);line-height:1.85}
 .company-page .home-hero h1{font-weight:750;line-height:1.55}
-.company-page .product-hero .product-hero-title{font-size:clamp(32px,calc(22px + .5vw),38px);line-height:1.35;font-weight:750;color:var(--teal)}
-.company-page .product-hero .product-hero-tagline{margin-top:16px;font-size:clamp(24px,calc(18px + .3vw),29px);line-height:1.5;font-weight:600;color:var(--ink)}
+.company-page .product-hero .product-hero-title{font-size:32px;line-height:1.35;font-weight:750;color:var(--teal)}
+.company-page .product-hero .product-hero-tagline{margin-top:16px;font-size:24px;line-height:1.5;font-weight:600;color:var(--ink)}
 .company-page .section-heading h2{max-width:38em}
 .company-page .balanced-heading>span{display:inline}
 body.company-page main .heading-lines>span{display:inline}
 html[lang=en] .company-page .heading-lines>span+span:before{content:' '}
 .company-page .small-label,.company-page .status,.company-page .breadcrumb,.company-page .hero-topics{font-size:var(--type-note);line-height:1.65;letter-spacing:.02em}
-.company-page main .section h2{font-size:var(--type-module-title);line-height:1.4;font-weight:750;color:var(--teal)}
-.company-page main .section .small-label{margin-bottom:10px;font-size:var(--type-module-title);line-height:1.4;font-weight:750;letter-spacing:0;color:var(--teal)}
-.company-page main .section .small-label+:is(h2,h3){font-size:var(--type-module-subtitle);line-height:1.55;font-weight:650;color:var(--ink)}
+.company-page main .section h2{font-size:28px;line-height:1.4;font-weight:750;color:var(--teal)}
+.company-page main .section .small-label{margin-bottom:10px;font-size:28px;line-height:1.4;font-weight:750;letter-spacing:0;color:var(--teal)}
+.company-page main .section .small-label+:is(h2,h3){font-size:22px;line-height:1.55;font-weight:650;color:var(--ink)}
 .company-page .hero-topics{gap:16px}
 .company-page .feature-list :is(strong,span),.company-page .architecture-list :is(strong,span){font-size:var(--type-body);line-height:1.8}
 .company-page .feature-list li{grid-template-columns:110px minmax(0,1fr)}
@@ -52,9 +51,9 @@ html[lang=en] .company-page .heading-lines>span+span:before{content:' '}
 /* Navigation remains readable without squeezing the company name. */
 .company-header .company-brand{min-width:0}
 .company-header .company-brand>span{min-width:0}
-.company-header .brand-name{font-size:clamp(20px,calc(14px + .3vw),24px);line-height:1.5;letter-spacing:0}
-.company-header .brand-en{font-size:clamp(12px,calc(9px + .15vw),14px);line-height:1.6;letter-spacing:.01em}
-.company-header .company-links a{font-size:clamp(18px,calc(12px + .3vw),21px);font-weight:600;line-height:1.6}
+.company-header .brand-name{font-size:20px;line-height:1.5;letter-spacing:0}
+.company-header .brand-en{font-size:12px;line-height:1.6;letter-spacing:.01em}
+.company-header .company-links a{font-size:18px;font-weight:600;line-height:1.6}
 .company-header .company-links{gap:18px}
 .company-header .nav-panel{gap:18px}
 .company-header .nav-tools select{font-size:16px}
@@ -80,14 +79,6 @@ body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!im
 #memberProfile #positionBadge>span{font-size:var(--type-note)!important}
 #memberProfile #contactInfo{overflow-wrap:anywhere}
 #memberProfile #projects [style*="justify-content: space-between"]{flex-wrap:wrap;gap:12px}
-.partner-profile-page #heroSection .container{max-width:clamp(1280px,72vw,1760px)!important}
-.partner-profile-page #heroSection>.container>div[style*="max-width: 1100px"],.partner-profile-page #memberProfile>.section>.container[style*="max-width: 1100px"]{max-width:clamp(1100px,72vw,1600px)!important}
-
-@media(max-width:1180px) and (min-width:641px){
-  .company-page .platform-layout,.company-page .edge-box-layout{grid-template-columns:minmax(0,1fr)}
-  .company-page .edge-box-copy{order:-1}
-  .company-page .platform-visual,.company-page .edge-box-visual{width:100%;max-width:780px;justify-self:center}
-}
 
 @media(max-width:1360px){
   .company-header .menu-button{display:block;flex:none}
@@ -103,7 +94,7 @@ body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!im
   .company-header .theme-switch{width:44px;height:44px}
 }
 @media(max-width:640px){
-  :root{--type-body:16px;--type-page-title:24px;--type-section-title:23px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px;--type-module-title:24px;--type-module-subtitle:20px}
+  :root{--type-body:16px;--type-page-title:24px;--type-section-title:23px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
   .company-page .product-hero .product-hero-title{font-size:28px}
   .company-page .product-hero .product-hero-tagline{margin-top:14px;font-size:20px}
   .company-page main .section h2,.company-page main .section .small-label{font-size:24px}
