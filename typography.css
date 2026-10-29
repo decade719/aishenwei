@@ -15,6 +15,9 @@ body.company-page .intro-text,body.company-page .home-hero .intro-text,body.comp
 body.company-page main .heading-lines>span{display:inline}
 html[lang=en] .company-page .heading-lines>span+span:before{content:' '}
 .company-page .small-label,.company-page .status,.company-page .breadcrumb,.company-page .hero-topics{font-size:var(--type-note);line-height:1.65;letter-spacing:.02em}
+.company-page main .section h2{font-size:28px;line-height:1.4;font-weight:750;color:var(--teal)}
+.company-page main .section .small-label{margin-bottom:10px;font-size:28px;line-height:1.4;font-weight:750;letter-spacing:0;color:var(--teal)}
+.company-page main .section .small-label+:is(h2,h3){font-size:22px;line-height:1.55;font-weight:650;color:var(--ink)}
 .company-page .hero-topics{gap:16px}
 .company-page .feature-list :is(strong,span),.company-page .architecture-list :is(strong,span){font-size:var(--type-body);line-height:1.8}
 .company-page .feature-list li{grid-template-columns:110px minmax(0,1fr)}
@@ -94,6 +97,8 @@ body.partner-profile-page #memberProfile :is(p,li){font-size:var(--type-body)!im
   :root{--type-body:16px;--type-page-title:24px;--type-section-title:23px;--type-heading:20px;--type-card:19px;--type-note:15px;--type-small:14px}
   .company-page .product-hero .product-hero-title{font-size:28px}
   .company-page .product-hero .product-hero-tagline{margin-top:14px;font-size:20px}
+  .company-page main .section h2,.company-page main .section .small-label{font-size:24px}
+  .company-page main .section .small-label+:is(h2,h3){font-size:20px}
   .company-header .header-row{min-height:72px;gap:12px}
   .company-header .company-brand{flex:1;white-space:normal;gap:8px}
   .company-header .brand-name{font-size:16px;line-height:1.45;overflow-wrap:anywhere}
